@@ -1,5 +1,5 @@
 body{
-    background-color: black;
+    /* background-color: black; */
     display: grid;
     width: 100vw;
     height: 100vh;
@@ -11,3 +11,150 @@ body{
     box-sizing: border-box;
 }
 
+[class*=corner]{
+    background-color: aqua;
+}
+
+[class*=player]{
+    background-color: blueviolet;
+}
+
+.bourd{
+    background-color: black;
+}
+
+/* setup main grid */
+.tl-corner{
+    grid-row-start: 1;
+    grid-row-end: 4;
+    grid-column-start: 1;
+    grid-column-end: 4;
+}
+
+.top-player{
+    grid-row-start: 1;
+    grid-row-end: 4;
+    grid-column-start: 4;
+    grid-column-end: 12;
+}
+
+.tr-corner{
+    grid-row-start: 1;
+    grid-row-end: 4;
+    grid-column-start: 12;
+    grid-column-end: 15;
+}
+
+.left-player{
+    grid-row-start: 4;
+    grid-row-end: 12;
+    grid-column-start: 1;
+    grid-column-end: 4;
+}
+
+.bourd{
+    grid-row-start: 4;
+    grid-row-end: 12;
+    grid-column-start: 4;
+    grid-column-end: 12;
+}
+
+.right-player{
+    grid-row-start: 4;
+    grid-row-end: 12;
+    grid-column-start: 12;
+    grid-column-end: 15;
+}
+
+.bl-corner{
+    grid-row-start: 12;
+    grid-row-end: 15;
+    grid-column-start: 1;
+    grid-column-end: 4;
+}
+
+.bottom-player{
+    grid-row-start: 12;
+    grid-row-end: 15;
+    grid-column-start: 4;
+    grid-column-end: 12;
+}
+
+.br-corner{
+    grid-row-start: 12;
+    grid-row-end: 15;
+    grid-column-start: 12;
+    grid-column-end: 15;
+}
+
+/* colors */
+div:has(.black) > *{
+    border: 1px solid blueviolet;
+}
+.black{
+    background-color: black;
+}
+.red{
+    background-color: red;
+}
+.blue{
+    background-color: blue;
+}
+.green{
+    background-color: green;
+}
+.white{
+    background-color: white;
+}
+.gold{
+    background-color: gold;
+}
+
+/* general setup */
+.cards, .gems{
+    display: grid;
+}
+
+/* top player grid */
+.top-player{
+    display: grid;
+}
+
+.top-player .cards{
+    grid-row: 1;
+    grid-column: 1;
+}
+
+.top-player .gold{
+    grid-column: 1;
+}
+
+.top-player .white{
+    grid-column: 2;
+}
+
+.top-player .green{
+    grid-column: 3;
+}
+
+.top-player .blue{
+    grid-column: 4;
+}
+
+.top-player .red{
+    grid-column: 5;
+}
+
+.top-player .black{
+    grid-column: 6;
+} 
+
+/* left player grid */
+.left-player{
+    display: grid;
+}
+
+.left-player .cards{
+    grid-row: 1;
+    grid-column: 3;
+}
