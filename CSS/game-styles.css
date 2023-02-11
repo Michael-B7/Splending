@@ -99,22 +99,38 @@ div:has(.blank1){
 }
 
 /* left player */
-
+.l-player{
+    grid-row-start: 5;
+    grid-row-end: 11;
+    display: grid;
+}
 .black{
     background-color: black;
+    border: 2px solid purple;
 }
 .red{
     background-color: red;
+    border: 2px solid purple;
 }
 .blue{
     background-color: blue;
+    border: 2px solid purple;
 }
 .green{
     background-color: green;
+    border: 2px solid purple;
 }
 .white{
     background-color: white;
+    border: 2px solid purple;
 }
 .gold{
     background-color: gold;
+    border: 2px solid purple;
+}
+
+.t-player{
+    grid-column-start: 5;
+    grid-column-end: 11;
+    display: grid;
 }
