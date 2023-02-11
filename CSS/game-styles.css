@@ -1,0 +1,26 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    background-color: #242830;
+}
+
+article {
+    width: 100vw;
+    height: 100vh;
+    display: grid;
+    gap: 1rem;
+    grid-template-rows: 1fr 2fr 1fr;
+    grid-template-columns: 1fr 2fr 1fr;
+    /* grid-template-rows: 1fr 2fr 1fr; */
+}
+
+.player {
+    background-color: pink;
+}
+
+.board {
+    background-color: brown;
+}
