@@ -1,8 +1,6 @@
 body{
-    background-color: #744A23;
+    background-color: black;
     display: grid;
-    grid-template-columns: calc(100vw/19);
-    /* grid-template-rows: calc(100vh/14); */
     width: 100vw;
     height: 100vh;
     margin: 0;
@@ -10,9 +8,9 @@ body{
 }
 
 /* make empty columns span every row */
-.column1, .column4, .column5, .column12, .column13, .column16{
+.column1, .column4, .column11, .column14{
     grid-row-start: span;
-    background-color: aliceblue;
+    background-color: grey;
 }
 
 /* setup columns */
@@ -58,21 +56,44 @@ body{
 .column14{
     grid-column-start: 14;
 }
-.column15{
-    grid-column-start: 15;
+
+/* rows */
+div:has(.blank1){
+    display: grid;
 }
-.column16{
-    grid-column-start: 16;
+[class*=blank]{
+    background-color: grey;
 }
-.column17{
-    grid-column-start: 17;
+.blank1{
+    grid-row-start: 1;
 }
-.column18{
-    grid-column-start: 18;
+.blank2{
+    grid-row-start: 2;
 }
-.column19{
-    grid-column-start: 19;
+.blank3{
+    grid-row-start: 3;
 }
-.column20{
-    grid-column-start: 20;
+.blank4{
+    grid-row-start: 4;
+}
+.blank6{
+    grid-row-start: 6;
+}
+.blank7{
+    grid-row-start: 7;
+}
+.blank10{
+    grid-row-start: 10;
+}
+.blank11{
+    grid-row-start: 11;
+}
+.blank12{
+    grid-row-start: 12;
+}
+.blank13{
+    grid-row-start: 13;
+}
+.blank14{
+    grid-row-start: 14;
 }
