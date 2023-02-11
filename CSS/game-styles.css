@@ -1,0 +1,78 @@
+body{
+    background-color: #744A23;
+    display: grid;
+    grid-template-columns: calc(100vw/19);
+    /* grid-template-rows: calc(100vh/14); */
+    width: 100vw;
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+}
+
+/* make empty columns span every row */
+.column1, .column4, .column5, .column12, .column13, .column16{
+    grid-row-start: span;
+    background-color: aliceblue;
+}
+
+/* setup columns */
+.column1{
+    grid-column-start: 1;
+}
+.column2{
+    grid-column-start: 2;
+}
+.column3{
+    grid-column-start: 3;
+}
+.column4{
+    grid-column-start: 4;
+}
+.column5{
+    grid-column-start: 5;
+}
+.column6{
+    grid-column-start: 6;
+}
+.column7{
+    grid-column-start: 7;
+}
+.column8{
+    grid-column-start: 8;
+}
+.column9{
+    grid-column-start: 9;
+}
+.column10{
+    grid-column-start: 10;
+}
+.column11{
+    grid-column-start: 11;
+}
+.column12{
+    grid-column-start: 12;
+}
+.column13{
+    grid-column-start: 13;
+}
+.column14{
+    grid-column-start: 14;
+}
+.column15{
+    grid-column-start: 15;
+}
+.column16{
+    grid-column-start: 16;
+}
+.column17{
+    grid-column-start: 17;
+}
+.column18{
+    grid-column-start: 18;
+}
+.column19{
+    grid-column-start: 19;
+}
+.column20{
+    grid-column-start: 20;
+}
