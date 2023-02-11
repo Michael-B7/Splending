@@ -97,3 +97,24 @@ div:has(.blank1){
 .blank14{
     grid-row-start: 14;
 }
+
+/* left player */
+
+.black{
+    background-color: black;
+}
+.red{
+    background-color: red;
+}
+.blue{
+    background-color: blue;
+}
+.green{
+    background-color: green;
+}
+.white{
+    background-color: white;
+}
+.gold{
+    background-color: gold;
+}
