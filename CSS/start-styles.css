@@ -118,7 +118,7 @@ h2 {
 }
 
 .step {
-    display: none;
+    display: flex;
     justify-content: center;
     flex-wrap: wrap;
     align-items: center;
@@ -131,8 +131,8 @@ h2 {
     justify-content: space-around;
 }
 
-.active {
-    display: flex;
+.hidden {
+    display: none;
 }
 
 [class*="caret"] {
@@ -180,6 +180,7 @@ h2 {
     font-size: 2rem;
     width: 35%;
     transition: .4s ease-in;
+    margin-top: 24px;
 }
 
 .rules {
