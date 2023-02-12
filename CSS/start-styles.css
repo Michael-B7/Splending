@@ -7,13 +7,9 @@
 body {
     margin: 0;
     background-color: #242830;
-    /* background-color: #EDD534;
-    background-image: url("https://www.transparenttextures.com/patterns/brushed-alum-dark.png"); */
 }
 
-article {
-    /* background: url(/Images/town.png) no-repeat;
-    background-position: top left; */
+.index {
     height: 100vh;
     display: flex;
     flex-wrap: wrap;
@@ -92,4 +88,136 @@ footer {
 h2 {
     text-align: center;
     color: #EDD534;
+}
+
+/* rule book page */
+
+.rule-hero {
+    height: 95vh;
+    background: url(/Images/church-ceiling.jpg);
+    background-position: top;
+    background-size:cover;
+    align-items: center;
+}
+
+.rule-hero h1 {
+    font-size: 4rem;
+    padding: 32px;
+    width: 25%;
+    text-align: center;
+
+    border-radius: 16px;
+    border: 4px solid #EDD534;
+    color: #EDD534;
+    background-color: rgba(58, 66, 99, .75);
+    text-shadow: 2px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+.rules {
+    /* background-color: #353C48; */
+    margin: 0 10%;
+    
+}
+
+.rule {
+    color: white;
+    display: grid;
+    column-gap: 10%;
+
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas: 
+    "header header"
+    "single single";
+
+    border: 1px solid red;
+}
+
+.rule h2 {
+    margin: 0;
+    padding: 5vh 0 0 0;
+    font-size: 2rem;
+
+    grid-area: header;
+}
+
+.rule h2 ~ p {
+    grid-area: single;
+}
+
+.subsection-half {
+    border: 1px solid yellow;
+}
+
+.stretch-width {
+    grid-area: single;
+}
+
+h3 {
+    text-align: center;
+    color: #AAC2FF;
+    grid-area: header;
+}
+
+.gems {
+    display: grid;
+    grid-template-areas: 
+    "header header header header";
+}
+
+
+/* gem colors */
+[class^="gem"] {
+    background-color: pink;
+    width: 65%;
+    aspect-ratio: 1/1;
+    border-radius: 50%;
+    justify-self: center;
+    align-self: center;
+    border: 4px solid white;
+    box-shadow: 2px 4px 4px rgba(0, 0, 0, 0.25);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.image {
+    width: 100%;
+    height: 100%;
+    background-position: center;
+    background-size: cover;
+    margin: 5px;
+    border-radius: 50%;
+}
+
+[class$="green"] {
+    background-color: #21714A;
+    border-color: #27A166;
+    /* background-image: url(/Images/green.png) center;
+    background-size: cover; */
+}
+
+[class$="white"] {
+    background-color: #BCBCBC;
+    border-color: #ffffff;
+}
+
+[class$="blue"] {
+    background-color: #1557A3;
+    border-color: #176DD0;
+}
+
+[class$="black"] {
+    background-color: #2C211D;
+    border-color: #000000;
+}
+
+[class$="red"] {
+    background-color: #B62D2E;
+    border-color: #ED3537;
+}
+
+[class$="yellow"] {
+    background-color: #B8B030;
+    border-color: #FDF344;
 }
