@@ -1,10 +1,15 @@
 body{
     /* background-color: black; */
-    display: grid;
     width: 100vw;
     height: 100vh;
     margin: 0;
-    padding: 0;
+}
+
+main{
+    display: flex;
+    flex-wrap: wrap;
+    width: 100vw;
+    height: 100vh;
 }
 
 *{
@@ -23,72 +28,8 @@ body{
     background-color: black;
 }
 
-/* setup main grid */
-.tl-corner{
-    grid-row-start: 1;
-    grid-row-end: 4;
-    grid-column-start: 1;
-    grid-column-end: 4;
-}
-
-.top-player{
-    grid-row-start: 1;
-    grid-row-end: 4;
-    grid-column-start: 4;
-    grid-column-end: 12;
-}
-
-.tr-corner{
-    grid-row-start: 1;
-    grid-row-end: 4;
-    grid-column-start: 12;
-    grid-column-end: 15;
-}
-
-.left-player{
-    grid-row-start: 4;
-    grid-row-end: 12;
-    grid-column-start: 1;
-    grid-column-end: 4;
-}
-
-.bourd{
-    grid-row-start: 4;
-    grid-row-end: 12;
-    grid-column-start: 4;
-    grid-column-end: 12;
-}
-
-.right-player{
-    grid-row-start: 4;
-    grid-row-end: 12;
-    grid-column-start: 12;
-    grid-column-end: 15;
-}
-
-.bl-corner{
-    grid-row-start: 12;
-    grid-row-end: 15;
-    grid-column-start: 1;
-    grid-column-end: 4;
-}
-
-.bottom-player{
-    grid-row-start: 12;
-    grid-row-end: 15;
-    grid-column-start: 4;
-    grid-column-end: 12;
-}
-
-.br-corner{
-    grid-row-start: 12;
-    grid-row-end: 15;
-    grid-column-start: 12;
-    grid-column-end: 15;
-}
-
 /* colors */
-div:has(.black) > *{
+.gems, .cards{
     border: 1px solid blueviolet;
 }
 .black{
@@ -111,50 +52,89 @@ div:has(.black) > *{
 }
 
 /* general setup */
-.cards, .gems{
-    display: grid;
+main > *:not([class*=corner]){
+    display: flex;
+    flex-wrap: wrap;
 }
 
-/* top player grid */
+.tl-corner{
+    width: 17%;
+    height: 17%;
+}
+
 .top-player{
-    display: grid;
+    width: 66%;
+    height: 17%;
+    display: flex;
+    justify-content: center;
 }
 
-.top-player .cards{
-    grid-row: 1;
-    grid-column: 1;
+.tr-corner{
+    width: 17%;
+    height: 17%;
 }
 
-.top-player .gold{
-    grid-column: 1;
-}
-
-.top-player .white{
-    grid-column: 2;
-}
-
-.top-player .green{
-    grid-column: 3;
-}
-
-.top-player .blue{
-    grid-column: 4;
-}
-
-.top-player .red{
-    grid-column: 5;
-}
-
-.top-player .black{
-    grid-column: 6;
-} 
-
-/* left player grid */
 .left-player{
-    display: grid;
+    width: 17%;
+    height: 66%;
+    display: flex;
+    flex-direction: column;
+    align-content: flex-end;
+    justify-content: center;
 }
 
-.left-player .cards{
-    grid-row: 1;
-    grid-column: 3;
+.bourd{
+    width: 66%;
+    height: 66%;
+}
+
+.right-player{
+    width: 17%;
+    height: 66%;
+}
+
+.bl-corner{
+    width: 17%;
+    height: 17%;
+}
+
+.bottom-player{
+    width: 66%;
+    height: 17%;
+}
+
+.br-corner{
+    width: 17%;
+    height: 17%;
+}
+
+/* top-player setup */
+
+.top-player .cards, .top-player .gems{
+    width: 66%;
+    display: flex;
+    flex-wrap: wrap;
+    height: 50%;
+    justify-content: center;
+}
+
+.top-player .cards > *, .top-player .gems > *{
+    height: 100%;
+    width: calc(100%/6);
+}
+
+/* left-player setup */
+
+.left-player .cards, .left-player .gems{
+    height: 90%;
+    width: 33%;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.left-player .cards > *, .left-player .gems > *{
+    height: calc(100%/6);
+    width: 100%;
 }
