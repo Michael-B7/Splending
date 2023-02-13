@@ -12,10 +12,74 @@ body {
 
 .index {
     height: 100vh;
-    display: flex;
-    flex-wrap: wrap;
-    flex-direction: column;
-    justify-content: space-between;
+    display: grid;
+    align-items: center;
+}
+
+.top-frame {
+    position: absolute;
+    width: 100%;
+    height: 24px;
+    background: url(/Images/top.png);
+}
+
+.right-frame {
+    position: absolute;
+    width: 18px;
+    height: 100%;
+    right: 0;
+    background: url(/Images/rightwing.png);
+}
+
+.bottom-frame {
+    position: absolute;
+    width: 100%;
+    height: 28px;
+    bottom: 0;
+    background: url(/Images/bot.png);
+}
+
+.left-frame {
+    position: absolute;
+    width: 19px;
+    height: 100%;
+    background: url(/Images/leftwing.png);
+}
+
+.tr-corner {
+    position: absolute;
+    height: 149px;
+    width: 150px;
+    background: url(/Images/topright.png);
+    z-index: 1;
+    right: 0;
+}
+
+.tl-corner {
+    position: absolute;
+    height: 149px;
+    width: 150px;
+    background: url(/Images/topleft.png);
+    z-index: 1;
+}
+
+.br-corner {
+    position: absolute;
+    height: 149px;
+    width: 150px;
+    background: url(/Images/bottomright.png);
+    z-index: 1;
+    bottom: 0;
+    right: 0;
+}
+
+.bl-corner {
+    position: absolute;
+    height: 149px;
+    width: 150px;
+    background: url(/Images/bottomleft.png);
+    z-index: 1;
+    bottom: 0;
 }
 
 header {
@@ -29,6 +93,7 @@ header {
     display: flex;
     justify-content: center;
     align-items: center;
+    align-self: flex-end;
 }
 
 .play {
@@ -40,8 +105,8 @@ header {
 
 .button-box {
     background-color: #A5B1C5;
-    width: 35%;
     height: 150px;
+    /* width: clamp(200px, 35%, 800px); */
     padding: 16px;
     margin: 16px;
     display: flex;
@@ -54,7 +119,7 @@ header {
 .button-box button {
     padding: 16px;
     margin: 8px;
-    width: 40%;
+    width: 200px;
     background-color: #3A4263;
     color: #EDD534;
     font-size: 2rem;
@@ -73,7 +138,8 @@ footer {
     display: flex;
     width: 100%;
     height: 25vh;
-    
+    align-self: end;
+    margin-bottom: 28px;
 }
 
 .footer-item {
@@ -128,7 +194,7 @@ h2 {
 .step-rule {
     width: 100%;
     display: flex;
-    justify-content: space-around;
+    justify-content: space-evenly;
 }
 
 .hidden {
@@ -165,7 +231,6 @@ h2 {
 .step a {
     font-size: 4rem;
     padding: 32px;
-    width: 25%;
     text-align: center;
 
     border-radius: 16px;
@@ -178,7 +243,6 @@ h2 {
 .step a {
     text-decoration: none;
     font-size: 2rem;
-    width: 35%;
     transition: .4s ease-in;
     margin-top: 24px;
 }
