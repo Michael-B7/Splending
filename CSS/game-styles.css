@@ -3,11 +3,6 @@ background-image: url("https://www.transparenttextures.com/patterns/45-degree-fa
 /* This is mostly intended for prototyping; please download the pattern and re-host for production environments. Thank you! */
 
 
-
-
-
-
-
 @import url('https://fonts.googleapis.com/css2?family=El+Messiri&display=swap');
 * {
     box-sizing: border-box;
@@ -17,13 +12,13 @@ background-image: url("https://www.transparenttextures.com/patterns/45-degree-fa
 body {
     margin: 0;
     background-color: #242830;
+    background-image: url("https://www.transparenttextures.com/patterns/45-degree-fabric-light.png"); 
 }
 
-article {
+.gamer-zone {
     width: 100vw;
     height: 100vh;
     display: grid;
-    gap: 8px;
     grid-template-rows: 1fr 2fr 1fr;
     grid-template-columns: 1fr 2fr 1fr;
 }
@@ -39,6 +34,11 @@ article {
     gap: 16px;
     grid-template-rows: auto;
     grid-template-columns: repeat(5, 1fr);
+    background-color: rgb(174, 111, 35);
+    width: 100%;
+    aspect-ratio: 1;
+    max-width: 500px;
+    justify-self: center;
 }
 
 .card, 
@@ -65,17 +65,17 @@ article {
 
 .card-deck :nth-child(1) {
     transform: rotate(-2.5deg);
-    z-index: -1;
+    /* z-index: -1; */
 }
 
 .card-deck :nth-child(2) {
     transform: rotate(-5deg);
-    z-index: -2;
+    /* z-index: -2; */
 }
 
 .card-deck :nth-child(3) {
     transform: rotate(-7.5deg);
-    z-index: -3;
+    /* z-index: -3; */
 }
 
 .level-3 {
@@ -116,11 +116,19 @@ article {
     border-radius: 10px 10px 0 0;
 }
 
+.card-costs {
+    display: flex;
+    flex-direction: column;
+    padding: 8px;
+}
+
 .gem {
     background-color: blue; 
-    width: 50%;
+    width: 75%;
     aspect-ratio: 1;
     border-radius: 50%;
+    justify-self: center;
+    border: 4px solid white;
 }
 
 #player-one {
