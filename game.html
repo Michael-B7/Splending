@@ -6,43 +6,68 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Game</title>
     <link rel="stylesheet" href="/CSS/game-styles.css">
+    <script src="/Scripts/script.js" defer></script>
 </head>
 <body>
-    <article>
+    <article class="gamer-zone">
         <div class="corner"></div>
-        <div class="top">
-            <div class="player vertical"> </div>
-        </div>
+        <div class="player-side" id="player-three"></div>
         <div class="corner"></div>
-        <div class="left">
-            <div class="player horizontal"></div>
-        </div>
+        <div class="player-side" id="player-four"></div>
         <div class="center">
-            <div class="board">
-                <div class="card"></div>
-                <div class="card"></div>
-                <div class="card"></div>
-                <div class="card"></div>
-                <div class="card"></div>
-                <div class="card"></div>
-                <div class="card"></div>
-                <div class="card"></div>
-                <div class="card"></div>
-                <div class="card"></div>
-                <div class="card"></div>
-                <div class="card"></div>
-                <div class="card"></div>
-                <div class="card"></div>
-                <div class="card"></div>
+            <div class="noble"></div>
+            <div class="noble"></div>
+            <div class="noble"></div>
+            <div class="noble"></div>
+            <div class="noble"></div>
+            <div class="card-deck">
+                <div class="face-down level-3 ">Splendor</div>
+                <div class="face-down level-3">Splendor</div>
+                <div class="face-down level-3">Splendor</div>
+              </div>
+            <div class="card level-3"></div>
+            <div class="card level-3"></div>
+            <div class="card level-3"></div>
+            <div class="card level-3"><button id="test">test</button></div>
+            <div class="card-deck">
+                <div class="face-down level-2">Splendor</div>
+                <div class="face-down level-2">Splendor</div>
+                <div class="face-down level-2">Splendor</div>
+              </div>
+            <div class="card level-2"></div>
+            <div class="card level-2"></div>
+            <div class="card level-2"></div>
+            <div class="card level-2"></div>
+            <div class="card-deck">
+                <div class="face-down level-1">Splendor</div>
+                <div class="face-down level-1">Splendor</div>
+                <div class="face-down level-1">Splendor</div>
             </div>
+            <div class="card level-1"></div>
+            <div class="card level-1"></div>
+            <div class="card level-1"></div>
+            <div class="card level-1">
+                <div class="card-header">
+                    <span class="card-points">2</span>
+                    <span class="card-worth">ruby</span>
+                  </div>
+                  <div class="card-body">
+                    <ul class="card-costs">
+                      <li><span class="diamond-cost">3</span></li>
+                      <li><span class="emerald-cost">1</span></li>
+                      <li><span class="sapphire-cost">1</span></li>
+                    </ul>
+                  </div>
+            </div>
+            <div class="gem"></div>
+            <div class="gem"></div>
+            <div class="gem"></div>
+            <div class="gem"></div>
+            <div class="gem"></div>
         </div>
-        <div class="right">
-            <div class="player horizontal"></div>
-        </div>
+        <div class="player-side" id="player-two"></div>
         <div class="corner"></div>
-        <div class="bottom">
-            <div class="player vertical"></div>
-        </div>
+        <div class="player-side" id="player-one"></div>
         <div class="corner"></div>
     </article>
 </body>
