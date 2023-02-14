@@ -8,5 +8,6 @@
     },
     "devDependencies": {
         "@types/ws": "^8.5.4"
-    }
+    },
+    "type": "module"
 }
