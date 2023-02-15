@@ -6,7 +6,7 @@
 
 body {
     margin: 0;
-    background-color: #242830;
+    background-color: #000000;
     background-image: url("https://www.transparenttextures.com/patterns/45-degree-fabric-light.png"); 
 }
 
@@ -14,9 +14,49 @@ body {
     width: 100vw;
     height: 100vh;
     display: grid;
-    grid-template-rows: 1fr 2fr 1fr;
-    grid-template-columns: 1fr 2fr 1fr;
-    gap: 16px
+    grid-template-rows: 1fr 1fr 2fr ;
+    grid-template-columns: 1fr 2fr;
+    grid-template-areas: 
+    "title reserved reserved"
+    "player gems gems"
+    "player board board"
+    "player board board";
+    gap: 32px;
+    padding: 16px;
+}
+
+.reserved-cards,
+.players,
+.gems,
+.board {
+    background: #5E687D;
+    box-shadow: 2px 2px 4px rgba(255, 255, 255, 0.25);
+    border-radius: 20px;
+}
+
+.title {
+    grid-area: title;
+}
+
+.reserved-cards {
+    grid-area: reserved;
+}
+
+.players {
+    grid-area: player;
+}
+
+.gems {
+    grid-area: gems;
+}
+
+.board {
+    grid-area: board;
+    display: grid;
+    padding: 16px;
+    gap: 16px;
+    grid-template-rows: repeat(3, 1fr);
+    grid-template-columns: repeat(6, 1fr);
 }
 
 .player-side {
@@ -27,56 +67,24 @@ body {
     padding: 8px;
 }
 
-.y-axis {
-    grid-template-columns: repeat(6, 1fr);
-}
-
-.x-axis {
-    grid-template-rows: repeat(6, 1fr);
-}
-
-.x-axis .card {
-    width: 50%;
-}
-
-.player-side .card { 
-    aspect-ratio: auto;
-}
-
-.center {
-    background-color: rgba(0, 0, 255, 0);
-    display: grid;
-    padding: 16px;
-    gap: 16px;
-    grid-template-rows: auto;
-    grid-template-columns: repeat(5, 1fr);
-    background-color: #A5B1C5;
-    width: 100%;
-    max-width: 500px;
-    justify-self: center;
-    border-radius: 10px;
-}
-
 .card, 
 .face-down {
     background-color: yellow;
-    aspect-ratio: 2/3;
-    width: 100%;
     border-radius: 10px;
 }
 
 .card-deck {
     position: relative;
-    width: 100%;
-    aspect-ratio: 2/3;
-    /* margin: 50px auto; */
     box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.1);
+    width: 100%;
 }
 
 .card-deck .face-down {
     position: absolute;
     box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.1);
     transform-origin: bottom;
+    height: 100%;
+    width: 100%;
 }
 
 .card-deck :nth-child(1) {
@@ -118,6 +126,7 @@ body {
     text-align: center;
     color: #EDD534;
 }
+
 
 .card {
     display: flex;
