@@ -19,11 +19,11 @@ body {
     grid-template-columns: 1fr 2fr;
     grid-template-areas: 
     "title reserved reserved"
-    "player gems gems"
     "player board board"
-    "player board board";
+    "player board board"
+    "player gems gems";
     gap: 32px;
-    padding: 16px;
+    padding: 32px;
 }
 
 .reserved-cards,
@@ -49,6 +49,10 @@ body {
 
 .gems {
     grid-area: gems;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    padding: 16px;
 }
 
 .board {
@@ -153,10 +157,40 @@ body {
 }
 
 .gem {
-    background-color: blue; 
-    width: 75%;
-    aspect-ratio: 1;
-    border-radius: 50%;
-    justify-self: center;
+    color: white;
     border: 4px solid white;
+    border-radius: 50%;
+    width: 150px;
+    height: 150px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    font-size: 32px;
+    text-shadow: 0 0 10px black;
+}
+
+#red {
+    background: #B62D2E;
+}
+
+#blue {
+    background-color: #1557A3;
+}
+
+#green {
+    background-color: #21714A;
+}
+
+#white {
+    background-color: #BCBCBC;
+}
+
+#black {
+    background-color: #2C211D;
+}
+
+#gold {
+    background-color: #B8B030;
 }
