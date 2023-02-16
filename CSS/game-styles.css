@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=El+Messiri&display=swap');
+
 * {
     box-sizing: border-box;
     font-family: 'El Messiri', sans-serif;
@@ -59,47 +60,51 @@ body {
     grid-template-columns: repeat(6, 1fr);
 }
 
-.player-side {
-    background-color: #A5B1C5;
-    border-radius: 10px;
-    display: grid;
-    gap: 8px;
-    padding: 8px;
-}
-
 .card, 
 .face-down {
-    background-color: yellow;
     border-radius: 10px;
 }
 
 .card-deck {
     position: relative;
-    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.1);
     width: 100%;
 }
 
-.card-deck .face-down {
+.noble-deck {
+   display: flex;
+}
+
+.card-deck .face-down,
+.card-deck .noble-stack { 
     position: absolute;
     box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.1);
     transform-origin: bottom;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #EDD534;
+}
+
+.card-deck .face-down {
     height: 100%;
     width: 100%;
 }
 
+.card-deck .noble-stack {
+    background-color: brown;
+    align-self: center;
+}
+
 .card-deck :nth-child(1) {
     transform: rotate(-2.5deg);
-    /* z-index: -1; */
 }
 
 .card-deck :nth-child(2) {
     transform: rotate(-5deg);
-    /* z-index: -2; */
 }
 
 .card-deck :nth-child(3) {
     transform: rotate(-7.5deg);
-    /* z-index: -3; */
 }
 
 .level-3 {
@@ -116,17 +121,17 @@ body {
 
 .noble {
     width: 100%;
-    aspect-ratio: 1;
-    background-color: antiquewhite;
+    height: 80%;
+    background-color: burlywood;
     border-radius: 10px;
+    align-self: center;
+    border: 4px solid brown;
 }
 
 .face-down {
     border: 4px solid white;
     text-align: center;
-    color: #EDD534;
 }
-
 
 .card {
     display: flex;
@@ -154,29 +159,4 @@ body {
     border-radius: 50%;
     justify-self: center;
     border: 4px solid white;
-}
-
-#player-one {
-    border: 4px solid red;
-    box-shadow: 0px 0px 10px 10px rgba(255, 0, 0, 0.5);
-}
-
-#player-two {
-    border: 4px solid green;
-    box-shadow: 0px 0px 10px 10px rgba(0, 128, 0, 0.5);
-}
-
-#player-three {
-    border: 4px solid yellow;
-    box-shadow: 0px 0px 10px 10px rgba(255, 255, 0, 0.5);
-}
-
-#player-four {
-    border: 4px solid purple;
-    box-shadow: 0px 0px 10px 10px rgba(128, 0, 128, 0.5);
-}
-
-.corner {
-    background-color: #A5B1C5;
-    border-radius: 10px;
 }
