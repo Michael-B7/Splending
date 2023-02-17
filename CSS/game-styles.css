@@ -18,10 +18,10 @@ body {
     grid-template-rows: 1fr 1fr 2fr ;
     grid-template-columns: 1fr 2fr;
     grid-template-areas: 
-    "title reserved reserved"
-    "player board board"
-    "player board board"
-    "player gems gems";
+    "title reserved reserved reserved"
+    "player board board gems"
+    "player board board gems"
+    "player board board gems";
     gap: 32px;
     padding: 32px;
 }
@@ -39,20 +39,14 @@ body {
     grid-area: title;
 }
 
-.reserved-cards {
-    grid-area: reserved;
-}
-
-.players {
-    grid-area: player;
-}
-
 .gems {
     grid-area: gems;
-    display: flex;
-    align-items: center;
-    justify-content: space-around;
+    display: grid;
+    grid-template-rows: repeat(6, 1fr);
+
+    /* gap: 16px; */
     padding: 16px;
+    width: 100px;
 }
 
 .board {
@@ -74,10 +68,6 @@ body {
     width: 100%;
 }
 
-.noble-deck {
-   display: flex;
-}
-
 .card-deck .face-down,
 .card-deck .noble-stack { 
     position: absolute;
@@ -96,19 +86,32 @@ body {
 
 .card-deck .noble-stack {
     background-color: brown;
-    align-self: center;
+    border: 4px solid burlywood;
 }
 
 .card-deck :nth-child(1) {
-    transform: rotate(-2.5deg);
+    transform: rotate(-1.25deg);
 }
 
 .card-deck :nth-child(2) {
-    transform: rotate(-5deg);
+    transform: rotate(-2.5deg);
 }
 
 .card-deck :nth-child(3) {
-    transform: rotate(-7.5deg);
+    transform: rotate(-3.75deg);
+}
+
+
+.noble-deck :nth-child(1) {
+    transform: rotate(1.25deg);
+}
+
+.noble-deck :nth-child(2) {
+    transform: rotate(2.5deg);
+}
+
+.noble-deck :nth-child(3) {
+    transform: rotate(3.75deg);
 }
 
 .level-3 {
@@ -125,11 +128,11 @@ body {
 
 .noble {
     width: 100%;
-    height: 80%;
+    height: 100%;
     background-color: burlywood;
     border-radius: 10px;
-    align-self: center;
     border: 4px solid brown;
+    /* justify-self: end; */
 }
 
 .face-down {
@@ -160,8 +163,6 @@ body {
     color: white;
     border: 4px solid white;
     border-radius: 50%;
-    width: 150px;
-    height: 150px;
 
     display: flex;
     justify-content: center;
@@ -169,28 +170,106 @@ body {
 
     font-size: 32px;
     text-shadow: 0 0 10px black;
+
+    align-self: center;
+    aspect-ratio: 1;
 }
 
-#red {
+.players {
+    display: grid;
+    gap: 8px;
+    color: white;
+    grid-area: player;
+}
+
+.player {
+    display: grid;
+    /* background-color: rgba(238, 130, 238, 0.252); */
+    border-radius: 10px;
+    padding: 8px;
+
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(5, 1fr);
+    grid-template-areas:
+    "player player"
+    "gems gems"
+    "gems gems"
+    "gems gems"
+    "gems gems"
+    "prestige noble";
+}
+
+.reserved-cards {
+    display: grid;
+    padding: 16px;
+    column-gap: 16px;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: 1fr 8fr;
+    grid-area: reserved;
+}
+
+.empty-card {
+    border-radius: 10px;
+    border: 4px dashed white;
+    color: white;
+    text-align: center;
+}
+
+.player-name {
+    color: white;
+    text-align: center;
+    margin: 0;
+}
+
+.player .player-name {
+    grid-area: player;
+}
+
+.player-gems {
+    grid-area: gems;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-template-rows: 1fr 1fr;
+    column-gap: 8px;
+}
+
+.player-gem {
+    border: 1px solid white;
+    border-radius: 8px 8px 0 0 ;
+}
+
+.player-card {
+    border: 1px solid white;
+    border-radius: 0 0 8px 8px;
+    
+}
+
+.player-gems [class^="player-"] {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.red {
     background: #B62D2E;
 }
 
-#blue {
+.blue {
     background-color: #1557A3;
 }
 
-#green {
+.green {
     background-color: #21714A;
 }
 
-#white {
+.white {
     background-color: #BCBCBC;
 }
 
-#black {
+.black {
     background-color: #2C211D;
 }
 
-#gold {
+.gold {
     background-color: #B8B030;
 }
