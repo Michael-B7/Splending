@@ -15,12 +15,10 @@ body {
     width: 100vw;
     height: 100vh;
     display: grid;
-    grid-template-rows: 1fr 1fr 2fr ;
+    grid-template-rows: 1fr 2fr ;
     grid-template-columns: 1fr 2fr;
     grid-template-areas: 
-    "title reserved reserved reserved"
-    "player board board gems"
-    "player board board gems"
+    "title reserved reserved gems"
     "player board board gems";
     gap: 32px;
     padding: 32px;
@@ -41,12 +39,11 @@ body {
 
 .gems {
     grid-area: gems;
-    display: grid;
-    grid-template-rows: repeat(6, 1fr);
-
-    /* gap: 16px; */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
     padding: 16px;
-    width: 100px;
+    width: 150px;
 }
 
 .board {
@@ -163,6 +160,7 @@ body {
     color: white;
     border: 4px solid white;
     border-radius: 50%;
+    width: 100%;
 
     display: flex;
     justify-content: center;
@@ -173,6 +171,8 @@ body {
 
     align-self: center;
     aspect-ratio: 1;
+
+    margin: 16px 0;
 }
 
 .players {
@@ -192,7 +192,6 @@ body {
     grid-template-rows: repeat(5, 1fr);
     grid-template-areas:
     "player player"
-    "gems gems"
     "gems gems"
     "gems gems"
     "gems gems"
