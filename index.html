@@ -4,28 +4,171 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Splendor Start</title>
     <link rel="stylesheet" href="/CSS/start-styles.css">
+    <script src="/Scripts/script.js" defer></script>
+    <script src="https://kit.fontawesome.com/96eecf184e.js" crossorigin="anonymous"></script>
+    <title>Start</title>
 </head>
 <body>
-    <article>
+    <div class="top-frame"></div>
+    <div class="tr-corner"></div>
+    <div class="right-frame"></div>
+    <div class="br-corner"></div>
+    <div class="bottom-frame"></div>
+    <div class="bl-corner"></div>
+    <div class="left-frame"></div>
+    <div class="tl-corner"></div>
+    
+    <article class="index">
         <header class="title">
-            <img src="/Images/title.png" alt="">
+            <a href="index.html"><img src="/Images/title.png" alt=""></a>
         </header>
-        
         <div class="play">
             <div class="button-box">
-                <button id="create">Create</button>
-                <button id="join">Join</button> 
+                <div id="create">Create</div>
+                <div id="join">Join</div> 
             </div>
         </div>
 
         <footer>
             <section class="footer-item">
-                <h2>Copyright</h2>
+                <h2>Copyright </h2>
             </section>
             <section class="footer-item">
                 <h2>How to play</h2>
+                <div id="tutorial">
+                    <div class="navigation" id="nav-left">
+                        <i class="fa-solid fa-caret-left"></i>
+                    </div>
+                    <div class="steps">
+                        <div class="step active">
+                            <a href="rules.html">Rule-book</a>
+                        </div>
+                        <div class="step hidden">
+                            <h3>Acquire gems</h3>
+                            <div class="step-rule">
+                                <div class="gem-green">
+                                    <div class="coin-image"></div>
+                                </div>
+                                <div class="gem-white">
+                                    <div class="coin-image"></div>
+                                </div>
+                                <div class="gem-blue">
+                                    <div class="coin-image"></div>
+                                </div>
+                                <div class="gem-black">
+                                    <div class="coin-image"></div>
+                                </div>
+                                <div class="gem-red">
+                                    <div class="coin-image"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="step hidden">
+                            <h3>Build your wealth</h3>
+                            <div class="step-rule">
+                                <div class="card-lvl-1">
+                                    <div class="card-header">
+                                        <div class="pp"></div>
+                                        <div class="card-gem">
+                                            <img src="/Images/white.png" alt="" class="card-gem-image">
+                                        </div>
+                                    </div>
+                                    <div class="card-price">
+                                        <div class="price-amount">1</div>
+                                        <div class="price-amount">1</div>
+                                        <div class="price-amount">1</div>
+                                        <div class="price-amount">1</div>
+                                    </div>
+                                </div>
+                                <div class="card-lvl-2">
+                                    <div class="card-header">
+                                        <div class="pp">2</div>
+                                        <div class="card-gem">
+                                            <img src="/Images/red.png" alt="" class="card-gem-image">
+                                        </div>
+                                    </div>
+                                    <div class="card-price">
+                                        
+                                        <div class="price-amount">2</div>
+                                        <div class="price-amount">1</div>
+                                        <div class="price-amount">4</div>
+                                    </div>
+                                </div>
+                                <div class="card-lvl-3">
+                                    <div class="card-header">
+                                        <div class="pp">3</div>
+                                        <div class="card-gem">
+                                            <img src="/Images/blue.png" alt="" class="card-gem-image">
+                                        </div>
+                                    </div>
+                                    <div class="card-price">
+                                        <div class="price-amount">1</div>
+                                        <div class="price-amount">3</div>
+                                        <div class="price-amount">5</div>
+                                        <div class="price-amount">3</div>
+                                    </div>
+                                </div>
+                                <div class="card-lvl-4">
+                                    <div class="card-header">
+                                        <div class="pp"></div>
+                                        <div class="card-gem">
+                                            <img src="/Images/black.png" alt="" class="card-gem-image">
+                                        </div>
+                                    </div>
+                                    <div class="card-price">
+                                        <div class="price-amount">1</div>
+                                        <div class="price-amount">1</div>
+                                        <div class="price-amount">1</div>
+                                        <div class="price-amount">1</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="step hidden">
+                            <h3>Attract rich nobles</h3>
+                            <div class="step-rule">
+                                <div class="first-noble">
+                                    <div class="noble-price">
+                                        <div class="pp">3</div>
+                                        <div class="noble-price-amount">3</div>
+                                        <div class="noble-price-amount">3</div>
+                                        <div class="noble-price-amount">3</div>
+                                    </div>
+                                </div>
+                                <div class="second-noble">
+                                    <div class="noble-price">
+                                        <div class="pp">3</div>
+                                        <div class="noble-price-amount"></div>
+                                        <div class="noble-price-amount">4</div>
+                                        <div class="noble-price-amount">4</div>
+                                    </div>
+                                </div>
+                                <div class="third-noble">
+                                    <div class="noble-price">
+                                        <div class="pp">3</div>
+                                        <div class="noble-price-amount">3</div>
+                                        <div class="noble-price-amount">3</div>
+                                        <div class="noble-price-amount">3</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="step hidden">
+                            <h3>Achieve the highest prestige points</h3>
+                            <div class="step-rule placements">
+                                <div class="first-place">
+                                    <i class="fa-solid fa-crown"></i>
+                                    <br>1st
+                                </div>
+                                <div class="second-place">2nd</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="navigation" id="nav-right">
+                            <i class="fa-solid fa-caret-right"></i>
+                    </div>
+                </div>
             </section>
             <section class="footer-item">
                 <h2>Citations</h2>
