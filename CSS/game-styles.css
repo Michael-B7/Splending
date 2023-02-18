@@ -9,13 +9,14 @@ body {
     margin: 0;
     background-color: #000000;
     background-image: url("https://www.transparenttextures.com/patterns/45-degree-fabric-light.png"); 
+    overflow-x: hidden;
 }
 
 .gamer-zone {
     width: 100vw;
     height: 100vh;
     display: grid;
-    grid-template-rows: 1fr 2fr ;
+    grid-template-rows: 1fr 4fr ;
     grid-template-columns: 1fr 2fr;
     grid-template-areas: 
     "title reserved reserved gems"
@@ -35,6 +36,12 @@ body {
 
 .title {
     grid-area: title;
+    display: flex;
+    align-items: center;
+}
+
+.title img {
+    width: 100%;
 }
 
 .gems {
@@ -43,7 +50,7 @@ body {
     flex-direction: column;
     justify-content: center;
     padding: 16px;
-    width: 150px;
+    width: 125px;
 }
 
 .board {
