@@ -35,6 +35,12 @@ body {
 
 .title {
     grid-area: title;
+    display: flex;
+    align-items: center;
+}
+
+.title img {
+    width: 100%;
 }
 
 .gems {
@@ -43,7 +49,7 @@ body {
     flex-direction: column;
     justify-content: center;
     padding: 16px;
-    width: 150px;
+    width: 125px;
 }
 
 .board {
@@ -137,11 +143,6 @@ body {
     text-align: center;
 }
 
-.card {
-    display: flex;
-    flex-direction: column;
-}
-
 .card-header {
     display: flex;
     justify-content: space-around;
@@ -173,6 +174,11 @@ body {
     aspect-ratio: 1;
 
     margin: 16px 0;
+    cursor: pointer;
+}
+
+.gems:hover :not(:hover) {
+    opacity: .5;
 }
 
 .players {
@@ -247,6 +253,33 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.noble-balance {
+    justify-self: center;
+}
+
+.card {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    position: relative;
+}
+
+.card-options {
+    display: none;
+}
+
+.card-content {
+    display: block;
+}
+
+.card:hover .card-content {
+    opacity: .25;
+}
+
+.card:hover .card-options {
+    display: block;
 }
 
 .red {
