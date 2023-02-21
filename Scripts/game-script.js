@@ -115,3 +115,7 @@ class Noble{
         this.image = image;
     }
 }
+
+function calcPoints(level){
+    let possPoints = {1:[0,0,0,1], 2:[]}
+}
