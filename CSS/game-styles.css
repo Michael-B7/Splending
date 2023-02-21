@@ -179,10 +179,6 @@ body {
     cursor: pointer;
 }
 
-.gems:hover :not(:hover) {
-    opacity: .5;
-}
-
 .players {
     display: grid;
     gap: 8px;
@@ -206,10 +202,6 @@ body {
     "gems gems"
     "prestige noble";
 }
-
-/* .player-1 {
-    box-shadow: 0 0 10px 2.5px #EDD534;
-} */
 
 .reserved-cards {
     display: grid;
@@ -253,7 +245,6 @@ body {
 .player-card {
     border: 1px solid white;
     border-radius: 0 0 8px 8px;
-    
 }
 
 .player-gems [class^="player-"] {
