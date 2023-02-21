@@ -13,8 +13,9 @@
     <header class="title">
       <img src="/Images/title.png" alt="">
     </header>
+
+    <!-- reserved card, top of page -->
     <div class="reserved-cards">
-      
         <h4 class="player-name">Player 1</h4>      
         <h4 class="player-name">Player 2</h4>
         <h4 class="player-name">Player 3</h4>
@@ -24,8 +25,9 @@
         <div class="empty-card"></div>
         <div class="empty-card"></div>
         <div class="empty-card"></div>
-        
     </div>
+
+    <!-- players column, left side of page -->
     <div class="players">
       <div class="player">
         <h4 class="player-name">Player 1</h4>
@@ -44,40 +46,43 @@
         <span class="player-balance">Prestige Points:</span>
         <span class="noble-balance">Nobles:</span>
       </div>
+
       <div class="player">
         <h4 class="player-name">Player 2</h4>
         <div class="player-gems">
-          <div class="player-gem red">1</div>
-          <div class="player-gem blue">2</div>
-          <div class="player-gem green">3</div>
-          <div class="player-gem white">4</div>
-          <div class="player-gem black">5</div>
-          <div class="player-card red">6</div>
-          <div class="player-card blue">7</div>
-          <div class="player-card green">8</div>
-          <div class="player-card white">9</div>
+          <div class="player-gem red">0</div>
+          <div class="player-gem blue">0</div>
+          <div class="player-gem green">0</div>
+          <div class="player-gem white">0</div>
+          <div class="player-gem black">0</div>
+          <div class="player-card red">0</div>
+          <div class="player-card blue">0</div>
+          <div class="player-card green">0</div>
+          <div class="player-card white">0</div>
           <div class="player-card black">0</div>
         </div>
         <span class="player-balance">Prestige Points:</span>
         <span class="noble-balance">Nobles:</span>
       </div>
+
       <div class="player">
         <h4 class="player-name">Player 3</h4>
         <div class="player-gems">
-          <div class="player-gem red">1</div>
-          <div class="player-gem blue">2</div>
-          <div class="player-gem green">3</div>
-          <div class="player-gem white">4</div>
-          <div class="player-gem black">5</div>
-          <div class="player-card red">6</div>
-          <div class="player-card blue">7</div>
-          <div class="player-card green">8</div>
-          <div class="player-card white">9</div>
-          <div class="player-card black">0</div>
+          <div class="player-gem red"></div>
+          <div class="player-gem blue"></div>
+          <div class="player-gem green"></div>
+          <div class="player-gem white"></div>
+          <div class="player-gem black"></div>
+          <div class="player-card red"></div>
+          <div class="player-card blue"></div>
+          <div class="player-card green"></div>
+          <div class="player-card white"></div>
+          <div class="player-card black"></div>
         </div>
         <span class="player-balance">Prestige Points:</span>
         <span class="noble-balance">Nobles:</span>
       </div>
+
       <div class="player">
         <h4 class="player-name">Player 4</h4>
         <div class="player-gems">
@@ -96,54 +101,133 @@
         <span class="noble-balance">Nobles:</span>
       </div>
     </div>
+
+    <!-- board, center of page -->
     <div class="board">
       <div class="card-deck">
           <div class="face-down level-3 ">Splendor</div>
           <div class="face-down level-3">Splendor</div>
           <div class="face-down level-3">Splendor</div>
       </div>
-      <div class="card level-3"></div>
-      <div class="card level-3"></div>
-      <div class="card level-3"></div>
-      <div class="card level-3"><button id="test">test</button></div>
-      <div class="noble"></div>
-      <div class="card-deck">
-          <div class="face-down level-2">Splendor</div>
-          <div class="face-down level-2">Splendor</div>
-          <div class="face-down level-2">Splendor</div>
+      <div class="card level-3">
+        <div class="card-options">
+          <div class="buy-button">Purchase</div>
+          <div class="reserve-button">Reserve</div>
         </div>
-      <div class="card level-2"></div>
-      <div class="card level-2"></div>
-      <div class="card level-2"></div>
-      <div class="card level-2"></div>
-      <div class="noble"></div>
-      <div class="card-deck">
-          <div class="face-down level-1">Splendor</div>
-          <div class="face-down level-1">Splendor</div>
-          <div class="face-down level-1">Splendor</div>
       </div>
-      <div class="card level-1"></div>
-      <div class="card level-1"></div>
-      <div class="card level-1"></div>
-      <div class="card level-1">
-          <div class="card-header">
-              <span class="card-points">2</span>
-              <span class="card-worth">ruby</span>
-            </div>
-            <div class="card-body">
-              <div class="card-costs">
-                <span class="diamond-cost">3</span>
-                <span class="emerald-cost">1</span>
-                <span class="sapphire-cost">1</span>
-              </div>
-            </div>
+      <div class="card level-3">
+        <div class="card-options">
+          <div class="buy-button">Purchase</div>
+          <div class="reserve-button">Reserve</div>
+        </div>
+      </div>
+      <div class="card level-3">
+        <div class="card-options">
+          <div class="buy-button">Purchase</div>
+          <div class="reserve-button">Reserve</div>
+        </div>
+      </div>
+      <div class="card level-3">
+        <button id="test">test</button>
+        <div class="card-options">
+          <div class="buy-button">Purchase</div>
+          <div class="reserve-button">Reserve</div>
+        </div>
       </div>
       <div class="card-deck noble-deck">
         <div class="noble noble-stack">Splendor</div>
         <div class="noble noble-stack">Splendor</div>
         <div class="noble noble-stack">Splendor</div>
       </div>
+      <div class="card-deck">
+          <div class="face-down level-2">Splendor</div>
+          <div class="face-down level-2">Splendor</div>
+          <div class="face-down level-2">Splendor</div>
+        </div>
+      <div class="card level-2">
+        <div class="card-options">
+          <div class="buy-button">Purchase</div>
+          <div class="reserve-button">Reserve</div>
+        </div>
+      </div>
+      <div class="card level-2">
+        <div class="card-options">
+          <div class="buy-button">Purchase</div>
+          <div class="reserve-button">Reserve</div>
+        </div>
+      </div>
+      <div class="card level-2">
+        <div class="card-options">
+          <div class="buy-button">Purchase</div>
+          <div class="reserve-button">Reserve</div>
+        </div>
+        <div class="card-content">
+          <div class="card-header">
+            <span class="card-points">2</span>
+            <span class="card-worth">diamond</span>
+          </div>
+          <div class="card-body">
+            <div class="card-costs">
+              <span class="diamond-cost">3</span>
+              <span class="emerald-cost">4</span>
+              <span class="sapphire-cost">2</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card level-2">
+        <div class="card-options">
+          <div class="buy-button">Purchase</div>
+          <div class="reserve-button">Reserve</div>
+        </div>
+      </div>
+      <div class="noble"></div>
+      <div class="card-deck">
+          <div class="face-down level-1">Splendor</div>
+          <div class="face-down level-1">Splendor</div>
+          <div class="face-down level-1">Splendor</div>
+      </div>
+      <div class="card level-1">
+        <div class="card-options">
+          <div class="buy-button">Purchase</div>
+          <div class="reserve-button">Reserve</div>
+        </div>
+      </div>
+      <div class="card level-1">
+        <div class="card-options">
+          <div class="buy-button">Purchase</div>
+          <div class="reserve-button">Reserve</div>
+        </div>
+      </div>
+      <div class="card level-1">
+        <div class="card-options">
+          <div class="buy-button">Purchase</div>
+          <div class="reserve-button">Reserve</div>
+        </div>
+      </div>
+      <div class="card level-1">
+        <div class="card-options">
+          <div class="buy-button">Purchase</div>
+          <div class="reserve-button">Reserve</div>
+        </div>
+        <div class="card-content">
+          <div class="card-header">
+            <span class="card-points">2</span>
+            <span class="card-worth">ruby</span>
+          </div>
+          <div class="card-body">
+            <div class="card-costs">
+              <span class="diamond-cost">3</span>
+              <span class="emerald-cost">1</span>
+              <span class="sapphire-cost">1</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="noble"></div>
     </div>
+
+    <!-- gem column, right side of page -->
     <div class="gems">
       <div class="gem red">8</div>
       <div class="gem blue">8</div>

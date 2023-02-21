@@ -8,9 +8,9 @@
 
 body {
     margin: 0;
-    background-color: #000000;
-    background-image: url("https://www.transparenttextures.com/patterns/45-degree-fabric-light.png"); 
-    overflow-x: hidden;
+    background-color: #242830;
+    /* background-image: url("https://www.transparenttextures.com/patterns/45-degree-fabric-dark.png"); */
+    background-image: url("https://www.transparenttextures.com/patterns/always-grey.png");
 }
 
 .gamer-zone {
@@ -27,10 +27,10 @@ body {
 }
 
 .reserved-cards,
-.players,
 .gems,
 .board {
     background: #5E687D;
+    /* background-image: url("https://www.transparenttextures.com/patterns/cartographer.png"); */
     box-shadow: 2px 2px 4px rgba(255, 255, 255, 0.25);
     border-radius: 20px;
 }
@@ -64,8 +64,10 @@ body {
 }
 
 .card, 
-.face-down {
+.face-down,
+.noble {
     border-radius: 10px;
+    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.1);
 }
 
 .card-deck {
@@ -76,7 +78,7 @@ body {
 .card-deck .face-down,
 .card-deck .noble-stack { 
     position: absolute;
-    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.1);
+    /* box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.1); */
     transform-origin: bottom;
     display: flex;
     justify-content: center;
@@ -95,28 +97,28 @@ body {
 }
 
 .card-deck :nth-child(1) {
-    transform: rotate(-1.25deg);
+    transform: rotate(-1.65deg);
 }
 
 .card-deck :nth-child(2) {
-    transform: rotate(-2.5deg);
+    transform: rotate(-3.35deg);
 }
 
 .card-deck :nth-child(3) {
-    transform: rotate(-3.75deg);
+    transform: rotate(-5deg);
 }
 
 
 .noble-deck :nth-child(1) {
-    transform: rotate(1.25deg);
+    transform: rotate(1.65deg);
 }
 
 .noble-deck :nth-child(2) {
-    transform: rotate(2.5deg);
+    transform: rotate(3.35deg);
 }
 
 .noble-deck :nth-child(3) {
-    transform: rotate(3.75deg);
+    transform: rotate(5deg);
 }
 
 .level-3 {
@@ -135,7 +137,6 @@ body {
     width: 100%;
     height: 100%;
     background-color: burlywood;
-    border-radius: 10px;
     border: 4px solid brown;
     /* justify-self: end; */
 }
@@ -143,11 +144,6 @@ body {
 .face-down {
     border: 4px solid white;
     text-align: center;
-}
-
-.card {
-    display: flex;
-    flex-direction: column;
 }
 
 .card-header {
@@ -181,6 +177,11 @@ body {
     aspect-ratio: 1;
 
     margin: 16px 0;
+    cursor: pointer;
+}
+
+.gems:hover :not(:hover) {
+    opacity: .5;
 }
 
 .players {
@@ -192,9 +193,10 @@ body {
 
 .player {
     display: grid;
-    /* background-color: rgba(238, 130, 238, 0.252); */
+    background-color: #5E687D;
     border-radius: 10px;
     padding: 8px;
+    box-shadow: 2px 2px 4px rgba(255, 255, 255, 0.25);
 
     grid-template-columns: repeat(2, 1fr);
     grid-template-rows: repeat(5, 1fr);
@@ -205,6 +207,10 @@ body {
     "gems gems"
     "prestige noble";
 }
+
+/* .player-1 {
+    box-shadow: 0 0 10px 2.5px #EDD534;
+} */
 
 .reserved-cards {
     display: grid;
@@ -255,6 +261,44 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.noble-balance {
+    justify-self: center;
+}
+
+.card {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    position: relative;
+}
+
+.card-options {
+    display: none;
+    position: absolute;    
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 2;
+}
+
+.card-options > div {
+    color: #EDD534;
+    cursor: pointer;
+    margin: 8px 0;
+}
+
+.card-content {
+    display: block;
+}
+
+.card:hover .card-content {
+    opacity: .5;
+}
+
+.card:hover .card-options {
+    display: block;
 }
 
 .red {
