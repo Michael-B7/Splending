@@ -1,14 +1,6 @@
-/* background-color: #703400;
-background-image: url("https://www.transparenttextures.com/patterns/45-degree-fabric-light.png"); */
-/* This is mostly intended for prototyping; please download the pattern and re-host for production environments. Thank you! */
-
-
-
-
-
-
 
 @import url('https://fonts.googleapis.com/css2?family=El+Messiri&display=swap');
+
 * {
     box-sizing: border-box;
     font-family: 'El Messiri', sans-serif;
@@ -16,66 +8,115 @@ background-image: url("https://www.transparenttextures.com/patterns/45-degree-fa
 
 body {
     margin: 0;
-    background-color: #242830;
+    background-color: #000000;
+    background-image: url("https://www.transparenttextures.com/patterns/45-degree-fabric-light.png"); 
+    overflow-x: hidden;
 }
 
-article {
+.gamer-zone {
     width: 100vw;
     height: 100vh;
     display: grid;
-    gap: 8px;
-    grid-template-rows: 1fr 2fr 1fr;
-    grid-template-columns: 1fr 2fr 1fr;
+    grid-template-rows: 1fr 4fr ;
+    grid-template-columns: 1fr 2fr;
+    grid-template-areas: 
+    "title reserved reserved gems"
+    "player board board gems";
+    gap: 32px;
+    padding: 32px;
 }
 
-.player-side {
-    background-color: pink;
+.reserved-cards,
+.players,
+.gems,
+.board {
+    background: #5E687D;
+    box-shadow: 2px 2px 4px rgba(255, 255, 255, 0.25);
+    border-radius: 20px;
 }
 
-.center {
-    background-color: rgba(0, 0, 255, 0);
+.title {
+    grid-area: title;
+    display: flex;
+    align-items: center;
+}
+
+.title img {
+    width: 100%;
+}
+
+.gems {
+    grid-area: gems;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 16px;
+    width: 125px;
+}
+
+.board {
+    grid-area: board;
     display: grid;
     padding: 16px;
     gap: 16px;
-    grid-template-rows: auto;
-    grid-template-columns: repeat(5, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    grid-template-columns: repeat(6, 1fr);
 }
 
 .card, 
 .face-down {
-    background-color: yellow;
-    aspect-ratio: 2/3;
-    width: 100%;
     border-radius: 10px;
 }
 
 .card-deck {
     position: relative;
     width: 100%;
-    aspect-ratio: 2/3;
-    /* margin: 50px auto; */
-    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.1);
 }
 
-.card-deck .face-down {
+.card-deck .face-down,
+.card-deck .noble-stack { 
     position: absolute;
     box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.1);
     transform-origin: bottom;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #EDD534;
+}
+
+.card-deck .face-down {
+    height: 100%;
+    width: 100%;
+}
+
+.card-deck .noble-stack {
+    background-color: brown;
+    border: 4px solid burlywood;
 }
 
 .card-deck :nth-child(1) {
-    transform: rotate(-2.5deg);
-    z-index: -1;
+    transform: rotate(-1.25deg);
 }
 
 .card-deck :nth-child(2) {
-    transform: rotate(-5deg);
-    z-index: -2;
+    transform: rotate(-2.5deg);
 }
 
 .card-deck :nth-child(3) {
-    transform: rotate(-7.5deg);
-    z-index: -3;
+    transform: rotate(-3.75deg);
+}
+
+
+.noble-deck :nth-child(1) {
+    transform: rotate(1.25deg);
+}
+
+.noble-deck :nth-child(2) {
+    transform: rotate(2.5deg);
+}
+
+.noble-deck :nth-child(3) {
+    transform: rotate(3.75deg);
 }
 
 .level-3 {
@@ -92,15 +133,16 @@ article {
 
 .noble {
     width: 100%;
-    aspect-ratio: 1;
-    background-color: antiquewhite;
+    height: 100%;
+    background-color: burlywood;
     border-radius: 10px;
+    border: 4px solid brown;
+    /* justify-self: end; */
 }
 
 .face-down {
     border: 4px solid white;
     text-align: center;
-    color: #EDD534;
 }
 
 .card {
@@ -116,33 +158,125 @@ article {
     border-radius: 10px 10px 0 0;
 }
 
+.card-costs {
+    display: flex;
+    flex-direction: column;
+    padding: 8px;
+}
+
 .gem {
-    background-color: blue; 
-    width: 50%;
-    aspect-ratio: 1;
+    color: white;
+    border: 4px solid white;
     border-radius: 50%;
+    width: 100%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    font-size: 32px;
+    text-shadow: 0 0 10px black;
+
+    align-self: center;
+    aspect-ratio: 1;
+
+    margin: 16px 0;
 }
 
-#player-one {
-    background-color: red;
+.players {
+    display: grid;
+    gap: 8px;
+    color: white;
+    grid-area: player;
 }
 
-#player-two {
-    background-color: green;
+.player {
+    display: grid;
+    /* background-color: rgba(238, 130, 238, 0.252); */
+    border-radius: 10px;
+    padding: 8px;
+
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(5, 1fr);
+    grid-template-areas:
+    "player player"
+    "gems gems"
+    "gems gems"
+    "gems gems"
+    "prestige noble";
 }
 
-#player-three {
-    background-color: yellow;
+.reserved-cards {
+    display: grid;
+    padding: 16px;
+    column-gap: 16px;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: 1fr 8fr;
+    grid-area: reserved;
 }
 
-#player-four {
-    background-color: purple;
+.empty-card {
+    border-radius: 10px;
+    border: 4px dashed white;
+    color: white;
+    text-align: center;
 }
 
-  
-html.rotate {
-    transform: rotate(90deg);
-    width: 100vh;
-    height: 100vw;
+.player-name {
+    color: white;
+    text-align: center;
+    margin: 0;
 }
 
+.player .player-name {
+    grid-area: player;
+}
+
+.player-gems {
+    grid-area: gems;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-template-rows: 1fr 1fr;
+    column-gap: 8px;
+}
+
+.player-gem {
+    border: 1px solid white;
+    border-radius: 8px 8px 0 0 ;
+}
+
+.player-card {
+    border: 1px solid white;
+    border-radius: 0 0 8px 8px;
+    
+}
+
+.player-gems [class^="player-"] {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.red {
+    background: #B62D2E;
+}
+
+.blue {
+    background-color: #1557A3;
+}
+
+.green {
+    background-color: #21714A;
+}
+
+.white {
+    background-color: #BCBCBC;
+}
+
+.black {
+    background-color: #2C211D;
+}
+
+.gold {
+    background-color: #B8B030;
+}

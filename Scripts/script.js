@@ -26,22 +26,3 @@ document.getElementById("nav-right").addEventListener("click", function() {
 document.getElementById("nav-left").addEventListener("click", function() {
     tutorial(-1);
 });
-
-
-// const container = document.querySelector('.gamer-zone');
-// const item1 = document.querySelector('#player-one');
-// const item2 = document.querySelector('#player-two');
-
-// const item1Parent = item1.parentNode;
-// const item2Parent = item2.parentNode;
-
-// const item1Index = Array.from(item1Parent.children).indexOf(item1);
-// const item2Index = Array.from(item2Parent.children).indexOf(item2);
-// console.log(item1Parent)
-// console.log(item2Index)
-
-// console.log(document.getElementById("player-one").previousElementSibling.previousElementSibling)
-// document.getElementById("test").addEventListener("click", function() {
-//     item1Parent.insertBefore(item2, container.children[item1Index]);
-//     item2Parent.insertBefore(item1, container.children[item2Index]);
-// });
