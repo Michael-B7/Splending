@@ -61,11 +61,57 @@ function reserveCard(cardColor) {
 }
 
 document.getElementById("test").addEventListener("click", function() {
-    let curPlaySpace = reserveSpace[currentPlayer - 1]
-    curPlaySpace.style.backgroundColor = "rgba(0, 0, 0, 0)";
-    curPlaySpace.style.border = "4px dashed white"
-    console.log(curPlaySpace.style.border)
-    console.log("test")
-    nextTurn()
+    // let curPlaySpace = reserveSpace[currentPlayer - 1]
+    // curPlaySpace.style.backgroundColor = "rgba(0, 0, 0, 0)";
+    // curPlaySpace.style.border = "4px dashed white"
+    // console.log(curPlaySpace.style.border)
+    // console.log("test")
+    // nextTurn()
+    // console.log(p1.gems);
 });
 
+// player class
+class Player {
+    // gems: object of player gem count per color
+    // cards: object of player card count per color
+    // pp: num of player prestige points
+    // np: num of player noble points
+    // reserved: card object of reserved card
+    // gold: boolean of whether player has gold or not
+    constructor() {
+        this.gems = {'red':0, 'blue':0, 'green':0, 'white':0, 'black':0};
+        this.cards = {'red':0, 'blue':0, 'green':0, 'white':0, 'black':0};
+        this.pp = 0;
+        this.np = 0;
+        this.reserved = null;
+        this.gold = false;
+    }
+}
+
+// card class
+class Card {
+    // color: string of the gem provided by card
+    // image: string of url of background image of card
+    // points: num of point value of card
+    // cost: object of how many gems and color of gems card costs
+    // level: num of difficulty to acquire
+    constructor(color, image, points, cost, level){
+        this.color = color;
+        this.image = image;
+        this.points = points;
+        this.cost = cost;
+        this.level = level;
+    }
+}
+
+// noble class
+class Noble{
+    // cost: object of color of card and numebr of that color of card required
+    // np: num of point value assigned to noble
+    // image: string of url of background image of noble
+    constructor(cost, np, image){
+        this.cost = cost;
+        this.np = np;
+        this.image = image;
+    }
+}
