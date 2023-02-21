@@ -278,6 +278,10 @@ body {
     color: #EDD534;
     cursor: pointer;
     margin: 8px 0;
+    padding: 8px;
+    background-color: #242830;
+    border-radius: 10px;
+
 }
 
 .card-content {

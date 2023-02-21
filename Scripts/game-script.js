@@ -70,6 +70,23 @@ document.getElementById("test").addEventListener("click", function() {
     // console.log(p1.gems);
 });
 
+const innerCard =
+`<div class="card-content">
+<div class="card-header">
+  <div class="card-points"></div>
+  <div class="card-worth"></div>
+</div>
+<div class="card-body">
+  <div class="card-costs">
+    <div class="red-cost"></div>
+    <div class="blue-cost"></div>
+    <div class="green-cost"></div>
+    <div class="white-cost"></div>
+    <div class="black-cost"></div>
+  </div>
+</div>
+</div>`
+
 // player class
 class Player {
     // gems: object of player gem count per color
