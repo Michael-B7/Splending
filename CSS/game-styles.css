@@ -1,140 +1,148 @@
-body{
-    /* background-color: black; */
-    width: 100vw;
-    height: 100vh;
-    margin: 0;
-}
+/* background-color: #703400;
+background-image: url("https://www.transparenttextures.com/patterns/45-degree-fabric-light.png"); */
+/* This is mostly intended for prototyping; please download the pattern and re-host for production environments. Thank you! */
 
-main{
-    display: flex;
-    flex-wrap: wrap;
-    width: 100vw;
-    height: 100vh;
-}
 
-*{
+
+
+
+
+
+@import url('https://fonts.googleapis.com/css2?family=El+Messiri&display=swap');
+* {
     box-sizing: border-box;
+    font-family: 'El Messiri', sans-serif;
 }
 
-[class*=corner]{
-    background-color: aqua;
+body {
+    margin: 0;
+    background-color: #242830;
 }
 
-[class*=player]{
-    background-color: blueviolet;
+article {
+    width: 100vw;
+    height: 100vh;
+    display: grid;
+    gap: 8px;
+    grid-template-rows: 1fr 2fr 1fr;
+    grid-template-columns: 1fr 2fr 1fr;
 }
 
-.bourd{
-    background-color: black;
+.player-side {
+    background-color: pink;
 }
 
-/* colors */
-.gems, .cards{
-    border: 1px solid blueviolet;
+.center {
+    background-color: rgba(0, 0, 255, 0);
+    display: grid;
+    padding: 16px;
+    gap: 16px;
+    grid-template-rows: auto;
+    grid-template-columns: repeat(5, 1fr);
 }
-.black{
-    background-color: black;
+
+.card, 
+.face-down {
+    background-color: yellow;
+    aspect-ratio: 2/3;
+    width: 100%;
+    border-radius: 10px;
 }
-.red{
+
+.card-deck {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 2/3;
+    /* margin: 50px auto; */
+    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+.card-deck .face-down {
+    position: absolute;
+    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.1);
+    transform-origin: bottom;
+}
+
+.card-deck :nth-child(1) {
+    transform: rotate(-2.5deg);
+    z-index: -1;
+}
+
+.card-deck :nth-child(2) {
+    transform: rotate(-5deg);
+    z-index: -2;
+}
+
+.card-deck :nth-child(3) {
+    transform: rotate(-7.5deg);
+    z-index: -3;
+}
+
+.level-3 {
+    background-color: rgb(62, 49, 255);
+}
+
+.level-2 {
+    background-color: rgb(156, 134, 7);
+}
+
+.level-1 {
+    background-color: rgb(3, 117, 28);
+}
+
+.noble {
+    width: 100%;
+    aspect-ratio: 1;
+    background-color: antiquewhite;
+    border-radius: 10px;
+}
+
+.face-down {
+    border: 4px solid white;
+    text-align: center;
+    color: #EDD534;
+}
+
+.card {
+    display: flex;
+    flex-direction: column;
+}
+
+.card-header {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    background-color: rgba(255, 255, 255, .35);
+    border-radius: 10px 10px 0 0;
+}
+
+.gem {
+    background-color: blue; 
+    width: 50%;
+    aspect-ratio: 1;
+    border-radius: 50%;
+}
+
+#player-one {
     background-color: red;
 }
-.blue{
-    background-color: blue;
-}
-.green{
+
+#player-two {
     background-color: green;
 }
-.white{
-    background-color: white;
-}
-.gold{
-    background-color: gold;
+
+#player-three {
+    background-color: yellow;
 }
 
-/* general setup */
-main > *:not([class*=corner]){
-    display: flex;
-    flex-wrap: wrap;
+#player-four {
+    background-color: purple;
 }
 
-.tl-corner{
-    width: 17%;
-    height: 17%;
+  
+html.rotate {
+    transform: rotate(90deg);
+    width: 100vh;
+    height: 100vw;
 }
 
-.top-player{
-    width: 66%;
-    height: 17%;
-    display: flex;
-    justify-content: center;
-}
-
-.tr-corner{
-    width: 17%;
-    height: 17%;
-}
-
-.left-player{
-    width: 17%;
-    height: 66%;
-    display: flex;
-    flex-direction: column;
-    align-content: flex-end;
-    justify-content: center;
-}
-
-.bourd{
-    width: 66%;
-    height: 66%;
-}
-
-.right-player{
-    width: 17%;
-    height: 66%;
-}
-
-.bl-corner{
-    width: 17%;
-    height: 17%;
-}
-
-.bottom-player{
-    width: 66%;
-    height: 17%;
-}
-
-.br-corner{
-    width: 17%;
-    height: 17%;
-}
-
-/* top-player setup */
-
-.top-player .cards, .top-player .gems{
-    width: 66%;
-    display: flex;
-    flex-wrap: wrap;
-    height: 50%;
-    justify-content: center;
-}
-
-.top-player .cards > *, .top-player .gems > *{
-    height: 100%;
-    width: calc(100%/6);
-}
-
-/* left-player setup */
-
-.left-player .cards, .left-player .gems{
-    height: 90%;
-    width: 33%;
-    display: flex;
-    flex-direction: column;
-    flex-wrap: wrap;
-    justify-content: center;
-}
-
-.left-player .cards > *, .left-player .gems > *{
-    height: calc(100%/6);
-    width: 100%;
-}

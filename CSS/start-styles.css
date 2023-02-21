@@ -1,0 +1,570 @@
+@import url('https://fonts.googleapis.com/css2?family=El+Messiri&display=swap');
+
+* {
+    box-sizing: border-box;
+    font-family: 'El Messiri', sans-serif;
+}
+
+body {
+    margin: 0;
+    background-color: #242830;
+}
+
+.index {
+    height: 100vh;
+    display: grid;
+    align-items: center;
+}
+
+.top-frame {
+    position: absolute;
+    width: 100%;
+    height: 24px;
+    background: url(/Images/top.png);
+}
+
+.right-frame {
+    position: absolute;
+    width: 18px;
+    height: 100%;
+    right: 0;
+    background: url(/Images/rightwing.png);
+}
+
+.bottom-frame {
+    position: absolute;
+    width: 100%;
+    height: 28px;
+    bottom: 0;
+    background: url(/Images/bot.png);
+}
+
+.left-frame {
+    position: absolute;
+    width: 19px;
+    height: 100%;
+    background: url(/Images/leftwing.png);
+}
+
+.tr-corner {
+    position: absolute;
+    height: 149px;
+    width: 150px;
+    background: url(/Images/topright.png);
+    z-index: 1;
+    right: 0;
+}
+
+.tl-corner {
+    position: absolute;
+    height: 149px;
+    width: 150px;
+    background: url(/Images/topleft.png);
+    z-index: 1;
+}
+
+.br-corner {
+    position: absolute;
+    height: 149px;
+    width: 150px;
+    background: url(/Images/bottomright.png);
+    z-index: 1;
+    bottom: 0;
+    right: 0;
+}
+
+.bl-corner {
+    position: absolute;
+    height: 149px;
+    width: 150px;
+    background: url(/Images/bottomleft.png);
+    z-index: 1;
+    bottom: 0;
+}
+
+header {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+}
+
+.title {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-self: flex-end;
+}
+
+.play {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    margin-bottom: 5%;
+}
+
+.button-box {
+    background-color: #A5B1C5;
+    height: 150px;
+    /* width: clamp(200px, 35%, 800px); */
+    padding: 16px;
+    margin: 16px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0px 4px 4px rgba(255, 255, 255, 0.25);
+    border-radius: 16px;
+}
+
+.button-box button {
+    padding: 16px;
+    margin: 8px;
+    width: 200px;
+    background-color: #3A4263;
+    color: #EDD534;
+    font-size: 2rem;
+    border-radius: 16px;
+    border: 4px solid #242830;
+
+    transition: .3s ease-in;
+}
+
+.button-box button:hover {
+    background-color: #242830;
+    border-color: #3A4263 ;
+}
+
+footer {
+    display: flex;
+    width: 100%;
+    height: 25vh;
+    align-self: end;
+    margin-bottom: 28px;
+}
+
+.footer-item {
+    background-color: #353C48;
+}
+
+.footer-item:nth-child(2) {
+    width: 60%;
+    border-right: 4px solid #242830;
+    border-left: 4px solid #242830;
+}
+
+.footer-item:not(:nth-child(2)) {
+    width: 20%;
+}
+
+h2 {
+    text-align: center;
+    color: #EDD534;
+    margin: 0;
+}
+
+/* How to Play footer */
+#tutorial {
+    width: 100%;
+    height: 50%;
+    display: flex;
+    justify-content: center;
+} 
+
+.navigation {
+    height: 100%;
+    display: flex;
+    width: 25px;
+    justify-content: center;
+    align-items: center;
+}
+
+.steps {
+    width: 80%;
+    height: 100%;
+}
+
+.step {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    align-items: center;
+    height: 100%;
+}
+
+.step-rule {
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.hidden {
+    display: none;
+}
+
+[class*="caret"] {
+    font-size: 64px;
+    color: #EDD534;
+    cursor:pointer;
+}
+
+[class*="caret"]:hover {
+    color: #bda927;
+}
+
+.step a:hover {
+    border-color: rgb(27, 31, 46);
+    background-color: #edd434a4;
+    color: rgb(0, 0, 0);
+}
+
+/* rule book page */
+
+.rule-hero {
+    height: 95vh;
+    background: url(/Images/church-ceiling.jpg);
+    background-position: top;
+    background-size:cover;
+    align-items: center;
+}
+
+.rule-hero h1,
+.step a {
+    font-size: 4rem;
+    padding: 32px;
+    text-align: center;
+
+    border-radius: 16px;
+    border: 4px solid #EDD534;
+    color: #EDD534;
+    background-color: rgba(58, 66, 99, .75);
+    text-shadow: 2px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+.step a {
+    text-decoration: none;
+    font-size: 2rem;
+    transition: .4s ease-in;
+    margin-top: 24px;
+}
+
+.rules {
+    margin: 0 10%;
+}
+
+.rule {
+    color: white;
+    display: grid;
+    column-gap: 10%;
+    row-gap: 16px;
+
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas: 
+    "header header"
+    "single single";
+
+    /* border: 1px solid red; */
+}
+
+.rule h2 {
+    padding: 5vh 0 0 0;
+    font-size: 2rem;
+
+    grid-area: header;
+}
+
+.rule h2 ~ p {
+    grid-area: single;
+}
+
+.stretch-width {
+    grid-area: single;
+}
+
+h3 {
+    text-align: center;
+    color: #AAC2FF;
+    grid-area: header;
+    font-size: 1.4rem;
+    margin: 0;
+}
+
+.gems {
+    display: grid;
+    grid-template-areas: 
+    "header header header header";
+    row-gap: 16px;
+}
+
+/* card styling */
+[class*="card-lvl"] {
+    height: 120px;
+    aspect-ratio: 2/3;
+    background-color: rgb(6, 112, 3);
+    display: flex;
+    flex-wrap: wrap;
+    border-radius: 8px;
+    background-size: cover;
+}
+
+.card-header {
+    width: 100%;
+    height: 20%;
+    background-color: rgba(255, 255, 255, .5);
+    border-radius: 8px 8px 0 0;
+    
+    display: flex;
+    justify-content: space-between;
+}
+
+.pp {
+    color: rgb(0, 0, 0);
+    padding-left: 2px;
+    font-weight: bold;
+}
+
+.card-price {
+    width: 30%;
+    height: 80%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+}
+
+.price-amount {
+    width: 100%;
+    font-size: 13px;
+    text-align: center;
+    color: white;
+    text-shadow: 0 0 2px black;
+    border-radius: 50%;
+    border: 1px solid white;
+    margin: .5px;
+}
+
+.price-amount:nth-child(1) {
+    background-color: #1557A3;
+}
+
+.price-amount:nth-child(2) {
+    background-color: #B62D2E;
+}
+
+.price-amount:nth-child(3) {
+    background-color: #2C211D;
+}
+
+.price-amount:nth-child(4) {
+    background-color: #21714A;
+    /* color: black;
+    text-shadow: 0 0 2px #adadad; */
+    
+}
+
+.card-lvl-1 {
+    background-image: url(/Images/mountain.jpg);
+}
+
+.card-lvl-2 {
+    background-image: url(/Images/ship.jpg);
+}
+
+.card-lvl-3 {
+    background-image: url(/Images/building.jpg);
+}
+
+.card-lvl-4 {
+    background-image: url(/Images/camal.jpg);
+}
+
+.card-lvl-2 .price-amount:nth-child(1){
+    background-color: #aaaaaa;
+}
+
+.card-lvl-3 .price-amount:nth-child(1){
+    background-color: #aaaaaa;
+}
+
+.card-lvl-4 .price-amount:nth-child(3){
+    background-color: #aaaaaa;
+}
+
+.card-gem {
+    height: 100%;
+    width: 25%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.card-gem-image {
+    width: 100%;
+    aspect-ratio: 1;
+}
+
+[class$="noble"] {
+    background-color: #176DD0;
+    height: 100px;
+    width: 100px;
+    border-radius: 8px;
+    background-size: cover;
+}
+
+.noble-price {
+    height: 100%;
+    background-color: rgba(255, 255, 255, .5);
+    border-radius: 8px 0 0 8px;
+    width: 20%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.noble-price-amount {
+    width: 90%;
+    aspect-ratio: 1;
+    border-radius: 4px;
+    font-size: 12px;
+    text-align: center;
+    color: white;
+    text-shadow: 0 0 2px black;
+}
+
+[class$="noble"] .noble-price :nth-child(2) {
+    background-color: #B62D2E;
+} 
+
+[class$="noble"] .noble-price :nth-child(3) {
+    background-color: #2C211D;
+} 
+
+[class$="noble"] .noble-price :nth-child(4) {
+    background-color: #aaaaaa;
+} 
+
+.second-noble .noble-price :nth-child(2) {
+    background-color: rgba(0, 0, 0, 0);
+} 
+
+.third-noble .noble-price :nth-child(4) {
+    background-color: #21714A;
+} 
+
+.first-noble {
+    background-image: url(/Images/noble2.jpg);
+}
+
+.second-noble {
+    background-image: url(/Images/noble1.jpg);
+}
+
+.third-noble {
+    background-image: url(/Images/rich-child.jpg);
+}
+
+.placements {
+    justify-content: center;
+    align-items: flex-end;
+}
+
+.first-place {
+    width: 50px;
+    height: 100px;
+    background-color: gold;
+    text-align: center;
+}
+
+.second-place {
+    width: 50px;
+    height: 50px;
+    background-color: silver;
+    text-align: center;
+}
+
+/* gem colors */
+[class^="gem"] {
+    background-color: pink;
+    width: 65%;
+    aspect-ratio: 1/1;
+    border-radius: 50%;
+    justify-self: center;
+    align-self: center;
+    border: 4px solid white;
+    box-shadow: 2px 4px 4px rgba(0, 0, 0, 0.25);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.step-rule [class^="gem"] {
+    width: 75px;
+}
+
+.coin-image {
+    width: 100%;
+    height: 100%;
+    background-position: center;
+    background-size: cover;
+    margin: 5px;
+    border-radius: 50%;
+}
+
+[class$="green"] {
+    background-color: #21714A;
+    border-color: #27A166;
+}
+
+[class$="green"] :first-child{
+    background-image: url(/Images/green.png);
+}
+
+[class$="white"] {
+    background-color: #BCBCBC;
+    border-color: #ffffff;
+}
+
+[class$="white"] :first-child{
+    background-image: url(/Images/white.png);
+}
+
+[class$="blue"] {
+    background-color: #1557A3;
+    border-color: #176DD0;
+}
+
+[class$="blue"] :first-child{
+    background-image: url(/Images/blue.png);
+}
+
+[class$="black"] {
+    background-color: #2C211D;
+    border-color: #000000;
+}
+
+[class$="black"] :first-child{
+    background-image: url(/Images/black.png);
+}
+
+[class$="red"] {
+    background-color: #B62D2E;
+    border-color: #ED3537;
+}
+
+[class$="red"] :first-child{
+    background-image: url(/Images/red.png);
+}
+
+[class$="yellow"] {
+    background-color: #B8B030;
+    border-color: #FDF344;
+}
+
+[class$="yellow"] :first-child{
+    background-image: url(/Images/yellow.png);
+}
+
+
+.step-gems [class^="gem"]{
+    width: 10%;
+}

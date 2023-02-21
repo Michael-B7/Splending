@@ -4,108 +4,71 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="CSS/game-styles.css">
+    <title>Game</title>
+    <link rel="stylesheet" href="/CSS/game-styles.css">
+    <script src="/Scripts/script.js" defer></script>
 </head>
 <body>
-
-    <main>
-        <div class="tl-corner">
-            <!-- blank -->
-        </div>
-    
-        <div class="top-player">
-            <div class="cards">
-                <div class="gold"></div>
-                <div class="white"></div>
-                <div class="green"></div>
-                <div class="blue"></div>
-                <div class="red"></div>
-                <div class="black"></div>
+    <article class="gamer-zone">
+        <div class="corner"></div>
+        <div class="player-side" id="player-three"></div>
+        <div class="corner"></div>
+        <div class="player-side" id="player-four"></div>
+        <div class="center">
+            <div class="noble"></div>
+            <div class="noble"></div>
+            <div class="noble"></div>
+            <div class="noble"></div>
+            <div class="noble"></div>
+            <div class="card-deck">
+                <div class="face-down level-3 ">Splendor</div>
+                <div class="face-down level-3">Splendor</div>
+                <div class="face-down level-3">Splendor</div>
+              </div>
+            <div class="card level-3"></div>
+            <div class="card level-3"></div>
+            <div class="card level-3"></div>
+            <div class="card level-3"><button id="test">test</button></div>
+            <div class="card-deck">
+                <div class="face-down level-2">Splendor</div>
+                <div class="face-down level-2">Splendor</div>
+                <div class="face-down level-2">Splendor</div>
+              </div>
+            <div class="card level-2"></div>
+            <div class="card level-2"></div>
+            <div class="card level-2"></div>
+            <div class="card level-2"></div>
+            <div class="card-deck">
+                <div class="face-down level-1">Splendor</div>
+                <div class="face-down level-1">Splendor</div>
+                <div class="face-down level-1">Splendor</div>
             </div>
-            <div class="gems">
-                <div class="gold"></div>
-                <div class="white"></div>
-                <div class="green"></div>
-                <div class="blue"></div>
-                <div class="red"></div>
-                <div class="black"></div>
+            <div class="card level-1"></div>
+            <div class="card level-1"></div>
+            <div class="card level-1"></div>
+            <div class="card level-1">
+                <div class="card-header">
+                    <span class="card-points">2</span>
+                    <span class="card-worth">ruby</span>
+                  </div>
+                  <div class="card-body">
+                    <ul class="card-costs">
+                      <li><span class="diamond-cost">3</span></li>
+                      <li><span class="emerald-cost">1</span></li>
+                      <li><span class="sapphire-cost">1</span></li>
+                    </ul>
+                  </div>
             </div>
+            <div class="gem"></div>
+            <div class="gem"></div>
+            <div class="gem"></div>
+            <div class="gem"></div>
+            <div class="gem"></div>
         </div>
-    
-        <div class="tr-corner">
-            <!-- blank -->
-        </div>
-    
-        <div class="left-player">
-            <div class="cards">
-                <div class="black"></div>
-                <div class="red"></div>
-                <div class="blue"></div>
-                <div class="green"></div>
-                <div class="white"></div>
-                <div class="gold"></div>
-            </div>
-            <div class="gems">
-                <div class="black"></div>
-                <div class="red"></div>
-                <div class="blue"></div>
-                <div class="green"></div>
-                <div class="white"></div>
-                <div class="gold"></div>
-            </div>
-        </div>
-    
-        <div class="bourd">
-    
-        </div>
-    
-        <div class="right-player">
-            <div class="cards">
-                <div class="gold"></div>
-                <div class="white"></div>
-                <div class="green"></div>
-                <div class="blue"></div>
-                <div class="red"></div>
-                <div class="black"></div>
-            </div>
-            <div class="gems">
-                <div class="gold"></div>
-                <div class="white"></div>
-                <div class="green"></div>
-                <div class="blue"></div>
-                <div class="red"></div>
-                <div class="black"></div>
-            </div>
-        </div>
-    
-        <div class="bl-corner">
-            <!-- blank -->
-        </div>
-    
-        <div class="bottom-player">
-            <div class="cards">
-                <div class="gold"></div>
-                <div class="white"></div>
-                <div class="green"></div>
-                <div class="blue"></div>
-                <div class="red"></div>
-                <div class="black"></div>
-            </div>
-            <div class="gems">
-                <div class="gold"></div>
-                <div class="white"></div>
-                <div class="green"></div>
-                <div class="blue"></div>
-                <div class="red"></div>
-                <div class="black"></div>
-            </div>
-        </div>
-    
-        <div class="br-corner">
-            <!-- blank -->
-        </div>
-    </main>
-    
+        <div class="player-side" id="player-two"></div>
+        <div class="corner"></div>
+        <div class="player-side" id="player-one"></div>
+        <div class="corner"></div>
+    </article>
 </body>
 </html>
