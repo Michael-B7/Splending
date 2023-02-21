@@ -1,3 +1,4 @@
+
 @import url('https://fonts.googleapis.com/css2?family=El+Messiri&display=swap');
 
 * {
@@ -16,7 +17,7 @@ body {
     width: 100vw;
     height: 100vh;
     display: grid;
-    grid-template-rows: 1fr 2fr ;
+    grid-template-rows: 1fr 4fr ;
     grid-template-columns: 1fr 2fr;
     grid-template-areas: 
     "title reserved reserved gems"
