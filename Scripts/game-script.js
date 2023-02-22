@@ -2,7 +2,7 @@ window.addEventListener("resize", function() {
     console.log(window.outerHeight)
 })
 
-const colors = ['red', 'blue', 'green', 'white', 'black'];
+const colorList = ['red', 'blue', 'green', 'white', 'black'];
 const players = document.getElementsByClassName("player");
 
 function cardActions() {
@@ -69,6 +69,7 @@ document.getElementById("test").addEventListener("click", function() {
     // console.log("test")
     // nextTurn()
     // console.log(p1.gems);
+    select(4)
 });
 
 // player class
@@ -104,17 +105,26 @@ class Card {
         this.level = level;
         this.calcPoints = function(level){
             const possPoints = {1:[0,0,0,0,0,0,0,1], 2:[1,1,2,2,2,3], 3:[3,4,4,5]};
-            let cost;
+            let points;
             if(level == 1){
-                cost = possPoints[1][Math.floor(Math.random() * possPoints[1].length)];
+                points = possPoints[1][Math.floor(Math.random() * possPoints[1].length)];
             }else if(level == 2){
-                cost = possPoints[2][Math.floor(Math.random() * possPoints[2].length)];
+                points = possPoints[2][Math.floor(Math.random() * possPoints[2].length)];
             }else if(level == 3){
-                cost = possPoints[3][Math.floor(Math.random() * possPoints[3].length)];
+                points = possPoints[3][Math.floor(Math.random() * possPoints[3].length)];
             }
-            return cost;
+            return points;
         }
-        
+        this.calcCost = function(level, points){
+            let cost;
+            if(level == 1 && points == 0){
+                const selector = Math.floor(Math.round() * 7)
+                switch(selector){
+                    case 0:
+                        cost = {}
+                }
+            }
+        }
     }
 }
 
@@ -130,3 +140,11 @@ class Noble{
     }
 }
 
+// makes sure the cost object of a card does not have a repeated key
+function select(numTerms){
+    let colors = []
+    for(let i=0; i<numTerms; i++){
+        colors.push(colorList[Math.floor(Math.random() * colorList.length)])
+    }
+    console.log(colors)
+}
