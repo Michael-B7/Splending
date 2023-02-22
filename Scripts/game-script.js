@@ -2,6 +2,7 @@ window.addEventListener("resize", function() {
     console.log(window.outerHeight)
 })
 
+const colors = ['red', 'blue', 'green', 'white', 'black'];
 const players = document.getElementsByClassName("player");
 
 function cardActions() {
@@ -101,12 +102,25 @@ class Card {
         this.points = points;
         this.cost = cost;
         this.level = level;
+        this.calcPoints = function(level){
+            const possPoints = {1:[0,0,0,0,0,0,0,1], 2:[1,1,2,2,2,3], 3:[3,4,4,5]};
+            let cost;
+            if(level == 1){
+                cost = possPoints[1][Math.floor(Math.random() * possPoints[1].length)];
+            }else if(level == 2){
+                cost = possPoints[2][Math.floor(Math.random() * possPoints[2].length)];
+            }else if(level == 3){
+                cost = possPoints[3][Math.floor(Math.random() * possPoints[3].length)];
+            }
+            return cost;
+        }
+        
     }
 }
 
 // noble class
 class Noble{
-    // cost: object of color of card and numebr of that color of card required
+    // cost: object of color of card and number of that color of card required
     // np: num of point value assigned to noble
     // image: string of url of background image of noble
     constructor(cost, np, image){
@@ -116,6 +130,3 @@ class Noble{
     }
 }
 
-function calcPoints(level){
-    let possPoints = {1:[0,0,0,1], 2:[]}
-}
