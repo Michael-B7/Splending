@@ -69,11 +69,9 @@ document.getElementById("test").addEventListener("click", function() {
     // console.log("test")
     // nextTurn()
     // console.log(p1.gems);
-    let card = new Card;
-    card.level = 2;
-    card.points = card.calcPoints(card.level)
-    card.cost = card.calcCost(card.level, card.points)
-    console.log(card)
+    let noble = new Noble;
+    noble.cost = noble.calcCost();
+    console.log(noble);
     
 });
 
@@ -158,10 +156,20 @@ class Noble{
     // cost: object of color of card and number of that color of card required
     // np: num of point value assigned to noble
     // image: string of url of background image of noble
-    constructor(cost, np, image){
-        this.cost = cost;
-        this.np = np;
+    constructor(image){
+        this.cost;
+        this.np = Math.floor(Math.random() * 4) + 3;
         this.image = image;
+        this.calcCost = function(){
+            let possCosts = [[3,3,3], [4,4]];
+            let costNums = possCosts[Math.floor(Math.random() * possCosts.length)];
+            let colors = selectColors(costNums.length);
+            let cost = {};
+            for(let i=0; i<costNums.length; i++){
+                cost[colors[i]] = costNums[i];
+            }
+            return cost;
+        }
     }
 }
 
