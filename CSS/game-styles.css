@@ -13,12 +13,17 @@ body {
     background-image: url("https://www.transparenttextures.com/patterns/always-grey.png");
 }
 
+#game {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
 .gamer-zone {
-    width: 100vw;
-    height: 100vh;
+    height: 100%;
     display: grid;
-    grid-template-rows: 1fr 4fr ;
-    grid-template-columns: 1fr 2fr;
+    grid-template-rows: 250px min-content ;
+    grid-template-columns: 1fr 1fr 1fr min-content;
     grid-template-areas: 
     "title reserved reserved gems"
     "players board board gems";
