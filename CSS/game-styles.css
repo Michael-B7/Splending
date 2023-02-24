@@ -11,22 +11,19 @@ body {
     background-color: #242830;
     /* background-image: url("https://www.transparenttextures.com/patterns/45-degree-fabric-dark.png"); */
     background-image: url("https://www.transparenttextures.com/patterns/always-grey.png");
-    display: flex;
-    justify-content: center;
-    align-items: center;
 }
 
 .gamer-zone {
-    width: 90vw;
-    height: 90vh;
+    width: 100vw;
+    height: 100vh;
     display: grid;
     grid-template-rows: 1fr 4fr ;
     grid-template-columns: 1fr 2fr;
     grid-template-areas: 
     "title reserved reserved gems"
-    "player board board gems";
+    "players board board gems";
     gap: 32px;
-    padding: 64px;
+    padding: 32px;
 }
 
 .reserved-cards,
@@ -154,30 +151,34 @@ body {
     align-items: center;
     background-color: rgba(255, 255, 255, .35);
     border-radius: 10px 10px 0 0;
+    height: 15%;
 }
 
 .card-costs {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(auto-fill, minmax(40px, 2fr));
+    grid-template-rows: 1fr;
     padding: 8px;
     gap: 8px;
+    height: 85%;
 }
 
 .cost {
     border-radius: 50%;
     border: 2px solid white;
-    aspect-ratio: 1;
+    /* aspect-ratio: 1; */
     display: flex;
     align-items: center;
     justify-content: center;
     color: white;
-
     text-shadow: 
         -1px -1px 0 black,
         1px -1px 0 black,
         -1px  1px 0 black,
         1px  1px 0 black;
     -webkit-text-stroke: .25px black;
+    width: 100%;
+    height: 40px
 }
 
 .gem {
@@ -209,23 +210,20 @@ body {
     display: grid;
     gap: 32px;
     color: white;
-    grid-area: player;
+    grid-area: players;
 }
 
 .player {
     display: grid;
     padding: 8px;
-
     grid-template-columns: repeat(2, 1fr);
-    grid-template-rows: repeat(5, 1fr);
+    grid-template-rows: 25px 1fr 35px;
     grid-template-areas:
     "player player"
-    "gems gems"
-    "gems gems"
-    "gems gems"
+    "gem gem"
+    "gem gem"
+    "gem gem"
     "prestige noble";
-
-    
 }
 
 .reserved-cards {
@@ -233,7 +231,7 @@ body {
     padding: 16px;
     column-gap: 16px;
     grid-template-columns: repeat(4, 1fr);
-    grid-template-rows: 1fr 8fr;
+    grid-template-rows: 25px 1fr;
     grid-area: reserved;
 }
 
@@ -255,7 +253,7 @@ body {
 }
 
 .player-gems {
-    grid-area: gems;
+    grid-area: gem;
     display: grid;
     grid-template-columns: repeat(5, 1fr);
     grid-template-rows: 1fr 1fr;
@@ -279,6 +277,10 @@ body {
 
 .player-card {
     border-radius: 0 0 10px 10px;
+}
+
+h4 {
+    height: min-content;
 }
 
 .player-gems [class^="player-"] {
