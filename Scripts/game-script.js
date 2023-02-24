@@ -69,7 +69,7 @@ document.getElementById("test").addEventListener("click", function() {
     // console.log("test")
     // nextTurn()
     // console.log(p1.gems);
-    select(4)
+    
 });
 
 // player class
@@ -142,9 +142,9 @@ class Noble{
 
 // makes sure the cost object of a card does not have a repeated key
 function select(numTerms){
-    let colors = []
-    for(let i=0; i<numTerms; i++){
-        colors.push(colorList[Math.floor(Math.random() * colorList.length)])
+    let colors = new Set();
+    while(colors.size < numTerms){
+        colors.add(colorList[Math.floor(Math.random() * colorList.length)])
     }
     console.log(colors)
 }
