@@ -2,7 +2,8 @@ window.addEventListener("resize", function() {
     console.log(window.outerHeight)
 })
 
-const colorList = ['red', 'blue', 'green', 'white', 'black'];
+const colorList = {red:'#B62D2E', blue:'#1557A3', green:'#21714A', white:'#BCBCBC', black:'#2C211D'};
+const gemList = {red:'ruby', blue:'sapphire', green:'emerald', white:'diamond', black:'onyx'}
 const players = document.getElementsByClassName("player");
 
 function cardActions() {
@@ -69,8 +70,7 @@ document.getElementById("test").addEventListener("click", function() {
     // console.log("test")
     // nextTurn()
     // console.log(p1.gems);
-    let noble = new Noble;
-    noble.cost = noble.calcCost();
+    let noble = new Card(undefined, 1);
     console.log(noble);
     
 });
@@ -117,11 +117,9 @@ class Card {
     // points: num of point value of card
     // cost: object of how many gems and color of gems card costs
     // level: num of difficulty to acquire
-    constructor(color, image, level){
-        this.color = color;
+    constructor(image, level){
+        this.color = ranColor(colorList)
         this.image = image;
-        this.points
-        this.cost
         this.level = level;
         this.calcPoints = function(level){
             const possPoints = {1:[0,0,0,0,0,0,0,1], 2:[1,1,2,2,2,3], 3:[3,4,4,5]};
@@ -135,6 +133,7 @@ class Card {
             }
             return points;
         }
+        this.points = this.calcPoints(level);
         this.calcCost = function(level, points){
             let possCosts = {
                 1:[[1,1,1,1], [1,1,1,2], [1,2,2], [1,1,3], [1,2], [2,2], [3]],
@@ -165,6 +164,7 @@ class Card {
 
             return cost;
         }
+        this.cost = this.calcCost(level, this.points);
     }
 }
 
@@ -174,7 +174,6 @@ class Noble{
     // np: num of point value assigned to noble
     // image: string of url of background image of noble
     constructor(image){
-        this.cost;
         this.np = Math.floor(Math.random() * 4) + 3;
         this.image = image;
         this.calcCost = function(){
@@ -187,14 +186,20 @@ class Noble{
             }
             return cost;
         }
+        this.cost = this.calcCost();
     }
 }
+
+function ranColor(colors){
+    let keys = Object.keys(colors);
+    return keys[Math.floor(Math.random()*keys.length)];
+};
 
 // makes sure the cost object of a card does not have a repeated key
 function selectColors(numTerms){
     let colors = new Set();
     while(colors.size < numTerms){
-        colors.add(colorList[Math.floor(Math.random() * colorList.length)])
+        colors.add(ranColor(colorList));
     };
     let temp = [];
     colors.forEach(function(value){
@@ -203,3 +208,36 @@ function selectColors(numTerms){
     colors = temp;
     return colors;
 }
+
+// display cards
+let cards1 = []; let cards2 = []; let cards3 = [];
+for(let i=0; i<4; i++){
+    cards1.push(new Card(undefined, 1));
+    cards2.push(new Card(undefined, 2));
+    cards3.push(new Card(undefined, 3));
+};
+let dispCards = {1:cards1, 2:cards2, 3:cards3};
+function displayCards(cardList){
+    for(let level in dispCards){
+        let row = document.getElementsByClassName(`level-${level} used`);
+        for(let i=0; i<row.length; i++){
+            let card = dispCards[level][i]
+            let cardHeader = row[i].children[1].children[0]
+            row[i].style.backgroundColor = colorList[card.color]
+            cardHeader.children[1].innerHTML = gemList[card.color]
+            if(card.points == 0){
+                cardHeader.children[0].innerHTML = ''
+            }else{
+                cardHeader.children[0].innerHTML = card.points;
+            }
+            let costItems = row[i].children[1].children[1].children[0]
+            console.log(costItems)
+            for(let i=0; i<Object.keys(card.cost).length; i++){
+                let currColor = Object.keys(card.cost)[i]
+                costItems.innerHTML = costItems.innerHTML + `<div class="${currColor} cost">${card.cost[currColor]}</div>`;
+            }
+        }
+    }
+}
+
+displayCards(dispCards);

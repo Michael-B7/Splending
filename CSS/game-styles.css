@@ -155,12 +155,15 @@ body {
 }
 
 .card-costs {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(40px, 2fr));
-    grid-template-rows: 1fr;
+    display: flex;
+    flex-wrap: wrap;
     padding: 8px;
     gap: 8px;
     height: 85%;
+}
+
+.card-costs > * {
+    max-width: 45%;
 }
 
 .cost {
@@ -357,4 +360,8 @@ h4 {
 
 .gold {
     background-color: #B8B030;
+}
+
+.blank .cost{
+    border: none;
 }
