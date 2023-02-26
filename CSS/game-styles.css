@@ -12,8 +12,6 @@ body {
     background-image: url("https://www.transparenttextures.com/patterns/always-grey.png");
 }
 
-
-
 #game {
     display: flex;
     flex-direction: column;

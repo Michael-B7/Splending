@@ -6,6 +6,19 @@ document.getElementById("join").addEventListener("click", () => {
 const colorList = ['red', 'blue', 'green', 'white', 'black'];
 const players = document.getElementsByClassName("player");
 
+
+
+document.getElementById("name").addEventListener("blur", (e) => {
+    window.localStorage.setItem("userName", e.target.value);
+})
+
+setName()
+function setName() {
+    let name = localStorage.getItem("userName")
+    console.log(localStorage.getItem("userName"))
+    document.getElementById("name").value = name;
+}
+
 function cardActions() {
     const cards = document.getElementsByClassName("card");
 
@@ -46,7 +59,6 @@ function playerGlow() {
     }
     players[currentPlayer - 1].style.boxShadow = "0 0 10px 2.5px #EDD534";
 }
-playerGlow();
 
 // sets the reserve card space of current player to the color of selected card
 // only runs if reserve space is empty
@@ -62,21 +74,11 @@ function reserveCard(cardColor) {
     }
 }
 
-document.getElementById("test").addEventListener("click", function() {
+// sets reserve card space back to defualt
     // let curPlaySpace = reserveSpace[currentPlayer - 1]
     // curPlaySpace.style.backgroundColor = "rgba(0, 0, 0, 0)";
     // curPlaySpace.style.border = "4px dashed white"
-    // console.log(curPlaySpace.style.border)
-    // console.log("test")
     // nextTurn()
-    // console.log(p1.gems);
-    let card = new Card;
-    card.level = 2;
-    card.points = card.calcPoints(card.level)
-    card.cost = card.calcCost(card.level, card.points)
-    console.log(card)
-    
-});
 
 const innerCard =
 `<div class="card-content">
@@ -196,3 +198,45 @@ function selectColors(numTerms){
     colors = temp;
     return colors;
 }
+
+const innerPlayer = 
+`<div class="player">
+<h4 class="player-name">Player</h4>
+<div class="player-gems">
+  <div class="player-gem red">0</div>
+  <div class="player-gem green">0</div>
+  <div class="player-gem blue">0</div>
+  <div class="player-gem white">0</div>
+  <div class="player-gem black">0</div>
+  <div class="player-card red">0</div>
+  <div class="player-card green">0</div>
+  <div class="player-card blue">0</div>
+  <div class="player-card white">0</div>
+  <div class="player-card black">0</div>
+</div>
+<div class="player-balance">Prestige Points:</div>
+<div class="noble-balance">Nobles:</div>
+</div>`
+
+document.getElementById("test").addEventListener("click", function() {
+    document.getElementById("game-settings").style.display = "flex";
+    document.getElementById("board").style.display = "none";
+});
+
+
+document.getElementById("start-game").addEventListener("click", () => {
+    document.getElementById("game-settings").style.display = "none";
+    document.getElementById("board").style.display = "grid";
+    playerGlow();
+})
+
+document.getElementById("player-amount").addEventListener("change", () => {
+    const name = localStorage.getItem("userName");
+    const selectedOption = document.getElementById("player-amount").value;
+    console.log(selectedOption);
+    document.getElementById("players").innerHTML = innerPlayer.repeat(selectedOption);
+
+    console.log(document.getElementsByClassName("player-name"))
+    document.getElementsByClassName("player-name")[0].innerText = name;
+    document.getElementsByClassName("player-name")[4].innerText = name;
+})
