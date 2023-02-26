@@ -1,5 +1,6 @@
-window.addEventListener("resize", function() {
-    console.log(window.outerHeight)
+document.getElementById("join").addEventListener("click", () => {
+    document.getElementById("start").style.display = 'none'; 
+    document.getElementById("game").style.display = 'flex';
 })
 
 const colorList = ['red', 'blue', 'green', 'white', 'black'];

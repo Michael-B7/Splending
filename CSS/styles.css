@@ -1,3 +1,4 @@
+
 @import url('https://fonts.googleapis.com/css2?family=El+Messiri&display=swap');
 
 * {
@@ -12,10 +13,145 @@ body {
     background-image: url("https://www.transparenttextures.com/patterns/always-grey.png");
 }
 
-
-
-#game {
+#start {
     display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100vh;
+    padding-top: 32px;
+} 
+
+header {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+}
+
+.splendor {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-self: flex-end;
+}
+
+.play {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    margin-bottom: 5%;
+}
+
+.button-box {
+    background-color: #A5B1C5;
+    width: 25%;
+    /* width: clamp(200px, 35%, 800px); */
+    padding: 16px;
+    /* margin: 16px; */
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto auto;
+    gap: 16px;
+
+    box-shadow: 0px 4px 4px rgba(255, 255, 255, 0.25);
+    border-radius: 16px;
+}
+
+#create {
+    grid-column: 1 / 2;
+    grid-row: 1 / 2;
+}
+
+#join {
+    grid-column: 2 / 3;
+    grid-row: 1 / 2;
+}
+
+#local {
+    grid-column: 1 / 3;
+    grid-row: 2 / 3;
+}
+
+.button-box div {
+    padding: 16px;
+
+    background-color: #3A4263;
+    color: #EDD534;
+    font-size: 2rem;
+    border-radius: 16px;
+    border: 4px solid #242830;
+
+    transition: .3s ease-in;
+    text-align: center;
+
+    cursor: pointer;
+}
+
+.button-box div:hover {
+    background-color: #242830;
+    border-color: #3A4263 ;
+}
+
+footer {
+    display: flex;
+    width: 100%;
+    height: 25vh;
+}
+
+.footer-item {
+    background-color: #353C48;
+}
+
+.footer-item:nth-child(2) {
+    width: 60%;
+    border-right: 4px solid #242830;
+    border-left: 4px solid #242830;
+}
+
+.footer-item:not(:nth-child(2)) {
+    width: 20%;
+}
+
+h2 {
+    text-align: center;
+    color: #EDD534;
+    margin: 0;
+}
+
+#tutorial {
+    width: 100%;
+    height: 50%;
+    display: flex;
+    justify-content: center;
+} 
+
+.step {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    align-items: center;
+    height: 100%;
+}
+
+.step a {
+    text-decoration: none;
+    font-size: 2rem;
+    transition: .4s ease-in;
+
+    padding: 32px;
+    text-align: center;
+
+    border-radius: 16px;
+    border: 4px solid #EDD534;
+    color: #EDD534;
+    background-color: rgba(58, 66, 99, .75);
+    text-shadow: 2px 4px 4px rgba(0, 0, 0, 0.25);
+    margin-top: 24px;
+}
+
+/* beginning of game styles */
+#game {
+    display: none;
     flex-direction: column;
     align-items: center;
 }
@@ -48,7 +184,7 @@ body {
     align-items: center;
 }
 
-.title img {
+.title a img {
     width: 100%;
 }
 
