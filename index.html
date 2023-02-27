@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/CSS/styles.css">
     <script src="/Scripts/game-script.js" defer></script>
+    <script src="https://kit.fontawesome.com/96eecf184e.js" crossorigin="anonymous"></script>
     <title>Splendor</title>
 </head>
 <body>
@@ -28,9 +29,57 @@
                 <h2>How to play</h2>
 
                 <div id="tutorial">
+                  <div class="navigation" id="nav-left">
+                    <i class="fa-solid fa-caret-left"></i>
+                  </div>
+
+                  <div class="steps">
                     <div class="step active">
-                        <a href="rules.html">Rule-book</a>
+                      <a href="rules.html">Rule-book</a>
                     </div>
+
+                    <div class="step hidden">
+                      <h3>Acquire gems</h3>
+                      <div class="step-rule">
+                          <div class="gem black"></div>
+                          <div class="gem blue"></div>
+                          <div class="gem green"></div>
+                          <div class="gem white"></div>
+                          <div class="gem red"></div>
+                      </div>
+                  </div>
+                  <div class="step hidden">
+                      <h3>Build your wealth</h3>
+                      <div class="step-rule">
+                        <div class="card level-1"></div>
+                        <div class="card level-3"></div>
+                        <div class="card level-2"></div>
+                        <div class="card level-3"></div>
+                      </div>
+                  </div>
+                  <div class="step hidden">
+                      <h3>Attract rich nobles</h3>
+                      <div class="step-rule">
+                          <div class="noble"></div>
+                          <div class="noble"></div>
+                          <div class="noble"></div>
+                      </div>
+                  </div>
+                  <div class="step hidden">
+                      <h3>Achieve the highest prestige points</h3>
+                      <div class="step-rule placements">
+                          <div class="first-place">
+                              <i class="fa-solid fa-crown"></i>
+                              <br>1st
+                          </div>
+                          <div class="second-place">2nd</div>
+                      </div>
+                  </div>
+                  </div>
+                    
+                  <div class="navigation" id="nav-right">
+                    <i class="fa-solid fa-caret-right"></i>
+                  </div>
                 </div>
             </section>
             <section class="footer-item">

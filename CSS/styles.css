@@ -9,7 +9,6 @@
 body {
     margin: 0;
     background-color: #242830;
-    /* background-image: url("https://www.transparenttextures.com/patterns/45-degree-fabric-dark.png"); */
     background-image: url("https://www.transparenttextures.com/patterns/always-grey.png");
 }
 
@@ -127,14 +126,6 @@ h2 {
     justify-content: center;
 } 
 
-.step {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    align-items: center;
-    height: 100%;
-}
-
 .step a {
     text-decoration: none;
     font-size: 2rem;
@@ -149,6 +140,99 @@ h2 {
     background-color: rgba(58, 66, 99, .75);
     text-shadow: 2px 4px 4px rgba(0, 0, 0, 0.25);
     margin-top: 24px;
+}
+
+/* How to Play footer */
+#tutorial {
+    width: 100%;
+    height: 50%;
+    display: flex;
+    justify-content: center;
+} 
+
+.navigation {
+    height: 100%;
+    display: flex;
+    width: 25px;
+    justify-content: center;
+    align-items: center;
+}
+
+.steps {
+    width: 80%;
+    height: 100%;
+}
+
+.step {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    align-items: center;
+    height: 100%;
+}
+
+h3 {
+    text-align: center;
+    color: #AAC2FF;
+    grid-area: header;
+    font-size: 1.4rem;
+    margin: 0;
+}
+
+.step-rule {
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.hidden {
+    display: none;
+}
+
+[class*="caret"] {
+    font-size: 64px;
+    color: #EDD534;
+    cursor:pointer;
+}
+
+[class*="caret"]:hover {
+    color: #bda927;
+}
+
+.step a:hover {
+    border-color: rgb(27, 31, 46);
+    background-color: #edd434a4;
+    color: rgb(0, 0, 0);
+}
+
+.placements {
+    justify-content: center;
+    align-items: flex-end;
+}
+
+.first-place {
+    width: 50px;
+    height: 100px;
+    background-color: gold;
+    text-align: center;
+}
+
+.second-place {
+    width: 50px;
+    height: 50px;
+    background-color: silver;
+    text-align: center;
+}
+
+.step-rule .gem {
+    width: 75px;
+    cursor: default;
+}
+
+.step-rule .card,
+.step-rule .noble {
+    height: 120px;
+    width: 80px;
 }
 
 /* beginning of game styles */
