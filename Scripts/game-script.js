@@ -1,23 +1,13 @@
-document.getElementById("join").addEventListener("click", () => {
+document.getElementById("create").addEventListener("click", () => {
     document.getElementById("start").style.display = 'none'; 
     document.getElementById("game").style.display = 'flex';
+
+    playerAmount()
+    setName(4)
 })
 
 const colorList = ['red', 'blue', 'green', 'white', 'black'];
 const players = document.getElementsByClassName("player");
-
-
-
-document.getElementById("name").addEventListener("blur", (e) => {
-    window.localStorage.setItem("userName", e.target.value);
-})
-
-setName()
-function setName() {
-    let name = localStorage.getItem("userName")
-    console.log(localStorage.getItem("userName"))
-    document.getElementById("name").value = name;
-}
 
 function cardActions() {
     const cards = document.getElementsByClassName("card");
@@ -199,6 +189,7 @@ function selectColors(numTerms){
     return colors;
 }
 
+// inner HTML of displayed players
 const innerPlayer = 
 `<div class="player">
 <h4 class="player-name">Player</h4>
@@ -216,6 +207,13 @@ const innerPlayer =
 </div>
 <div class="player-balance">Prestige Points:</div>
 <div class="noble-balance">Nobles:</div>
+</div>`;
+
+// inner HTML of reserved cards
+const innerReserve = 
+`<div class="reserved-container">
+<h4 class="player-name">Player</h4>      
+<div class="empty-card"></div>
 </div>`
 
 document.getElementById("test").addEventListener("click", function() {
@@ -223,20 +221,66 @@ document.getElementById("test").addEventListener("click", function() {
     document.getElementById("board").style.display = "none";
 });
 
-
+// start game button, removes settings, displays board
 document.getElementById("start-game").addEventListener("click", () => {
     document.getElementById("game-settings").style.display = "none";
     document.getElementById("board").style.display = "grid";
     playerGlow();
 })
 
-document.getElementById("player-amount").addEventListener("change", () => {
-    const name = localStorage.getItem("userName");
-    const selectedOption = document.getElementById("player-amount").value;
-    console.log(selectedOption);
-    document.getElementById("players").innerHTML = innerPlayer.repeat(selectedOption);
-
-    console.log(document.getElementsByClassName("player-name"))
-    document.getElementsByClassName("player-name")[0].innerText = name;
-    document.getElementsByClassName("player-name")[4].innerText = name;
+// saves username to local storage
+document.getElementById("name").addEventListener("blur", (e) => {
+    window.localStorage.setItem("userName", e.target.value);
 })
+
+// sets name in local storage to game board
+// pAmount: num, the amount of players in a game
+function setName(pAmount) {
+    let name = localStorage.getItem("userName") 
+
+    // sets name to player if name blank or no local storage
+    if (name == "" || name == null) {
+        name = "Player";
+    }
+
+    document.getElementsByClassName("player-name")[0].innerText = name;
+    document.getElementsByClassName("player-name")[+pAmount].innerText = name;
+}
+
+// displays how many players are in a game
+// updates on game setting dropdown
+function playerAmount() {
+    let playerAmount = 4;
+    playerAmount = document.getElementById("player-amount").value;
+    console.log(playerAmount);
+
+    document.getElementById("players").innerHTML = innerPlayer.repeat(playerAmount);
+    document.getElementById("reserved-cards").innerHTML = innerReserve.repeat(playerAmount);
+    setName(playerAmount)
+}
+
+// resets player amount to 1, prepares for players to join online
+function setOnline() {
+    document.getElementById("players").innerHTML = innerPlayer.repeat(1);
+    document.getElementById("reserved-cards").innerHTML = innerReserve.repeat(1);
+    setName(1)
+}
+
+document.getElementById("name").value = localStorage.getItem("userName");
+document.getElementById("player-amount").addEventListener("change", playerAmount);
+
+// event listener on settings radio buttons, displays or hides local/online
+const radioButtons = document.querySelectorAll(`input[type="radio"]`);
+for (let i = 0; i < radioButtons.length; i++) {
+    const element = radioButtons[i];
+
+    element.addEventListener("click", () => {
+        if (element.value == "online") {
+            document.getElementsByClassName("local")[0].style.display = "none"
+            setOnline();
+        } else {
+            document.getElementsByClassName("online")[0].style.display = "none"
+            playerAmount()
+        } document.getElementsByClassName(element.value)[0].style.display = "flex"
+    })
+}

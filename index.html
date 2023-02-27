@@ -17,7 +17,7 @@
             <div class="button-box">
                 <div id="create" class="button">Create</div>
                 <div id="join" class="button">Join</div> 
-                <input id="name" class="button" type="text" placeholder="Enter name" autocomplete="off"></input>
+                <input id="name" class="button" type="text" placeholder="Enter name..." autocomplete="off" maxlength="15"></input>
             </div>
         </div>
         <footer>
@@ -50,19 +50,7 @@
           </header>
     
           <!-- reserved card, top of page -->
-          <div class="reserved-cards">
-            <div class="reserved-container">
-                <h4 class="player-name">Player 1</h4>      
-                <div class="empty-card"></div>
-            </div>
-            <div class="reserved-container">
-                <h4 class="player-name">Player 1</h4>      
-                <div class="empty-card"></div>
-            </div>
-            <div class="reserved-container">
-                <h4 class="player-name">Player 1</h4>      
-                <div class="empty-card"></div>
-            </div>
+          <div id="reserved-cards">
             <div class="reserved-container">
                 <h4 class="player-name">Player 1</h4>      
                 <div class="empty-card"></div>
@@ -230,8 +218,14 @@
                     <div id="inv-QR">INVITE QR:</div>
                 </div>
                 <div class="game-setting">
-                    <div id="local" class="button">Local</div>
-                    <div id="online" class="button">Online</div>
+                    <div id="local">
+                      <input type="radio" name="option" id="option1" value="local" checked="checked">
+                      <label class="radio-button" for="option1">Local</label>
+                    </div>
+                    <div id="online">
+                      <input type="radio" name="option" id="option2" value="online">
+                      <label class="radio-button" for="option2">Online</label>
+                    </div>
                 </div>
                 <div class="game-setting button" id="start-game">START GAME!</div>
           </div>
