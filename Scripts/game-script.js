@@ -266,7 +266,7 @@ document.getElementById("name").addEventListener("blur", (e) => {
 // sets name in local storage to game board
 // pAmount: num, the amount of players in a game
 function setName(pAmount) {
-    let name = localStorage.getItem("userName") 
+    let name = localStorage.getItem("userName");
 
     // sets name to player if name blank or no local storage
     if (name == "" || name == null) {
@@ -314,3 +314,56 @@ for (let i = 0; i < radioButtons.length; i++) {
         } document.getElementsByClassName(element.value)[0].style.display = "flex"
     })
 }
+
+const modal = document.getElementById("modal");
+const modalIcons = document.querySelectorAll(".open-modal");
+const modalSections = document.querySelectorAll(".modal-section");
+const modalHeader = document.getElementById("modal-header");
+// removes modal from display when modal content is not clicked
+window.onclick = function(e) {
+    if (e.target == modal) {
+      modal.style.display = "none";
+      for (let i = 0; i < modalSections.length; i++) {
+        modalSections[i].style.display = "none";
+      }
+    }
+}
+
+// displays modal when an icon with the modal-icon class is selected
+for (let i = 0; i < modalIcons.length; i++) {
+    modalIcons[i].addEventListener("click", (e) => {
+        modal.style.display = "block";
+        openModal(e.target)
+    })
+}
+
+// sets correct modal content
+// parameter: string, takes in the icon that is selected
+function openModal(icon) {
+    document.getElementById("modal-username").innerText = localStorage.getItem("userName");
+    if (icon.classList.contains("fa-circle-question")) {
+        modalHeader.innerText = "How to play";
+        document.getElementById("settings").style.display = "flex";
+    } else if (icon.classList.contains("fa-chart-simple")) {
+        modalHeader.innerText = "Statistics";
+        document.getElementById("statistics").style.display = "flex";
+    } else {
+        modalHeader.innerText = "Settings";
+        document.getElementById("settings").style.display = "flex";
+    }
+}
+
+// changes css variables to color blind friendly colors and back
+document.getElementById("color-check").addEventListener("change", function() {
+    if (this.checked) {
+      document.documentElement.style.setProperty('--red', '#D55E00');
+      document.documentElement.style.setProperty('--green', '#009E73');
+      document.documentElement.style.setProperty('--blue', '#0072B2');
+      document.documentElement.style.setProperty('--gold', '#F0E442');
+    } else {
+      document.documentElement.style.setProperty('--red', '#B62D2E');
+      document.documentElement.style.setProperty('--green', '#21714A');
+      document.documentElement.style.setProperty('--blue', '#1557A3');
+      document.documentElement.style.setProperty('--gold', '#B8B030');
+    }
+});

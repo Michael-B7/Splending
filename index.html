@@ -105,6 +105,12 @@
                 <div class="empty-card"></div>
             </div>
           </div>
+
+          <div class="ingame-settings">
+            <i class="fa-solid fa-gear open-modal"></i>
+            <i class="fa-solid fa-chart-simple open-modal"></i>
+            <i class="fa-solid fa-circle-question open-modal"></i>
+          </div>
     
           <!-- players column, left side of page -->
           <div id="players">
@@ -243,40 +249,48 @@
 
           <!-- board, center of game -->
           <div id="game-settings">
-                <div class="game-setting">
-                    <div>Points</div>
-                    <select id="points">
-                        <option value="15">15</option>
-                        <option value="20">20</option>
-                        <option value="25" selected="selected">25</option>
-                        <option value="30">30</option>
-                        <option value="35">35</option>
-                    </select>
-                </div>
-                <div class="game-setting local">
-                    <div>Players</div>
-                    <select id="player-amount">
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                        <option value="4" selected="selected">4</option>
-                    </select>
-                </div>
-                <div class="game-setting online">
-                    <div id="inv-link">INVITE LINK:</div>
-                    <div id="inv-QR">INVITE QR:</div>
-                </div>
-                <div class="game-setting">
-                    <div id="local">
-                      <input type="radio" name="option" id="option1" value="local" checked="checked">
-                      <label class="radio-button" for="option1">Local</label>
-                    </div>
-                    <div id="online">
-                      <input type="radio" name="option" id="option2" value="online">
-                      <label class="radio-button" for="option2">Online</label>
-                    </div>
-                </div>
-                <div class="game-setting button" id="start-game">START GAME!</div>
+            <div class="setting-wrapper">
+              <div class="game-setting">
+                <div>Points</div>
+                <select id="points">
+                    <option value="15">15</option>
+                    <option value="20">20</option>
+                    <option value="25" selected="selected">25</option>
+                    <option value="30">30</option>
+                    <option value="35">35</option>
+                </select>
+              </div>
+              <div class="game-setting local">
+                  <div>Players</div>
+                  <select id="player-amount">
+                      <option value="1">1</option>
+                      <option value="2">2</option>
+                      <option value="3">3</option>
+                      <option value="4" selected="selected">4</option>
+                  </select>
+              </div>
+              <div class="game-setting online">
+                  <div id="link-wrapper">
+                    Invite Link:
+                    <div id="inv-link">541153</div>
+                  </div>
+                  <div id="link-wrapper">
+                    QR Code:
+                    <div id="inv-qr">541153</div>
+                  </div>
+              </div>
+              <div class="game-setting">
+                  <div id="local">
+                    <input type="radio" name="option" id="option1" value="local" checked="checked">
+                    <label class="radio-button button" for="option1">Local</label>
+                  </div>
+                  <div id="online">
+                    <input type="radio" name="option" id="option2" value="online">
+                    <label class="radio-button button" for="option2">Online</label>
+                  </div>
+              </div>
+            </div>
+              <div class="game-setting button" id="start-game">START GAME!</div>
           </div>
     
           <!-- gem column, right side of page -->
@@ -290,5 +304,24 @@
           </div>
         </div>
     </article>
+
+    <div id="modal" class="hidden">
+      <div class="modal-content">
+        <h2 id="modal-header">Statistics</h2>
+        <div id="settings" class="modal-section">
+          <h3>Colorblind mode</h3>
+          <label class="switch">
+            <input id="color-check" type="checkbox">
+            <span class="slider"></span>
+          </label>
+        </div>
+        <div id="statistics" class="modal-section">
+          <p id="modal-username"></p>
+          <div class="modal-text">Total Wins: 0</div>
+          <div class="modal-text">Time Played:</div>
+        </div>
+        
+      </div>
+    </div>
 </body>
 </html>
