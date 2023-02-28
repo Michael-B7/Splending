@@ -1,6 +1,40 @@
-window.addEventListener("resize", function() {
-    console.log(window.outerHeight)
+document.getElementById("create").addEventListener("click", () => {
+    document.getElementById("start").style.display = 'none'; 
+    document.getElementById("game").style.display = 'flex';
+
+    playerAmount()
+    setName(4)
 })
+
+let indexValue = 1;
+function tutorial(index) {
+    shownStep(indexValue += index);
+}
+
+// e: number
+// 
+function shownStep(e) {
+    const steps = document.querySelectorAll(".step");
+    // resets back to start of index if past the last child
+    if(e > steps.length) {
+        indexValue = 1
+    } 
+    if(e < 1) {
+        indexValue = steps.length
+    }
+    for (let i = 0; i < steps.length; i++) {
+        steps[i].style.display = "none";
+    }
+    steps[indexValue - 1].style.display = "flex";
+}
+
+document.getElementById("nav-right").addEventListener("click", function() {
+    tutorial(1);
+});
+document.getElementById("nav-left").addEventListener("click", function() {
+    tutorial(-1);
+});
+
 
 const colorList = {"red":'rgb(182, 45, 46)', "blue":'#1557A3', "green":'#21714A', "white":'#BCBCBC', "black":'#2C211D'};
 const gemList = {"red":'ruby', "blue":'sapphire', "green":'emerald', "white":'diamond', "black":'onyx'}
@@ -14,14 +48,13 @@ class Player {
     // np: num of player noble points
     // reserved: card object of reserved card
     // gold: boolean of whether player has gold or not
-    constructor(name) {
+    constructor() {
         this.gems = {'red':0, 'blue':0, 'green':0, 'white':0, 'black':0};
         this.cards = {'red':0, 'blue':0, 'green':0, 'white':0, 'black':0};
         this.pp = 0;
         this.np = 0;
         this.reserved = null;
         this.gold = false;
-        this.name = name;
     }
 }
 
@@ -32,9 +65,11 @@ class Card {
     // points: num of point value of card
     // cost: object of how many gems and color of gems card costs
     // level: num of difficulty to acquire
-    constructor(image, level){
-        this.color = ranColor(colorList)
+    constructor(color, image, level){
+        this.color = color;
         this.image = image;
+        this.points
+        this.cost
         this.level = level;
         this.calcPoints = function(level){
             const possPoints = {1:[0,0,0,0,0,0,0,1], 2:[1,1,2,2,2,3], 3:[3,4,4,5]};
@@ -48,7 +83,6 @@ class Card {
             }
             return points;
         }
-        this.points = this.calcPoints(level);
         this.calcCost = function(level, points){
             let possCosts = {
                 1:[[1,1,1,1], [1,1,1,2], [1,2,2], [1,1,3], [1,2], [2,2], [3]],
@@ -79,7 +113,6 @@ class Card {
 
             return cost;
         }
-        this.cost = this.calcCost(level, this.points);
     }
 }
 
@@ -88,124 +121,12 @@ class Noble{
     // cost: object of color of card and number of that color of card required
     // np: num of point value assigned to noble
     // image: string of url of background image of noble
-    constructor(image){
-        this.np = Math.floor(Math.random() * 4) + 3;
+    constructor(cost, np, image){
+        this.cost = cost;
+        this.np = np;
         this.image = image;
-        this.calcCost = function(){
-            let possCosts = [[3,3,3], [4,4]];
-            let costNums = possCosts[Math.floor(Math.random() * possCosts.length)];
-            let colors = selectColors(costNums.length);
-            let cost = {};
-            for(let i=0; i<costNums.length; i++){
-                cost[colors[i]] = costNums[i];
-            }
-            return cost;
-        }
-        this.cost = this.calcCost();
     }
 }
-
-function cardActions() {
-    const cards = document.getElementsByClassName("card");
-
-    for (let i = 0; i < cards.length; i++) {
-        if(!cards[i].classList.contains("used")) {
-            cards[i].classList.add("used");
-            cards[i].addEventListener("click", function(e) {
-                if (e.target.innerText == "Reserve") {
-                    reserveCard(window.getComputedStyle(this).backgroundColor)
-                } else if (e.target.innerText == "Purchase") {
-                    console.log("purchase!!")
-                } 
-            })
-        } 
-    }
-};
-cardActions();
-
-let playerCount = 4;
-let hands = []
-for(let i=0; i<playerCount; i++){
-    hands.push(new Player);
-}
-
-let gems = [];
-
-let currentPlayer = 0;
-// current player begins at player 1
-// function will add 1 to current player
-function nextTurn() {
-    currentPlayer += 1;
-    if(currentPlayer > players.length-1) {
-        // resets back to start of index if past the last child
-        currentPlayer = 0
-    } 
-    // console.log(currentPlayer)
-    playerGlow()
-    gems = [];
-}
-
-// sets all player box shadow to default
-// current player's box is set with bright box shadow
-function playerGlow() {
-    for (let i = 0; i < players.length; i++) {
-        players[i].style.boxShadow = "2px 2px 4px rgba(255, 255, 255, 0.25)";
-    }
-    // console.log(players[currentPlayer])
-    players[currentPlayer].style.boxShadow = "0 0 10px 2.5px #EDD534";
-}
-playerGlow();
-
-// sets the reserve card space of current player to the color of selected card
-// only runs if reserve space is empty
-const reserveSpace = document.getElementsByClassName("empty-card")
-function reserveCard(cardColor) {
-    let curPlaySpace = reserveSpace[currentPlayer - 1]
-    // rgba(0, 0, 0, 0) is empty background color
-    // use (window.getComputedStyle() for background color
-    if (window.getComputedStyle(curPlaySpace).backgroundColor == "rgba(0, 0, 0, 0)") {
-        curPlaySpace.style.border = "none";
-        curPlaySpace.style.backgroundColor = cardColor;
-        nextTurn()
-    }
-}
-
-document.getElementById("test").addEventListener("click", function() {
-    // let curPlaySpace = reserveSpace[currentPlayer - 1]
-    // curPlaySpace.style.backgroundColor = "rgba(0, 0, 0, 0)";
-    // curPlaySpace.style.border = "4px dashed white"
-    // console.log(curPlaySpace.style.border)
-    // console.log("test")
-    // nextTurn()
-    // console.log(p1.gems);
-    let noble = new Card(undefined, 1);
-    console.log(noble);
-    
-});
-
-const innerCard =
-`<div class="card-content">
-<div class="card-header">
-  <div class="card-points"></div>
-  <div class="card-worth"></div>
-</div>
-<div class="card-body">
-  <div class="card-costs">
-    <div class="red-cost"></div>
-    <div class="blue-cost"></div>
-    <div class="green-cost"></div>
-    <div class="white-cost"></div>
-    <div class="black-cost"></div>
-  </div>
-</div>
-</div>`
-
-
-
-function ranColor(colors){
-    let keys = Object.keys(colors);
-    return keys[Math.floor(Math.random()*keys.length)];
-};
 
 // makes sure the cost object of a card does not have a repeated key
 function selectColors(numTerms){
@@ -293,3 +214,99 @@ function displayGems(player, gems){
 // function buyCard(card, player){
 
 // }
+
+// inner HTML of displayed players
+const innerPlayer = 
+`<div class="player">
+<h4 class="player-name">Player</h4>
+<div class="player-gems">
+  <div class="player-gem red">0</div>
+  <div class="player-gem green">0</div>
+  <div class="player-gem blue">0</div>
+  <div class="player-gem white">0</div>
+  <div class="player-gem black">0</div>
+  <div class="player-card red">0</div>
+  <div class="player-card green">0</div>
+  <div class="player-card blue">0</div>
+  <div class="player-card white">0</div>
+  <div class="player-card black">0</div>
+</div>
+<div class="player-balance">Prestige Points:</div>
+<div class="noble-balance">Nobles:</div>
+</div>`;
+
+// inner HTML of reserved cards
+const innerReserve = 
+`<div class="reserved-container">
+<h4 class="player-name">Player</h4>      
+<div class="empty-card"></div>
+</div>`
+
+document.getElementById("test").addEventListener("click", function() {
+    document.getElementById("game-settings").style.display = "flex";
+    document.getElementById("board").style.display = "none";
+});
+
+// start game button, removes settings, displays board
+document.getElementById("start-game").addEventListener("click", () => {
+    document.getElementById("game-settings").style.display = "none";
+    document.getElementById("board").style.display = "grid";
+    playerGlow();
+})
+
+// saves username to local storage
+document.getElementById("name").addEventListener("blur", (e) => {
+    window.localStorage.setItem("userName", e.target.value);
+})
+
+// sets name in local storage to game board
+// pAmount: num, the amount of players in a game
+function setName(pAmount) {
+    let name = localStorage.getItem("userName") 
+
+    // sets name to player if name blank or no local storage
+    if (name == "" || name == null) {
+        name = "Player";
+    }
+
+    document.getElementsByClassName("player-name")[0].innerText = name;
+    document.getElementsByClassName("player-name")[+pAmount].innerText = name;
+}
+
+// displays how many players are in a game
+// updates on game setting dropdown
+function playerAmount() {
+    let playerAmount = 4;
+    playerAmount = document.getElementById("player-amount").value;
+    console.log(playerAmount);
+
+    document.getElementById("players").innerHTML = innerPlayer.repeat(playerAmount);
+    document.getElementById("reserved-cards").innerHTML = innerReserve.repeat(playerAmount);
+    setName(playerAmount)
+}
+
+// resets player amount to 1, prepares for players to join online
+function setOnline() {
+    document.getElementById("players").innerHTML = innerPlayer.repeat(1);
+    document.getElementById("reserved-cards").innerHTML = innerReserve.repeat(1);
+    setName(1)
+}
+
+document.getElementById("name").value = localStorage.getItem("userName");
+document.getElementById("player-amount").addEventListener("change", playerAmount);
+
+// event listener on settings radio buttons, displays or hides local/online
+const radioButtons = document.querySelectorAll(`input[type="radio"]`);
+for (let i = 0; i < radioButtons.length; i++) {
+    const element = radioButtons[i];
+
+    element.addEventListener("click", () => {
+        if (element.value == "online") {
+            document.getElementsByClassName("local")[0].style.display = "none"
+            setOnline();
+        } else {
+            document.getElementsByClassName("online")[0].style.display = "none"
+            playerAmount()
+        } document.getElementsByClassName(element.value)[0].style.display = "flex"
+    })
+}
