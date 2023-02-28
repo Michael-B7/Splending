@@ -11,6 +11,23 @@ function tutorial(index) {
     shownStep(indexValue += index);
 }
 
+let currentPlayer = 0;
+
+function playerGlow(){
+    for(let i=0; i<players.length; i++){
+        players[i].style.boxShadow = "2px 2px 4px rgba(255, 255, 255, 0.25)";
+    }
+    players[currentPlayer].style.boxShadow = "0 0 10px 2.5px #EDD534";
+}
+
+function nextTurn(){
+    currentPlayer += 1;
+    if(currentPlayer > player.length-1){
+        currentPlayer = 0;
+    }
+    playerGlow();
+}
+
 // e: number
 // 
 function shownStep(e) {
@@ -26,6 +43,10 @@ function shownStep(e) {
         steps[i].style.display = "none";
     }
     steps[indexValue - 1].style.display = "flex";
+}
+
+function cardActions(){
+    
 }
 
 document.getElementById("nav-right").addEventListener("click", function() {
