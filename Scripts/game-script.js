@@ -2,8 +2,8 @@ window.addEventListener("resize", function() {
     console.log(window.outerHeight)
 })
 
-const colorList = {red:'#B62D2E', blue:'#1557A3', green:'#21714A', white:'#BCBCBC', black:'#2C211D'};
-const gemList = {red:'ruby', blue:'sapphire', green:'emerald', white:'diamond', black:'onyx'}
+const colorList = {"red":'rgb(182, 45, 46)', "blue":'#1557A3', "green":'#21714A', "white":'#BCBCBC', "black":'#2C211D'};
+const gemList = {"red":'ruby', "blue":'sapphire', "green":'emerald', "white":'diamond', "black":'onyx'}
 const players = document.getElementsByClassName("player");
 
 // player class
@@ -14,13 +14,14 @@ class Player {
     // np: num of player noble points
     // reserved: card object of reserved card
     // gold: boolean of whether player has gold or not
-    constructor() {
+    constructor(name) {
         this.gems = {'red':0, 'blue':0, 'green':0, 'white':0, 'black':0};
         this.cards = {'red':0, 'blue':0, 'green':0, 'white':0, 'black':0};
         this.pp = 0;
         this.np = 0;
         this.reserved = null;
         this.gold = false;
+        this.name = name;
     }
 }
 
@@ -128,17 +129,20 @@ for(let i=0; i<playerCount; i++){
     hands.push(new Player);
 }
 
-let currentPlayer = 1;
+let gems = [];
+
+let currentPlayer = 0;
 // current player begins at player 1
 // function will add 1 to current player
 function nextTurn() {
     currentPlayer += 1;
-    if(currentPlayer > players.length) {
+    if(currentPlayer > players.length-1) {
         // resets back to start of index if past the last child
-        currentPlayer = 1
+        currentPlayer = 0
     } 
-    console.log(currentPlayer)
+    // console.log(currentPlayer)
     playerGlow()
+    gems = [];
 }
 
 // sets all player box shadow to default
@@ -147,7 +151,8 @@ function playerGlow() {
     for (let i = 0; i < players.length; i++) {
         players[i].style.boxShadow = "2px 2px 4px rgba(255, 255, 255, 0.25)";
     }
-    players[currentPlayer - 1].style.boxShadow = "0 0 10px 2.5px #EDD534";
+    // console.log(players[currentPlayer])
+    players[currentPlayer].style.boxShadow = "0 0 10px 2.5px #EDD534";
 }
 playerGlow();
 
@@ -227,7 +232,7 @@ for(let i=0; i<4; i++){
 
 let dispCards = {1:cards1, 2:cards2, 3:cards3};
 function displayCards(cardList){
-    for(let level in dispCards){
+    for(let level in cardList){
         let row = document.getElementsByClassName(`level-${level} used`);
         for(let i=0; i<row.length; i++){
             let card = dispCards[level][i]
@@ -254,28 +259,37 @@ displayCards(dispCards);
 function takeGems(player, gems){
     gemColors = []
     for(let i=0; i<gems.length; i++){
-        gemColors.push(gems[i].style.backgroundColor);
+        gemColors.push(window.getComputedStyle(gems[i]).backgroundColor);
     }
     if(gems.length == 2 && gemColors[0] == gemColors[1] && gems[0].innerHTML >= 4){
-        player.gems[Object.keys(colorList).find(key => colorList[key] === gemColors[0])] += 2;
+        player.gems[Object.keys(colorList).find(key => colorList[key] == gemColors[0])] += 2;
+        console.log(Object.keys(colorList).find(key => colorList[key] == gemColors[0]));
         nextTurn();
-    }else if(gems.length == 3 && gems[0].innerHTML > 0){
+    }else if(gems.length == 3 && gems[0].innerHTML > 0 && gems[1].innerHTML > 0 && gems[2].innerHTML > 0){
         if(gemColors[0] != gemColors[1] && gemColors[0] != gemColors[2] && gemColors[1] != gemColors[2]){
             for(let i=0; i<gems.length; i++){
-                player.gems[Object.keys(colorList).find(key => colorList[key] === gemColors[0])] += 1;
+                player.gems[Object.keys(colorList).find(key => colorList[key] === gemColors[i])] += 1;
             }
             nextTurn();
         }
     }
+    console.log(hands)
 }
 
-document.getElementsByClassName("gem red")[0].addEventListener("click", function(e){
-    takeGems(hands[currentPlayer], e.target)
-})
+for(let i=0; i<Object.keys(colorList).length; i++){
+    document.getElementsByClassName(`gem ${Object.keys(colorList)[i]}`)[0].addEventListener("click", function(e){
+        gems.push(e.target)
+        console.log(hands[currentPlayer])
+        takeGems(hands[currentPlayer], gems)
+    })
+}
 
-takeGems(undefined, [document.getElementsByClassName("gem red")[0],document.getElementsByClassName("gem red")[0]])
+// display gems
+function displayGems(player, gems){
+
+}
 
 // purchase cards
-function buyCard(card, player){
+// function buyCard(card, player){
 
-}
+// }
