@@ -160,8 +160,6 @@ body {
 
 .card-costs {
     display: grid;
-    /* grid-template-columns: repeat(auto-fill, minmax(40px, 2fr)); */
-    grid-template-columns: repeat(2, 1fr);
     padding: 8px;
     gap: 8px;
     height: 85%;
@@ -181,8 +179,8 @@ body {
         -1px  1px 0 black,
         1px  1px 0 black;
     -webkit-text-stroke: .25px black;
-    width: 40px;
-    /* height: 100%; */
+    width: 22.5%;
+    /* height: 40px */
 }
 
 .gem {
@@ -335,7 +333,7 @@ h4 {
 }
 
 .red {
-    background: #B62D2E;
+    background-color: #B62D2E;
 }
 
 .blue {
@@ -356,4 +354,8 @@ h4 {
 
 .gold {
     background-color: #B8B030;
+}
+
+.blank .cost{
+    border: none;
 }

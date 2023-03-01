@@ -36,9 +36,6 @@ document.getElementById("nav-left").addEventListener("click", function() {
 });
 
 
-const colorList = ['red', 'blue', 'green', 'white', 'black'];
-const players = document.getElementsByClassName("player");
-
 function cardActions() {
     const cards = document.getElementsByClassName("card");
 
@@ -56,29 +53,6 @@ function cardActions() {
     }
 };
 cardActions();
-
-
-let currentPlayer = 1;
-// current player begins at player 1
-// function will add 1 to current player
-function nextTurn() {
-    currentPlayer += 1;
-    if(currentPlayer > players.length) {
-        // resets back to start of index if past the last child
-        currentPlayer = 1
-    } 
-    console.log(currentPlayer)
-    playerGlow()
-}
-
-// sets all player box shadow to default
-// current player's box is set with bright box shadow
-function playerGlow() {
-    for (let i = 0; i < players.length; i++) {
-        players[i].style.boxShadow = "2px 2px 4px rgba(255, 255, 255, 0.25)";
-    }
-    players[currentPlayer - 1].style.boxShadow = "0 0 10px 2.5px #EDD534";
-}
 
 // sets the reserve card space of current player to the color of selected card
 // only runs if reserve space is empty
@@ -98,24 +72,11 @@ function reserveCard(cardColor) {
     // let curPlaySpace = reserveSpace[currentPlayer - 1]
     // curPlaySpace.style.backgroundColor = "rgba(0, 0, 0, 0)";
     // curPlaySpace.style.border = "4px dashed white"
-    // nextTurn()
+    // nextTurn()`
 
-const innerCard =
-`<div class="card-content">
-<div class="card-header">
-  <div class="card-points"></div>
-  <div class="card-worth"></div>
-</div>
-<div class="card-body">
-  <div class="card-costs">
-    <div class="red-cost"></div>
-    <div class="blue-cost"></div>
-    <div class="green-cost"></div>
-    <div class="white-cost"></div>
-    <div class="black-cost"></div>
-  </div>
-</div>
-</div>`
+const colorList = {"red":'rgb(182, 45, 46)', "blue":'#1557A3', "green":'#21714A', "white":'#BCBCBC', "black":'#2C211D'};
+const gemList = {"red":'ruby', "blue":'sapphire', "green":'emerald', "white":'diamond', "black":'onyx'}
+const players = document.getElementsByClassName("player");
 
 // player class
 class Player {
@@ -125,13 +86,14 @@ class Player {
     // np: num of player noble points
     // reserved: card object of reserved card
     // gold: boolean of whether player has gold or not
-    constructor() {
+    constructor(name) {
         this.gems = {'red':0, 'blue':0, 'green':0, 'white':0, 'black':0};
         this.cards = {'red':0, 'blue':0, 'green':0, 'white':0, 'black':0};
         this.pp = 0;
         this.np = 0;
         this.reserved = null;
         this.gold = false;
+        this.name = name;
     }
 }
 
@@ -142,11 +104,9 @@ class Card {
     // points: num of point value of card
     // cost: object of how many gems and color of gems card costs
     // level: num of difficulty to acquire
-    constructor(color, image, level){
-        this.color = color;
+    constructor(image, level){
+        this.color = ranColor(colorList)
         this.image = image;
-        this.points
-        this.cost
         this.level = level;
         this.calcPoints = function(level){
             const possPoints = {1:[0,0,0,0,0,0,0,1], 2:[1,1,2,2,2,3], 3:[3,4,4,5]};
@@ -160,6 +120,7 @@ class Card {
             }
             return points;
         }
+        this.points = this.calcPoints(level);
         this.calcCost = function(level, points){
             let possCosts = {
                 1:[[1,1,1,1], [1,1,1,2], [1,2,2], [1,1,3], [1,2], [2,2], [3]],
@@ -190,6 +151,7 @@ class Card {
 
             return cost;
         }
+        this.cost = this.calcCost(level, this.points);
     }
 }
 
@@ -198,18 +160,96 @@ class Noble{
     // cost: object of color of card and number of that color of card required
     // np: num of point value assigned to noble
     // image: string of url of background image of noble
-    constructor(cost, np, image){
-        this.cost = cost;
-        this.np = np;
+    constructor(image){
+        this.np = Math.floor(Math.random() * 4) + 3;
         this.image = image;
+        this.calcCost = function(){
+            let possCosts = [[3,3,3], [4,4]];
+            let costNums = possCosts[Math.floor(Math.random() * possCosts.length)];
+            let colors = selectColors(costNums.length);
+            let cost = {};
+            for(let i=0; i<costNums.length; i++){
+                cost[colors[i]] = costNums[i];
+            }
+            return cost;
+        }
+        this.cost = this.calcCost();
     }
 }
+
+let playerCount = 4;
+let hands = []
+for(let i=0; i<playerCount; i++){
+    hands.push(new Player);
+}
+
+let gems = [];
+
+let currentPlayer = 0;
+// current player begins at player 1
+// function will add 1 to current player
+function nextTurn() {
+    currentPlayer += 1;
+    if(currentPlayer > players.length-1) {
+        // resets back to start of index if past the last child
+        currentPlayer = 0
+    } 
+    // console.log(currentPlayer)
+    playerGlow()
+    gems = [];
+}
+
+// sets all player box shadow to default
+// current player's box is set with bright box shadow
+function playerGlow() {
+    for (let i = 0; i < players.length; i++) {
+        players[i].style.boxShadow = "2px 2px 4px rgba(255, 255, 255, 0.25)";
+    }
+    // console.log(players[currentPlayer])
+    players[currentPlayer].style.boxShadow = "0 0 10px 2.5px #EDD534";
+}
+playerGlow();
+
+document.getElementById("test").addEventListener("click", function() {
+    // let curPlaySpace = reserveSpace[currentPlayer - 1]
+    // curPlaySpace.style.backgroundColor = "rgba(0, 0, 0, 0)";
+    // curPlaySpace.style.border = "4px dashed white"
+    // console.log(curPlaySpace.style.border)
+    // console.log("test")
+    // nextTurn()
+    // console.log(p1.gems);
+    let noble = new Card(undefined, 1);
+    console.log(noble);
+    
+});
+
+const innerCard =
+`<div class="card-content">
+<div class="card-header">
+  <div class="card-points"></div>
+  <div class="card-worth"></div>
+</div>
+<div class="card-body">
+  <div class="card-costs">
+    <div class="red-cost"></div>
+    <div class="blue-cost"></div>
+    <div class="green-cost"></div>
+    <div class="white-cost"></div>
+    <div class="black-cost"></div>
+  </div>
+</div>
+</div>`
+
+function ranColor(colors){
+    let keys = Object.keys(colors);
+    return keys[Math.floor(Math.random()*keys.length)];
+};
 
 // makes sure the cost object of a card does not have a repeated key
 function selectColors(numTerms){
     let colors = new Set();
     while(colors.size < numTerms){
-        colors.add(colorList[Math.floor(Math.random() * colorList.length)])
+        colors.add(ranColor(colorList));
     };
     let temp = [];
     colors.forEach(function(value){
@@ -367,3 +407,75 @@ document.getElementById("color-check").addEventListener("change", function() {
       document.documentElement.style.setProperty('--gold', '#B8B030');
     }
 });
+// display cards
+let cards1 = []; let cards2 = []; let cards3 = [];
+
+for(let i=0; i<4; i++){
+    cards1.push(new Card(undefined, 1));
+    cards2.push(new Card(undefined, 2));
+    cards3.push(new Card(undefined, 3));
+};
+
+let dispCards = {1:cards1, 2:cards2, 3:cards3};
+function displayCards(cardList){
+    for(let level in cardList){
+        let row = document.getElementsByClassName(`level-${level} used`);
+        for(let i=0; i<row.length; i++){
+            let card = dispCards[level][i]
+            let cardHeader = row[i].children[1].children[0]
+            row[i].style.backgroundColor = colorList[card.color]
+            cardHeader.children[1].innerHTML = gemList[card.color]
+            if(card.points == 0){
+                cardHeader.children[0].innerHTML = ''
+            }else{
+                cardHeader.children[0].innerHTML = card.points;
+            }
+            let costItems = row[i].children[1].children[1].children[0]
+            for(let i=0; i<Object.keys(card.cost).length; i++){
+                let currColor = Object.keys(card.cost)[i]
+                costItems.innerHTML = costItems.innerHTML + `<div class="${currColor} cost">${card.cost[currColor]}</div>`;
+            }
+        }
+    }
+}
+
+displayCards(dispCards);
+
+// take gems
+function takeGems(player, gems){
+    gemColors = []
+    for(let i=0; i<gems.length; i++){
+        gemColors.push(window.getComputedStyle(gems[i]).backgroundColor);
+    }
+    if(gems.length == 2 && gemColors[0] == gemColors[1] && gems[0].innerHTML >= 4){
+        player.gems[Object.keys(colorList).find(key => colorList[key] == gemColors[0])] += 2;
+        console.log(Object.keys(colorList).find(key => colorList[key] == gemColors[0]));
+        nextTurn();
+    }else if(gems.length == 3 && gems[0].innerHTML > 0 && gems[1].innerHTML > 0 && gems[2].innerHTML > 0){
+        if(gemColors[0] != gemColors[1] && gemColors[0] != gemColors[2] && gemColors[1] != gemColors[2]){
+            for(let i=0; i<gems.length; i++){
+                player.gems[Object.keys(colorList).find(key => colorList[key] === gemColors[i])] += 1;
+            }
+            nextTurn();
+        }
+    }
+    console.log(hands)
+}
+
+for(let i=0; i<Object.keys(colorList).length; i++){
+    document.getElementsByClassName(`gem ${Object.keys(colorList)[i]}`)[0].addEventListener("click", function(e){
+        gems.push(e.target)
+        console.log(hands[currentPlayer])
+        takeGems(hands[currentPlayer], gems)
+    })
+}
+
+// display gems
+function displayGems(player, gems){
+
+}
+
+// purchase cards
+// function buyCard(card, player){
+
+// }
