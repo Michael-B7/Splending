@@ -277,6 +277,13 @@ const innerReserve =
 document.getElementById("start-game").addEventListener("click", () => {
     document.getElementById("game-settings").style.display = "none";
     document.getElementById("board").style.display = "grid";
+
+    for (let i = 0; i < document.querySelectorAll(".gem").length; i++) {
+        document.querySelectorAll(".gem")[i].style.display = "flex";
+        console.log(document.querySelectorAll(".gem")[i])
+        console.log(i)
+    }
+
     playerGlow();
 })
 
@@ -376,19 +383,19 @@ function openModal(icon) {
 }
 
 // changes css variables to color blind friendly colors and back
-document.getElementById("color-check").addEventListener("change", function() {
-    if (this.checked) {
-      document.documentElement.style.setProperty('--red', '#D55E00');
-      document.documentElement.style.setProperty('--green', '#009E73');
-      document.documentElement.style.setProperty('--blue', '#0072B2');
-      document.documentElement.style.setProperty('--gold', '#F0E442');
-    } else {
-      document.documentElement.style.setProperty('--red', '#B62D2E');
-      document.documentElement.style.setProperty('--green', '#21714A');
-      document.documentElement.style.setProperty('--blue', '#1557A3');
-      document.documentElement.style.setProperty('--gold', '#B8B030');
-    }
-});
+// document.getElementById("color-check").addEventListener("change", function() {
+//     if (this.checked) {
+//       document.documentElement.style.setProperty('--red', 'rgb(213, 94, 0)');
+//       document.documentElement.style.setProperty('--green', 'rgb(0, 158, 115)');
+//       document.documentElement.style.setProperty('--blue', 'rgb(0, 114, 178)');
+//       document.documentElement.style.setProperty('--gold', 'rgb(240, 228, 66)');
+//     } else {
+//       document.documentElement.style.setProperty('--red', '#B62D2E');
+//       document.documentElement.style.setProperty('--green', '#21714A');
+//       document.documentElement.style.setProperty('--blue', '#1557A3');
+//       document.documentElement.style.setProperty('--gold', '#B8B030');
+//     }
+// });
 
 // display cards
 let cards1 = []; let cards2 = []; let cards3 = [];
@@ -461,4 +468,10 @@ function displayGems(player, gems){
 // purchase cards
 // function buyCard(card, player){
 
+// }
+
+let timePlayed;
+// while (true) {
+//     timePlayed = setInterval(timePlayed += 1 , 1000)
+//     console.log(timePlayed)
 // }
