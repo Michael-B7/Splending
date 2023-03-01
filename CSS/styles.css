@@ -1,4 +1,3 @@
-
 @import url('https://fonts.googleapis.com/css2?family=El+Messiri&display=swap');
 
 * {
@@ -6,10 +5,18 @@
     font-family: 'El Messiri', sans-serif;
 }
 
+:root {
+    --red: #B62D2E;
+    --green: #21714A;
+    --blue: #1557A3;
+    --gold: #B8B030;
+}
+
 body {
     margin: 0;
     background-color: #242830;
     background-image: url("https://www.transparenttextures.com/patterns/always-grey.png");
+    overflow-y: hidden;
 }
 
 #start {
@@ -100,7 +107,7 @@ footer {
 }
 
 .footer-item {
-    background-color: #353C48;
+    background-color: rgba(53, 60, 72, 0.55);
 }
 
 .footer-item:nth-child(2) {
@@ -224,13 +231,8 @@ h3 {
     text-align: center;
 }
 
-.step-rule .gem {
-    width: 75px;
-    cursor: default;
-}
-
-.step-rule .card,
-.step-rule .noble {
+.step-rule .tut-card,
+.step-rule .tut-noble {
     height: 120px;
     width: 80px;
 }
@@ -248,7 +250,7 @@ h3 {
     grid-template-rows: min-content min-content ;
     grid-template-columns: 1fr 2fr min-content;
     grid-template-areas: 
-    "title reserved reserved"
+    "title reserved settings"
     "players board gems";
     gap: 32px;
     padding: 32px;
@@ -257,12 +259,13 @@ h3 {
 #reserved-cards,
 .gems,
 #board,
+.ingame-settings,
 #game-settings,
 .player {
     background: #5E687D;
     background-image: url("https://www.transparenttextures.com/patterns/cartographer.png");
     box-shadow: 2px 2px 4px rgba(255, 255, 255, 0.25);
-    border-radius: 20px;
+    border-radius: 24px;
 }
 
 .title {
@@ -271,8 +274,13 @@ h3 {
     align-items: center;
 }
 
-.title a img {
+a img {
     width: 100%;
+    transition: .3s ease-in
+}
+
+a img:hover {
+    transform: scale(1.05)
 }
 
 .gems {
@@ -311,9 +319,20 @@ h3 {
     font-size: 1.5em;
 }
 
+.setting-wrapper {
+    display: grid;
+    row-gap: 32px;
+}
+
 .game-setting select {
     font-size: 1.5rem;
     width: 50%;
+
+    padding: 8px;
+    border: none;
+    border-radius: 8px;
+    background-color: #3A4263;
+    color: white;
 }
 
 input[type="radio"] {
@@ -322,18 +341,6 @@ input[type="radio"] {
 
 label.radio-button {
     display: inline-block;
-    padding: 16px;
-
-    background-color: #3A4263;
-    color: #EDD534;
-    font-size: 2rem;
-    border-radius: 16px;
-    border: 4px solid #242830;
-
-    transition: .3s ease-in;
-    text-align: center;
-
-    cursor: pointer;
 }
 
 input[type="radio"]:checked + label.radio-button {
@@ -351,7 +358,7 @@ input[type="radio"]:checked + label.radio-button {
 .card, 
 .face-down,
 .noble {
-    border-radius: 10px;
+    border-radius: 8px;
     box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.1);
 }
 
@@ -416,7 +423,8 @@ input[type="radio"]:checked + label.radio-button {
     background-color: rgb(3, 117, 28);
 }
 
-.noble {
+.noble,
+.tut-noble {
     width: 100%;
     height: 100%;
     background-color: burlywood;
@@ -433,14 +441,14 @@ input[type="radio"]:checked + label.radio-button {
     justify-content: space-around;
     align-items: center;
     background-color: rgba(255, 255, 255, .35);
-    border-radius: 10px 10px 0 0;
+    border-radius: 8px 8px 0 0;
     height: 15%;
 }
 
 .card-costs {
     display: grid;
     /* grid-template-columns: repeat(auto-fill, minmax(40px, 2fr)); */
-    grid-template-columns: repeat(2, 1fr);
+    /* grid-template-columns: repeat(2, 1fr); */
     padding: 8px;
     gap: 8px;
     height: 85%;
@@ -460,11 +468,12 @@ input[type="radio"]:checked + label.radio-button {
         -1px  1px 0 black,
         1px  1px 0 black;
     -webkit-text-stroke: .25px black;
-    width: 40px;
+    width: 21%;
     /* height: 100%; */
 }
 
-.gem {
+.gem,
+.step-rule .tut-gem {
     color: white;
     border: 4px solid white;
     border-radius: 50%;
@@ -488,6 +497,11 @@ input[type="radio"]:checked + label.radio-button {
 
     margin: 16px 0;
     cursor: pointer;
+}
+
+.step-rule .tut-gem {
+    width: 75px;
+    cursor: default;
 }
 
 #players {
@@ -526,7 +540,7 @@ input[type="radio"]:checked + label.radio-button {
 }
 
 .empty-card {
-    border-radius: 10px;
+    border-radius: 8px;
     border: 4px dashed white;
     color: white;
     text-align: center;
@@ -563,11 +577,11 @@ input[type="radio"]:checked + label.radio-button {
 }
 
 .player-gem {
-    border-radius: 10px 10px 0 0 ;
+    border-radius: 8px 8px 0 0 ;
 }
 
 .player-card {
-    border-radius: 0 0 10px 10px;
+    border-radius: 0 0 8px 8px;
 }
 
 h4 {
@@ -600,7 +614,7 @@ h4 {
     margin: 8px 0;
     padding: 4px;
     background-color: rgba(36, 40, 48, .85);
-    border-radius: 10px;
+    border-radius: 8px;
 }
 
 .card-options > div:hover {
@@ -622,20 +636,136 @@ h4 {
     display: block;
 }
 
-.red {
-    background-color: #B62D2E;
+.ingame-settings {
+    grid-area: settings;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    color: white;
+    font-size: 2rem;
 }
 
-.blue {
-    background-color: #1557A3;
+.ingame-settings i {
+    opacity: .5;
+    transition: .3s ease-in;
+}
+
+.ingame-settings i:hover {
+    opacity: 1;
+    cursor: pointer;
+}
+
+#modal {
+    position: fixed;
+    z-index: 1; 
+
+    left: 0;
+    top: 0;
+    width: 100%; 
+    height: 100%; 
+
+    background-color: rgba(0,0,0,0.4); 
+}
+
+.modal-content {
+    background-color: #A5B1C5;
+    border: #242830 solid 3px;
+    
+    position: absolute;
+    top: 50px;
+    left: 50%;
+    transform: translateX(-50%);
+
+    padding: 16px;
+
+    width: 500px;
+    border-radius: 16px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 1.25rem;
+}
+
+.modal-section {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+}
+
+.modal-section h3 {
+    color: black;
+}
+
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+    margin-bottom: 20px;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: .4s;
+    border-radius: 34px;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    transition: .4s;
+    border-radius: 50%;
+}
+
+input:checked + .slider {
+    background-color: #2196F3;
+}
+
+input:focus + .slider {
+    box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked + .slider:before {
+    transform: translateX(26px);
+}
+
+.red {
+    background-color: var(--red);
+    /* #D55E00 */
 }
 
 .green {
-    background-color: #21714A;
+    background-color: var(--green);
+    /* #009E73 */
+}
+
+.blue {
+    background-color: var(--blue);
+    /* #0072B2 */
 }
 
 .white {
     background-color: #BCBCBC;
+    /* #EAEAEA */
 }
 
 .black {
@@ -643,5 +773,6 @@ h4 {
 }
 
 .gold {
-    background-color: #B8B030;
+    background-color: var(--gold);
+    /* #F0E442 */
 }
