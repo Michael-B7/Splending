@@ -41,28 +41,28 @@
                     <div class="step hidden">
                       <h3>Acquire gems</h3>
                       <div class="step-rule">
-                          <div class="gem black"></div>
-                          <div class="gem blue"></div>
-                          <div class="gem green"></div>
-                          <div class="gem white"></div>
-                          <div class="gem red"></div>
+                          <div class="circle black"></div>
+                          <div class="circle blue"></div>
+                          <div class="circle green"></div>
+                          <div class="circle white"></div>
+                          <div class="circle red"></div>
                       </div>
                   </div>
                   <div class="step hidden">
                       <h3>Build your wealth</h3>
                       <div class="step-rule">
-                        <div class="card level-1"></div>
+                        <!-- <div class="card level-1"></div>
                         <div class="card level-3"></div>
                         <div class="card level-2"></div>
-                        <div class="card level-3"></div>
+                        <div class="card level-3"></div> -->
                       </div>
                   </div>
                   <div class="step hidden">
                       <h3>Attract rich nobles</h3>
                       <div class="step-rule">
+                          <!-- <div class="noble"></div>
                           <div class="noble"></div>
-                          <div class="noble"></div>
-                          <div class="noble"></div>
+                          <div class="noble"></div> -->
                       </div>
                   </div>
                   <div class="step hidden">
@@ -145,11 +145,14 @@
                 <div class="buy-button">Purchase</div>
                 <div class="reserve-button">Reserve</div>
               </div>
-            </div>
-            <div class="card level-3">
-              <div class="card-options">
-                <div class="buy-button">Purchase</div>
-                <div class="reserve-button">Reserve</div>
+              <div class="card-content">
+                <div class="card-header">
+                  <div class="card-points"></div>
+                  <div class="card-worth"></div>
+                </div>
+                <div class="card-body">
+                  <div class="card-costs"></div>
+                </div>
               </div>
             </div>
             <div class="card level-3">
@@ -157,12 +160,44 @@
                 <div class="buy-button">Purchase</div>
                 <div class="reserve-button">Reserve</div>
               </div>
+              <div class="card-content">
+                <div class="card-header">
+                  <div class="card-points"></div>
+                  <div class="card-worth"></div>
+                </div>
+                <div class="card-body">
+                  <div class="card-costs"></div>
+                </div>
+              </div>
             </div>
             <div class="card level-3">
-              <button id="test">test</button>
               <div class="card-options">
                 <div class="buy-button">Purchase</div>
                 <div class="reserve-button">Reserve</div>
+              </div>
+              <div class="card-content">
+                <div class="card-header">
+                  <div class="card-points"></div>
+                  <div class="card-worth"></div>
+                </div>
+                <div class="card-body">
+                  <div class="card-costs"></div>
+                </div>
+              </div>
+            </div>
+            <div class="card level-3">
+              <div class="card-options">
+                <div class="buy-button">Purchase</div>
+                <div class="reserve-button">Reserve</div>
+              </div>
+              <div class="card-content">
+                <div class="card-header">
+                  <div class="card-points"></div>
+                  <div class="card-worth"></div>
+                </div>
+                <div class="card-body">
+                  <div class="card-costs"></div>
+                </div>
               </div>
             </div>
             <div class="card-deck noble-deck">
@@ -180,11 +215,14 @@
                 <div class="buy-button">Purchase</div>
                 <div class="reserve-button">Reserve</div>
               </div>
-            </div>
-            <div class="card level-2">
-              <div class="card-options">
-                <div class="buy-button">Purchase</div>
-                <div class="reserve-button">Reserve</div>
+              <div class="card-content">
+                <div class="card-header">
+                  <div class="card-points"></div>
+                  <div class="card-worth"></div>
+                </div>
+                <div class="card-body">
+                  <div class="card-costs"></div>
+                </div>
               </div>
             </div>
             <div class="card level-2">
@@ -194,16 +232,11 @@
               </div>
               <div class="card-content">
                 <div class="card-header">
-                  <div class="card-points">2</div>
-                  <div class="card-worth">diamond</div>
+                  <div class="card-points"></div>
+                  <div class="card-worth"></div>
                 </div>
                 <div class="card-body">
-                  <div class="card-costs">
-                    <div class="red cost">3</div>
-                    <div class="blue cost">2</div>
-                    <div class="white cost">2</div>
-                    <div class="black cost">2</div>
-                  </div>
+                  <div class="card-costs"></div>
                 </div>
               </div>
             </div>
@@ -211,6 +244,30 @@
               <div class="card-options">
                 <div class="buy-button">Purchase</div>
                 <div class="reserve-button">Reserve</div>
+              </div>
+              <div class="card-content">
+                <div class="card-header">
+                  <div class="card-points"></div>
+                  <div class="card-worth"></div>
+                </div>
+                <div class="card-body">
+                  <div class="card-costs"></div>
+                </div>
+              </div>
+            </div>
+            <div class="card level-2">
+              <div class="card-options">
+                <div class="buy-button">Purchase</div>
+                <div class="reserve-button">Reserve</div>
+              </div>
+              <div class="card-content">
+                <div class="card-header">
+                  <div class="card-points"></div>
+                  <div class="card-worth"></div>
+                </div>
+                <div class="card-body">
+                  <div class="card-costs"></div>
+                </div>
               </div>
             </div>
             <div class="noble"></div>
@@ -224,11 +281,14 @@
                 <div class="buy-button">Purchase</div>
                 <div class="reserve-button">Reserve</div>
               </div>
-            </div>
-            <div class="card level-1">
-              <div class="card-options">
-                <div class="buy-button">Purchase</div>
-                <div class="reserve-button">Reserve</div>
+              <div class="card-content">
+                <div class="card-header">
+                  <div class="card-points"></div>
+                  <div class="card-worth"></div>
+                </div>
+                <div class="card-body">
+                  <div class="card-costs"></div>
+                </div>
               </div>
             </div>
             <div class="card level-1">
@@ -236,13 +296,45 @@
                 <div class="buy-button">Purchase</div>
                 <div class="reserve-button">Reserve</div>
               </div>
+              <div class="card-content">
+                <div class="card-header">
+                  <div class="card-points"></div>
+                  <div class="card-worth"></div>
+                </div>
+                <div class="card-body">
+                  <div class="card-costs"></div>
+                </div>
+              </div>
             </div>
             <div class="card level-1">
               <div class="card-options">
                 <div class="buy-button">Purchase</div>
                 <div class="reserve-button">Reserve</div>
               </div>
-              
+              <div class="card-content">
+                <div class="card-header">
+                  <div class="card-points"></div>
+                  <div class="card-worth"></div>
+                </div>
+                <div class="card-body">
+                  <div class="card-costs"></div>
+                </div>
+              </div>
+            </div>
+            <div class="card level-1">
+              <div class="card-options">
+                <div class="buy-button">Purchase</div>
+                <div class="reserve-button">Reserve</div>
+              </div>
+              <div class="card-content">
+                <div class="card-header">
+                  <div class="card-points"></div>
+                  <div class="card-worth"></div>
+                </div>
+                <div class="card-body">
+                  <div class="card-costs"></div>
+                </div>
+              </div>
             </div>
             <div class="noble"></div>
           </div>

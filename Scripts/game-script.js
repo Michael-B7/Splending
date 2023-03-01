@@ -58,7 +58,7 @@ cardActions();
 // only runs if reserve space is empty
 const reserveSpace = document.getElementsByClassName("empty-card")
 function reserveCard(cardColor) {
-    let curPlaySpace = reserveSpace[currentPlayer - 1]
+    let curPlaySpace = reserveSpace[currentPlayer]
     // rgba(0, 0, 0, 0) is empty background color
     // use (window.getComputedStyle() for background color
     if (window.getComputedStyle(curPlaySpace).backgroundColor == "rgba(0, 0, 0, 0)") {
@@ -210,19 +210,6 @@ function playerGlow() {
 }
 playerGlow();
 
-document.getElementById("test").addEventListener("click", function() {
-    // let curPlaySpace = reserveSpace[currentPlayer - 1]
-    // curPlaySpace.style.backgroundColor = "rgba(0, 0, 0, 0)";
-    // curPlaySpace.style.border = "4px dashed white"
-    // console.log(curPlaySpace.style.border)
-    // console.log("test")
-    // nextTurn()
-    // console.log(p1.gems);
-    let noble = new Card(undefined, 1);
-    console.log(noble);
-    
-});
-
 const innerCard =
 `<div class="card-content">
 <div class="card-header">
@@ -285,11 +272,6 @@ const innerReserve =
 <h4 class="player-name">Player</h4>      
 <div class="empty-card"></div>
 </div>`
-
-document.getElementById("test").addEventListener("click", function() {
-    document.getElementById("game-settings").style.display = "flex";
-    document.getElementById("board").style.display = "none";
-});
 
 // start game button, removes settings, displays board
 document.getElementById("start-game").addEventListener("click", () => {
@@ -407,6 +389,7 @@ document.getElementById("color-check").addEventListener("change", function() {
       document.documentElement.style.setProperty('--gold', '#B8B030');
     }
 });
+
 // display cards
 let cards1 = []; let cards2 = []; let cards3 = [];
 
