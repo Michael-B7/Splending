@@ -231,8 +231,8 @@ h3 {
     text-align: center;
 }
 
-.step-rule .card,
-.step-rule .noble {
+.step-rule .tut-card,
+.step-rule .tut-noble {
     height: 120px;
     width: 80px;
 }
@@ -423,7 +423,8 @@ input[type="radio"]:checked + label.radio-button {
     background-color: rgb(3, 117, 28);
 }
 
-.noble {
+.noble,
+.tut-noble {
     width: 100%;
     height: 100%;
     background-color: burlywood;
@@ -472,7 +473,7 @@ input[type="radio"]:checked + label.radio-button {
 }
 
 .gem,
-.step-rule .circle {
+.step-rule .tut-gem {
     color: white;
     border: 4px solid white;
     border-radius: 50%;
@@ -498,7 +499,7 @@ input[type="radio"]:checked + label.radio-button {
     cursor: pointer;
 }
 
-.step-rule .circle {
+.step-rule .tut-gem {
     width: 75px;
     cursor: default;
 }
