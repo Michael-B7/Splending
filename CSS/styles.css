@@ -448,7 +448,7 @@ input[type="radio"]:checked + label.radio-button {
 .card-costs {
     display: grid;
     /* grid-template-columns: repeat(auto-fill, minmax(40px, 2fr)); */
-    grid-template-columns: repeat(2, 1fr);
+    /* grid-template-columns: repeat(2, 1fr); */
     padding: 8px;
     gap: 8px;
     height: 85%;
@@ -468,7 +468,7 @@ input[type="radio"]:checked + label.radio-button {
         -1px  1px 0 black,
         1px  1px 0 black;
     -webkit-text-stroke: .25px black;
-    width: 40px;
+    width: 21%;
     /* height: 100%; */
 }
 
