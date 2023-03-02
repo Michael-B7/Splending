@@ -44,7 +44,8 @@ function cardActions() {
             cards[i].classList.add("used");
             cards[i].addEventListener("click", function(e) {
                 if (e.target.innerText == "Reserve") {
-                    reserveCard(window.getComputedStyle(this).backgroundColor)
+                    reserveCard(hands[currentPlayer], window.getComputedStyle(this).backgroundColor, e.target.parentElement.parentElement.innerHTML)
+                    
                 } else if (e.target.innerText == "Purchase") {
                     buyCard(this);
                 } 
@@ -57,16 +58,26 @@ cardActions();
 // sets the reserve card space of current player to the color of selected card
 // only runs if reserve space is empty
 const reserveSpace = document.getElementsByClassName("empty-card")
-function reserveCard(cardColor) {
+function reserveCard(player, cardColor, card) {
     let curPlaySpace = reserveSpace[currentPlayer]
     // rgba(0, 0, 0, 0) is empty background color
     // use (window.getComputedStyle() for background color
-    if (window.getComputedStyle(curPlaySpace).backgroundColor == "rgba(0, 0, 0, 0)") {
+    if (!player.reserve) {
         curPlaySpace.style.border = "none";
         curPlaySpace.style.backgroundColor = cardColor;
-        nextTurn()
+        player.reserve = true;
+        player.gold = true;
+
+        curPlaySpace.innerHTML = card;
+        console.log(card)
+        
+        nextTurn();
+    } else {
+        console.log("can not reserve");
     }
 }
+
+
 
 // sets reserve card space back to defualt
     // let curPlaySpace = reserveSpace[currentPlayer - 1]
@@ -465,7 +476,7 @@ function takeGems(player, gems){
         console.log("cant take")
         chosenGems = []
     }
-    console.log(gems)
+    // console.log(gems)
 }
 
 for(let i=0; i<Object.keys(colorList).length; i++){
@@ -490,5 +501,8 @@ function displayGems(player){
 
 // purchase cards
 function buyCard(card, player){
-    console.log(card)
+    for (let i = 0; i < card.querySelectorAll(".cost").length; i++) {
+        const element = card.querySelectorAll(".cost")[i];
+        console.log(element.innerText)
+    }
 }

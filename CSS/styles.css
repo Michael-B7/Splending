@@ -444,6 +444,23 @@ input[type="radio"]:checked + label.radio-button {
     height: 15%;
 }
 
+.reserved-container .card-content {
+    flex-direction: row;
+}
+
+.reserved-container .card-header {
+    height: 100%;
+    padding: 8px;
+    display: flex;
+    flex-direction: column;
+    border-radius: 8px 0 0 8px;
+}
+
+.reserved-container .card-costs {
+    grid-template-rows: none;
+    grid-auto-flow: row;
+}
+
 .card-costs {
     display: grid;
     /* grid-template-columns: repeat(auto-fill, minmax(45px, 1fr)); */
