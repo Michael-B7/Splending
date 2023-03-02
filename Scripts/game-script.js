@@ -74,7 +74,7 @@ function reserveCard(cardColor) {
     // curPlaySpace.style.border = "4px dashed white"
     // nextTurn()`
 
-const colorList = {"red":'rgb(182, 45, 46)', "blue":'#1557A3', "green":'#21714A', "white":'#BCBCBC', "black":'#2C211D'};
+const colorList = {"red":'rgb(182, 45, 46)', "blue":'rgb(21, 87, 163)', "green":'rgb(33, 113, 74)', "white":'rgb(188, 188, 188)', "black":'rgb(44, 33, 29)'};
 const gemList = {"red":'ruby', "blue":'sapphire', "green":'emerald', "white":'diamond', "black":'onyx'}
 const players = document.getElementsByClassName("player");
 
@@ -183,12 +183,13 @@ for(let i=0; i<playerCount; i++){
     hands.push(new Player);
 }
 
-let gems = [];
+let chosenGems = [];
 
 let currentPlayer = 0;
 // current player begins at player 1
 // function will add 1 to current player
 function nextTurn() {
+    
     currentPlayer += 1;
     if(currentPlayer > players.length-1) {
         // resets back to start of index if past the last child
@@ -196,7 +197,7 @@ function nextTurn() {
     } 
     // console.log(currentPlayer)
     playerGlow()
-    gems = [];
+    chosenGems = [];
 }
 
 // sets all player box shadow to default
@@ -208,7 +209,7 @@ function playerGlow() {
     // console.log(players[currentPlayer])
     players[currentPlayer].style.boxShadow = "0 0 10px 2.5px #EDD534";
 }
-playerGlow();
+// playerGlow();
 
 const innerCard =
 `<div class="card-content">
@@ -246,25 +247,7 @@ function selectColors(numTerms){
     return colors;
 }
 
-// inner HTML of displayed players
-const innerPlayer = 
-`<div class="player">
-<h4 class="player-name">Player</h4>
-<div class="player-gems">
-  <div class="player-gem red">0</div>
-  <div class="player-gem green">0</div>
-  <div class="player-gem blue">0</div>
-  <div class="player-gem white">0</div>
-  <div class="player-gem black">0</div>
-  <div class="player-card red">0</div>
-  <div class="player-card green">0</div>
-  <div class="player-card blue">0</div>
-  <div class="player-card white">0</div>
-  <div class="player-card black">0</div>
-</div>
-<div class="player-balance">Prestige Points:</div>
-<div class="noble-balance">Nobles:</div>
-</div>`;
+// inner HTML of displayed player
 
 // inner HTML of reserved cards
 const innerReserve = 
@@ -312,8 +295,29 @@ function playerAmount() {
     let playerAmount = 4;
     playerAmount = document.getElementById("player-amount").value;
     console.log(playerAmount);
+    let innerPlayers = "";
+    for(let i=0; i<playerAmount; i++){
+        let innerPlayer = `<div class="player player${i}">
+        <h4 class="player-name"></h4>
+        <div class="player-gems">
+          <div class="player-gem red">0</div>
+          <div class="player-gem green">0</div>
+          <div class="player-gem blue">0</div>
+          <div class="player-gem white">0</div>
+          <div class="player-gem black">0</div>
+          <div class="player-card red">0</div>
+          <div class="player-card green">0</div>
+          <div class="player-card blue">0</div>
+          <div class="player-card white">0</div>
+          <div class="player-card black">0</div>
+        </div>
+        <div class="player-balance">Prestige Points:</div>
+        <div class="noble-balance">Nobles:</div>
+        </div>`
 
-    document.getElementById("players").innerHTML = innerPlayer.repeat(playerAmount);
+        innerPlayers += innerPlayer;
+    }
+    document.getElementById("players").innerHTML = innerPlayers;
     document.getElementById("reserved-cards").innerHTML = innerReserve.repeat(playerAmount);
     setName(playerAmount)
 }
@@ -338,6 +342,7 @@ for (let i = 0; i < radioButtons.length; i++) {
             document.getElementsByClassName("local")[0].style.display = "none"
             setOnline();
         } else {
+            document.getElementById("players").innerHTML = ""
             document.getElementsByClassName("online")[0].style.display = "none"
             playerAmount()
         } document.getElementsByClassName(element.value)[0].style.display = "flex"
@@ -433,36 +438,53 @@ displayCards(dispCards);
 
 // take gems
 function takeGems(player, gems){
+    console.log(gems)
     gemColors = []
     for(let i=0; i<gems.length; i++){
         gemColors.push(window.getComputedStyle(gems[i]).backgroundColor);
     }
+    console.log(gems[0].innerHTML)
+    console.log(gems.length)
+    console.log(gemColors[0], gemColors[1])
     if(gems.length == 2 && gemColors[0] == gemColors[1] && gems[0].innerHTML >= 4){
+        console.log(9)
         player.gems[Object.keys(colorList).find(key => colorList[key] == gemColors[0])] += 2;
-        console.log(Object.keys(colorList).find(key => colorList[key] == gemColors[0]));
-        nextTurn();
+        // console.log(Object.keys(colorList).find(key => colorList[key] == gemColors[0]));
+        displayGems(player)
     }else if(gems.length == 3 && gems[0].innerHTML > 0 && gems[1].innerHTML > 0 && gems[2].innerHTML > 0){
+        console.log(0)
         if(gemColors[0] != gemColors[1] && gemColors[0] != gemColors[2] && gemColors[1] != gemColors[2]){
+            console.log(1)
             for(let i=0; i<gems.length; i++){
                 player.gems[Object.keys(colorList).find(key => colorList[key] === gemColors[i])] += 1;
+                console.log(Object.keys(colorList).find(key => colorList[key] === gemColors[i]))
             }
-            nextTurn();
+            displayGems(player)
         }
-    }
-    console.log(hands)
+    }else if(gems.length != 1){
+        chosenGems = []
+    }  
+
 }
 
 for(let i=0; i<Object.keys(colorList).length; i++){
     document.getElementsByClassName(`gem ${Object.keys(colorList)[i]}`)[0].addEventListener("click", function(e){
-        gems.push(e.target)
-        console.log(hands[currentPlayer])
-        takeGems(hands[currentPlayer], gems)
+        chosenGems.push(e.target)
+        takeGems(hands[currentPlayer], chosenGems)
+        console.log(hands)
     })
 }
 
 // display gems
-function displayGems(player, gems){
-
+function displayGems(player){
+    let elem = document.querySelector(`.player${currentPlayer}`);
+    let colors = Object.keys(colorList);
+    for(let i=0; i<colors.length; i++){
+        elem.querySelector(".player-gems").children[i].innerHTML = player.gems[colors[i]];
+        document.getElementsByClassName(`gem ${colors[i]}`)[0].innerHTML -= player.gems[colors[i]];
+    }
+    console.log(elem)
+    nextTurn();
 }
 
 // purchase cards
