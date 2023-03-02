@@ -287,7 +287,7 @@ function setName(pAmount) {
 function playerAmount() {
     let playerAmount = 4;
     playerAmount = document.getElementById("player-amount").value;
-    console.log(playerAmount);
+    // console.log(playerAmount);
     let innerPlayers = "";
     for(let i=0; i<playerAmount; i++){
         let innerPlayer = `<div class="player player${i}">
@@ -431,40 +431,48 @@ displayCards(dispCards);
 
 // take gems
 function takeGems(player, gems){
-    console.log(gems)
+    // console.log(gems)
     gemColors = []
     for(let i=0; i<gems.length; i++){
         gemColors.push(window.getComputedStyle(gems[i]).backgroundColor);
     }
-    console.log(gems[0].innerHTML)
-    console.log(gems.length)
-    console.log(gemColors[0], gemColors[1])
-    if(gems.length == 2 && gemColors[0] == gemColors[1] && gems[0].innerHTML >= 4){
-        console.log(9)
-        player.gems[Object.keys(colorList).find(key => colorList[key] == gemColors[0])] += 2;
-        // console.log(Object.keys(colorList).find(key => colorList[key] == gemColors[0]));
-        displayGems(player)
-    }else if(gems.length == 3 && gems[0].innerHTML > 0 && gems[1].innerHTML > 0 && gems[2].innerHTML > 0){
-        console.log(0)
-        if(gemColors[0] != gemColors[1] && gemColors[0] != gemColors[2] && gemColors[1] != gemColors[2]){
-            console.log(1)
+    // console.log(gems[0].innerHTML)
+    // console.log(gems.length)
+    // console.log(gemColors[0], gemColors[1])
+    if(gems.length == 2 && gemColors[0] == gemColors[1]){
+        if(gems[0].innerHTML >= 4){
+            player.gems[Object.keys(colorList).find(key => colorList[key] == gemColors[0])] += 2;
+            gems[0].innerHTML -= 2;
+            displayGems(player)
+        }else{
+            console.log("cant take")
+            chosenGems = []
+        }
+    }else if(gems.length == 3 && gemColors[0] != gemColors[1] && gemColors[0] != gemColors[2] && gemColors[1] != gemColors[2]){
+        if(gems[0].innerHTML > 0 && gems[1].innerHTML > 0 && gems[2].innerHTML > 0){
+            // console.log(1)
             for(let i=0; i<gems.length; i++){
                 player.gems[Object.keys(colorList).find(key => colorList[key] === gemColors[i])] += 1;
-                console.log(Object.keys(colorList).find(key => colorList[key] === gemColors[i]))
+                // console.log(Object.keys(colorList).find(key => colorList[key] === gemColors[i]))
+                gems[i].innerHTML -= 1;
             }
             displayGems(player)
+        }else{
+            console.log("cant take")
+            chosenGems = []
         }
-    }else if(gems.length != 1){
+    }else if(gems.length > 2 ){
+        console.log("cant take")
         chosenGems = []
-    }  
-
+    }
+    console.log(gems)
 }
 
 for(let i=0; i<Object.keys(colorList).length; i++){
     document.getElementsByClassName(`gem ${Object.keys(colorList)[i]}`)[0].addEventListener("click", function(e){
         chosenGems.push(e.target)
         takeGems(hands[currentPlayer], chosenGems)
-        console.log(hands)
+        // console.log(hands)
     })
 }
 
@@ -474,9 +482,9 @@ function displayGems(player){
     let colors = Object.keys(colorList);
     for(let i=0; i<colors.length; i++){
         elem.querySelector(".player-gems").children[i].innerHTML = player.gems[colors[i]];
-        document.getElementsByClassName(`gem ${colors[i]}`)[0].innerHTML -= player.gems[colors[i]];
+        
     }
-    console.log(elem)
+    // console.log(elem)
     nextTurn();
 }
 
