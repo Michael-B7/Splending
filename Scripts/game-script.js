@@ -6,6 +6,36 @@ document.getElementById("create").addEventListener("click", () => {
     setName(4)
 })
 
+const colorList = {"red":'rgb(182, 45, 46)', "blue":'rgb(21, 87, 163)', "green":'rgb(33, 113, 74)', "white":'rgb(188, 188, 188)', "black":'rgb(44, 33, 29)'};
+const gemList = {"red":'ruby', "blue":'sapphire', "green":'emerald', "white":'diamond', "black":'onyx'}
+const players = document.getElementsByClassName("player");
+let gemDisplays = [];
+for(let i=0; i<Object.keys(colorList).length; i++){
+    gemDisplays.push(document.getElementsByClassName(`gem ${Object.keys(colorList)[i]}`)[0]);
+}
+
+let gemNums = [];
+function updateGemNums(){
+    console.log(9)
+    for(let i=0; i<Object.keys(colorList); i++){
+        console.log(gemDisplays[i])
+        gemNums.push(gemDisplays[i].innerHTML);
+    }
+}
+
+updateGemNums();
+console.log(gemNums)
+for(let i=0; i<gemNums.length; i++){
+    gemDisplays[i].addEventListener("change", function(e){
+        console.log(9)
+        if(e.target.innerHTML > 8){
+            console.log("stop messing with stuff");
+            e.target.innerHTML = gemNums[i];
+        }
+    })
+}
+
+
 let indexValue = 1;
 function tutorial(index) {
     shownStep(indexValue += index);
@@ -74,9 +104,7 @@ function reserveCard(cardColor) {
     // curPlaySpace.style.border = "4px dashed white"
     // nextTurn()`
 
-const colorList = {"red":'rgb(182, 45, 46)', "blue":'rgb(21, 87, 163)', "green":'rgb(33, 113, 74)', "white":'rgb(188, 188, 188)', "black":'rgb(44, 33, 29)'};
-const gemList = {"red":'ruby', "blue":'sapphire', "green":'emerald', "white":'diamond', "black":'onyx'}
-const players = document.getElementsByClassName("player");
+
 
 // player class
 class Player {
@@ -465,7 +493,7 @@ function takeGems(player, gems){
         console.log("cant take")
         chosenGems = []
     }
-    console.log(gems)
+    // console.log(gems)
 }
 
 for(let i=0; i<Object.keys(colorList).length; i++){
@@ -485,6 +513,7 @@ function displayGems(player){
         
     }
     // console.log(elem)
+    updateGemNums();
     nextTurn();
 }
 
