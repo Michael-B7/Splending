@@ -46,7 +46,7 @@ function cardActions() {
                 if (e.target.innerText == "Reserve") {
                     reserveCard(window.getComputedStyle(this).backgroundColor)
                 } else if (e.target.innerText == "Purchase") {
-                    console.log("purchase!!")
+                    buyCard(this);
                 } 
             })
         } 
@@ -195,7 +195,6 @@ function nextTurn() {
         // resets back to start of index if past the last child
         currentPlayer = 0
     } 
-    // console.log(currentPlayer)
     playerGlow()
     chosenGems = [];
 }
@@ -206,7 +205,6 @@ function playerGlow() {
     for (let i = 0; i < players.length; i++) {
         players[i].style.boxShadow = "2px 2px 4px rgba(255, 255, 255, 0.25)";
     }
-    // console.log(players[currentPlayer])
     players[currentPlayer].style.boxShadow = "0 0 10px 2.5px #EDD534";
 }
 // playerGlow();
@@ -260,13 +258,9 @@ const innerReserve =
 document.getElementById("start-game").addEventListener("click", () => {
     document.getElementById("game-settings").style.display = "none";
     document.getElementById("board").style.display = "grid";
-
     for (let i = 0; i < document.querySelectorAll(".gem").length; i++) {
         document.querySelectorAll(".gem")[i].style.display = "flex";
-        console.log(document.querySelectorAll(".gem")[i])
-        console.log(i)
     }
-
     playerGlow();
 })
 
@@ -294,7 +288,6 @@ function setName(pAmount) {
 function playerAmount() {
     let playerAmount = 4;
     playerAmount = document.getElementById("player-amount").value;
-    console.log(playerAmount);
     let innerPlayers = "";
     for(let i=0; i<playerAmount; i++){
         let innerPlayer = `<div class="player player${i}">
@@ -488,12 +481,6 @@ function displayGems(player){
 }
 
 // purchase cards
-// function buyCard(card, player){
-
-// }
-
-let timePlayed;
-// while (true) {
-//     timePlayed = setInterval(timePlayed += 1 , 1000)
-//     console.log(timePlayed)
-// }
+function buyCard(card, player){
+    console.log(card)
+}

@@ -51,9 +51,7 @@ header {
 .button-box {
     background-color: #A5B1C5;
     width: 25%;
-    /* width: clamp(200px, 35%, 800px); */
     padding: 16px;
-    /* margin: 16px; */
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-template-rows: auto auto;
@@ -518,6 +516,7 @@ input[type="radio"]:checked + label.radio-button {
     gap: 32px;
     color: white;
     grid-area: players;
+    justify-content: space-between;
 }
 
 .player {
