@@ -564,7 +564,7 @@ input[type="radio"]:checked + label.radio-button {
 .empty-card {
     border-radius: 8px;
     border: 4px dashed white;
-    color: white;
+    color: black;
     text-align: center;
     height: calc(100% - 25px);
 }

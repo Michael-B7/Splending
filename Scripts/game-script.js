@@ -61,10 +61,10 @@ cardActions();
     // curPlaySpace.style.border = "4px dashed white"
     // nextTurn()`
 
-const colorList = {"red":'rgb(182, 45, 46)', "blue":'rgb(21, 87, 163)', "green":'rgb(33, 113, 74)', "white":'rgb(188, 188, 188)', "black":'rgb(44, 33, 29)'};
-const reverseColorList = {'rgb(182, 45, 46)':"red", 'rgb(21, 87, 163)':"blue", 'rgb(33, 113, 74)':"green", 'rgb(188, 188, 188)':"white", 'rgb(44, 33, 29)':"black"};
-const gemList = {"red":'ruby', "blue":'sapphire', "green":'emerald', "white":'diamond', "black":'onyx'}
-let gemAmounts = {"red": 8, "blue": 8, "green": 8, "white": 8, "black": 8, "gold": 4} 
+const colorList = {"red":'rgb(182, 45, 46)', "green":'rgb(33, 113, 74)', "blue":'rgb(21, 87, 163)', "white":'rgb(188, 188, 188)', "black":'rgb(44, 33, 29)'};
+const reverseColorList = {'rgb(182, 45, 46)':"red", 'rgb(33, 113, 74)':"green", 'rgb(21, 87, 163)':"blue", 'rgb(188, 188, 188)':"white", 'rgb(44, 33, 29)':"black"};
+const gemList = {"red":'ruby', "green":'emerald', "blue":'sapphire', "white":'diamond', "black":'onyx'}
+let gemAmounts = {"red": 8, "green": 8, "blue": 8, "white": 8, "black": 8, "gold": 4} 
 const players = document.getElementsByClassName("player");
 const gemDisplays = document.querySelectorAll(".gem");
 
@@ -77,8 +77,8 @@ class Player {
     // reserved: card object of reserved card
     // gold: boolean of whether player has gold or not
     constructor(name) {
-        this.gems = {'red':0, 'blue':0, 'green':0, 'white':0, 'black':0};
-        this.cards = {'red':0, 'blue':0, 'green':0, 'white':0, 'black':0};
+        this.gems = {'red':0, 'green':0, 'blue':0, 'white':0, 'black':0};
+        this.cards = {'red':0, 'green':0, 'blue':0, 'white':0, 'black':0};
         this.pp = 0;
         this.np = 0;
         this.reserved = null;
@@ -405,24 +405,23 @@ function displayCards(cardList){
     for(let level in cardList){
         let row = document.getElementsByClassName(`level-${level} used`);
         for(let i=0; i<row.length; i++){
-            let card = board[level][i]
-            let cardHeader = row[i].children[1].children[0]
+            let card = board[level][i];
+            let cardHeader = row[i].children[1].children[0];
             row[i].style.backgroundColor = colorList[card.color]
             cardHeader.children[1].innerHTML = gemList[card.color]
             if(card.points == 0){
-                cardHeader.children[0].innerHTML = ''
+                cardHeader.children[0].innerHTML = '';
             }else{
                 cardHeader.children[0].innerHTML = card.points;
             }
             let costItems = row[i].children[1].children[1].children[0]
             for(let i=0; i<Object.keys(card.cost).length; i++){
-                let currColor = Object.keys(card.cost)[i]
+                let currColor = Object.keys(card.cost)[i];
                 costItems.innerHTML = costItems.innerHTML + `<div class="${currColor} cost">${card.cost[currColor]}</div>`;
             }
         }
     }
 }
-
 displayCards(board);
 
 // sets the reserve card space of current player to the color of selected card
@@ -454,7 +453,6 @@ function reserveCard(player, eventCard) {
                     let currColor = Object.keys(board[level][i].cost)[j]
                     costItems.innerHTML = costItems.innerHTML + `<div class="${currColor} cost">${board[level][i].cost[currColor]}</div>`;
                 }
-                
             }
         }
         nextTurn();
