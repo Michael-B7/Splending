@@ -300,8 +300,14 @@ function playerAmount() {
 
         innerPlayers += innerPlayer;
     }
-    document.getElementById("players").innerHTML = innerPlayers;
+    const playerColumn = document.getElementById("players");
+    playerColumn.innerHTML = innerPlayers;
     document.getElementById("reserved-cards").innerHTML = innerReserve.repeat(playerAmount);
+    if (playerAmount < 4) {
+        playerColumn.style.justifyContent = "normal";
+    } else {
+        playerColumn.style.justifyContent = "space-between";
+    }
     setName(playerAmount)
 }
 
@@ -419,7 +425,6 @@ function displayCards(cardList){
 
 displayCards(board);
 
-
 // sets the reserve card space of current player to the color of selected card
 // only runs if reserve space is empty
 const reserveSpace = document.getElementsByClassName("empty-card")
@@ -430,29 +435,28 @@ function reserveCard(player, eventCard) {
         player.reserve = true;
         player.gold = true;
         curPlaySpace.innerHTML = eventCard.innerHTML;
-        // console.log(eventCard.children[1])
 
+        // level: num, the card level of the selected card
         let level = eventCard.classList[1].slice(-1);
         let row = document.getElementsByClassName(`level-${level} used`);
         for (let i = 0; i < row.length; i++) {
             if (row[i] == eventCard) {
-                console.log(board[level][i].cost)
                 curPlaySpace.children[1].children[0].children[0].innerHTML = board[level][i].points;
                 curPlaySpace.children[1].children[0].children[1].innerHTML = gemList[board[level][i].color];
-                // console.log(curPlaySpace.children[1].children[1].children[0])
-                for (let j = 0; j < board[level][i].cost.length; j++) {
-                    console.log(j)
-                    console.log(Object.keys(board[level][i].cost)[i])
-                    console.log(board[level][i].cost[Object.keys(board[level][i].cost)[i]])
+                curPlaySpace.style.backgroundColor = colorList[board[level][i].color]
+                if (board[level][i].points < 1) {
+                    curPlaySpace.children[1].children[0].children[0].innerHTML = "";
+                }
 
-                    curPlaySpace.children[1].children[1].children[0].innerHTML = board[level][i].cost[Object.keys(board[level][i].cost)[i]];
+                let costItems = curPlaySpace.children[1].children[1].children[0] 
+                costItems.innerHTML = ""
+                for (let j = 0; j < Object.keys(board[level][i].cost).length; j++) {
+                    let currColor = Object.keys(board[level][i].cost)[j]
+                    costItems.innerHTML = costItems.innerHTML + `<div class="${currColor} cost">${board[level][i].cost[currColor]}</div>`;
                 }
                 
             }
         }
-
-
-        // console.log(board[eventCard.classList[1].slice(-1)][0])
         nextTurn();
     } else {
         console.log("can not reserve");

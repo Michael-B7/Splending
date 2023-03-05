@@ -452,13 +452,14 @@ input[type="radio"]:checked + label.radio-button {
     height: 100%;
     padding: 8px;
     display: flex;
-    flex-direction: column;
+    flex-direction: column-reverse;
     border-radius: 8px 0 0 8px;
 }
 
 .reserved-container .card-costs {
     grid-template-rows: none;
     grid-auto-flow: row;
+    align-items: flex-end;
 }
 
 .card-costs {
@@ -533,7 +534,6 @@ input[type="radio"]:checked + label.radio-button {
     gap: 32px;
     color: white;
     grid-area: players;
-    justify-content: space-between;
 }
 
 .player {
