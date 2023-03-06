@@ -44,9 +44,10 @@ function cardActions() {
             cards[i].classList.add("used");
             cards[i].addEventListener("click", function(e) {
                 if (e.target.innerText == "Reserve") {
-                    reserveCard(window.getComputedStyle(this).backgroundColor)
+                    reserveCard(hands[currentPlayer], e.target.parentElement.parentElement)
+                    
                 } else if (e.target.innerText == "Purchase") {
-                    console.log("purchase!!")
+                    buyCard(this);
                 } 
             })
         } 
@@ -54,29 +55,18 @@ function cardActions() {
 };
 cardActions();
 
-// sets the reserve card space of current player to the color of selected card
-// only runs if reserve space is empty
-const reserveSpace = document.getElementsByClassName("empty-card")
-function reserveCard(cardColor) {
-    let curPlaySpace = reserveSpace[currentPlayer]
-    // rgba(0, 0, 0, 0) is empty background color
-    // use (window.getComputedStyle() for background color
-    if (window.getComputedStyle(curPlaySpace).backgroundColor == "rgba(0, 0, 0, 0)") {
-        curPlaySpace.style.border = "none";
-        curPlaySpace.style.backgroundColor = cardColor;
-        nextTurn()
-    }
-}
-
 // sets reserve card space back to defualt
     // let curPlaySpace = reserveSpace[currentPlayer - 1]
     // curPlaySpace.style.backgroundColor = "rgba(0, 0, 0, 0)";
     // curPlaySpace.style.border = "4px dashed white"
     // nextTurn()`
 
-const colorList = {"red":'rgb(182, 45, 46)', "blue":'rgb(21, 87, 163)', "green":'rgb(33, 113, 74)', "white":'rgb(188, 188, 188)', "black":'rgb(44, 33, 29)'};
-const gemList = {"red":'ruby', "blue":'sapphire', "green":'emerald', "white":'diamond', "black":'onyx'}
+const colorList = {"red":'rgb(182, 45, 46)', "green":'rgb(33, 113, 74)', "blue":'rgb(21, 87, 163)', "white":'rgb(188, 188, 188)', "black":'rgb(44, 33, 29)'};
+const reverseColorList = {'rgb(182, 45, 46)':"red", 'rgb(33, 113, 74)':"green", 'rgb(21, 87, 163)':"blue", 'rgb(188, 188, 188)':"white", 'rgb(44, 33, 29)':"black"};
+const gemList = {"red":'ruby', "green":'emerald', "blue":'sapphire', "white":'diamond', "black":'onyx'}
+let gemAmounts = {"red": 8, "green": 8, "blue": 8, "white": 8, "black": 8, "gold": 4} 
 const players = document.getElementsByClassName("player");
+const gemDisplays = document.querySelectorAll(".gem");
 
 // player class
 class Player {
@@ -87,11 +77,11 @@ class Player {
     // reserved: card object of reserved card
     // gold: boolean of whether player has gold or not
     constructor(name) {
-        this.gems = {'red':0, 'blue':0, 'green':0, 'white':0, 'black':0};
-        this.cards = {'red':0, 'blue':0, 'green':0, 'white':0, 'black':0};
+        this.gems = {'red':0, 'green':0, 'blue':0, 'white':0, 'black':0};
+        this.cards = {'red':0, 'green':0, 'blue':0, 'white':0, 'black':0};
         this.pp = 0;
         this.np = 0;
-        this.reserved = null;
+        this.reserved = {};
         this.gold = false;
         this.name = name;
     }
@@ -195,7 +185,6 @@ function nextTurn() {
         // resets back to start of index if past the last child
         currentPlayer = 0
     } 
-    // console.log(currentPlayer)
     playerGlow()
     chosenGems = [];
 }
@@ -206,7 +195,6 @@ function playerGlow() {
     for (let i = 0; i < players.length; i++) {
         players[i].style.boxShadow = "2px 2px 4px rgba(255, 255, 255, 0.25)";
     }
-    // console.log(players[currentPlayer])
     players[currentPlayer].style.boxShadow = "0 0 10px 2.5px #EDD534";
 }
 // playerGlow();
@@ -260,6 +248,9 @@ const innerReserve =
 document.getElementById("start-game").addEventListener("click", () => {
     document.getElementById("game-settings").style.display = "none";
     document.getElementById("board").style.display = "grid";
+    for (let i = 0; i < document.querySelectorAll(".gem").length; i++) {
+        document.querySelectorAll(".gem")[i].style.display = "flex";
+    }
     playerGlow();
 })
 
@@ -287,7 +278,6 @@ function setName(pAmount) {
 function playerAmount() {
     let playerAmount = 4;
     playerAmount = document.getElementById("player-amount").value;
-    // console.log(playerAmount);
     let innerPlayers = "";
     for(let i=0; i<playerAmount; i++){
         let innerPlayer = `<div class="player player${i}">
@@ -310,14 +300,37 @@ function playerAmount() {
 
         innerPlayers += innerPlayer;
     }
-    document.getElementById("players").innerHTML = innerPlayers;
+    const playerColumn = document.getElementById("players");
+    playerColumn.innerHTML = innerPlayers;
     document.getElementById("reserved-cards").innerHTML = innerReserve.repeat(playerAmount);
+    if (playerAmount < 4) {
+        playerColumn.style.justifyContent = "normal";
+    } else {
+        playerColumn.style.justifyContent = "space-between";
+    }
     setName(playerAmount)
 }
 
 // resets player amount to 1, prepares for players to join online
 function setOnline() {
-    document.getElementById("players").innerHTML = innerPlayer.repeat(1);
+    document.getElementById("players").innerHTML = 
+    `<div class="player">
+    <h4 class="player-name"></h4>
+    <div class="player-gems">
+      <div class="player-gem red">0</div>
+      <div class="player-gem green">0</div>
+      <div class="player-gem blue">0</div>
+      <div class="player-gem white">0</div>
+      <div class="player-gem black">0</div>
+      <div class="player-card red">0</div>
+      <div class="player-card green">0</div>
+      <div class="player-card blue">0</div>
+      <div class="player-card white">0</div>
+      <div class="player-card black">0</div>
+    </div>
+    <div class="player-balance">Prestige Points:</div>
+    <div class="noble-balance">Nobles:</div>
+    </div>`;
     document.getElementById("reserved-cards").innerHTML = innerReserve.repeat(1);
     setName(1)
 }
@@ -381,19 +394,19 @@ function openModal(icon) {
 }
 
 // changes css variables to color blind friendly colors and back
-document.getElementById("color-check").addEventListener("change", function() {
-    if (this.checked) {
-      document.documentElement.style.setProperty('--red', '#D55E00');
-      document.documentElement.style.setProperty('--green', '#009E73');
-      document.documentElement.style.setProperty('--blue', '#0072B2');
-      document.documentElement.style.setProperty('--gold', '#F0E442');
-    } else {
-      document.documentElement.style.setProperty('--red', '#B62D2E');
-      document.documentElement.style.setProperty('--green', '#21714A');
-      document.documentElement.style.setProperty('--blue', '#1557A3');
-      document.documentElement.style.setProperty('--gold', '#B8B030');
-    }
-});
+// document.getElementById("color-check").addEventListener("change", function() {
+//     if (this.checked) {
+//       document.documentElement.style.setProperty('--red', 'rgb(213, 94, 0)');
+//       document.documentElement.style.setProperty('--green', 'rgb(0, 158, 115)');
+//       document.documentElement.style.setProperty('--blue', 'rgb(0, 114, 178)');
+//       document.documentElement.style.setProperty('--gold', 'rgb(240, 228, 66)');
+//     } else {
+//       document.documentElement.style.setProperty('--red', '#B62D2E');
+//       document.documentElement.style.setProperty('--green', '#21714A');
+//       document.documentElement.style.setProperty('--blue', '#1557A3');
+//       document.documentElement.style.setProperty('--gold', '#B8B030');
+//     }
+// });
 
 // display cards
 let cards1 = []; let cards2 = []; let cards3 = [];
@@ -404,30 +417,88 @@ for(let i=0; i<4; i++){
     cards3.push(new Card(undefined, 3));
 };
 
-let dispCards = {1:cards1, 2:cards2, 3:cards3};
+let board = {1:cards1, 2:cards2, 3:cards3};
 function displayCards(cardList){
+    let cards = document.getElementsByClassName("used");
+    for(let i=0; i<cards.length; i++){
+        cards[i].querySelector(".card-points").innerHTML = ''
+        cards[i].querySelector(".card-worth").innerHTML = ''
+        cards[i].querySelector(".card-costs").innerHTML = ''
+    }
+
     for(let level in cardList){
         let row = document.getElementsByClassName(`level-${level} used`);
         for(let i=0; i<row.length; i++){
-            let card = dispCards[level][i]
-            let cardHeader = row[i].children[1].children[0]
+            let card = board[level][i];
+            let cardHeader = row[i].children[1].children[0];
             row[i].style.backgroundColor = colorList[card.color]
             cardHeader.children[1].innerHTML = gemList[card.color]
             if(card.points == 0){
-                cardHeader.children[0].innerHTML = ''
+                cardHeader.children[0].innerHTML = '';
             }else{
                 cardHeader.children[0].innerHTML = card.points;
             }
             let costItems = row[i].children[1].children[1].children[0]
             for(let i=0; i<Object.keys(card.cost).length; i++){
-                let currColor = Object.keys(card.cost)[i]
+                let currColor = Object.keys(card.cost)[i];
                 costItems.innerHTML = costItems.innerHTML + `<div class="${currColor} cost">${card.cost[currColor]}</div>`;
             }
         }
     }
 }
+displayCards(board);
+console.log(cards3)
 
-displayCards(dispCards);
+// sets the reserve card space of current player to the color of selected card
+// only runs if reserve space is empty
+const reserveSpace = document.getElementsByClassName("empty-card")
+function reserveCard(player, eventCard) {
+    let curPlaySpace = reserveSpace[currentPlayer]
+    console.log(typeof player.reserved)
+    if (!player.gold) {
+        curPlaySpace.style.border = "none";
+        player.gold = true;
+        gemAmounts["gold"]--;
+        document.querySelector(".gem + .gold").innerHTML = gemAmounts["gold"];
+        console.log(player)
+        curPlaySpace.innerHTML = eventCard.innerHTML;
+        // level: num, the card level of the selected card
+        let level = eventCard.classList[1].slice(-1);
+        let row = document.getElementsByClassName(`level-${level} used`);
+        for (let i = 0; i < row.length; i++) {
+            if (row[i] == eventCard) {
+                player.reserved = board[level][i];
+                console.log(player.reserved)
+                console.log(player["reserved"]["points"])
+                console.log(gemList[player["reserved"]["color"]])
+                console.log(colorList[player["reserved"]["color"]])
+                
+                curPlaySpace.children[1].children[0].children[0].innerHTML = player["reserved"]["points"];
+                console.log(curPlaySpace.children[1].children[0].children[0].innerHTML)
+                curPlaySpace.children[1].children[0].children[1].innerHTML = gemList[player["reserved"]["color"]];
+                curPlaySpace.style.backgroundColor = colorList[player["reserved"]["color"]]
+                if (board[level][i].points < 1) {
+                    curPlaySpace.children[1].children[0].children[0].innerHTML = "";
+                }
+                let costItems = curPlaySpace.children[1].children[1].children[0] 
+                costItems.innerHTML = ""
+                for (let j = 0; j < Object.keys(board[level][i].cost).length; j++) {
+                    let currColor = Object.keys(board[level][i].cost)[j]
+                    costItems.innerHTML = costItems.innerHTML + `<div class="${currColor} cost">${board[level][i].cost[currColor]}</div>`;
+                }
+                if (level == 3) {
+                    console.log(cards3)
+                    cards3.splice(i, 1, new Card(undefined, 3));
+                    displayCards(board)
+                }
+            }
+        }
+        
+        nextTurn();
+    } else {
+        console.log("can not reserve");
+    }
+}
 
 // take gems
 function takeGems(player, gems){
@@ -440,21 +511,24 @@ function takeGems(player, gems){
     // console.log(gems.length)
     // console.log(gemColors[0], gemColors[1])
     if(gems.length == 2 && gemColors[0] == gemColors[1]){
-        if(gems[0].innerHTML >= 4){
+        if(gemAmounts[reverseColorList[gemColors[0]]] >= 4){
             player.gems[Object.keys(colorList).find(key => colorList[key] == gemColors[0])] += 2;
-            gems[0].innerHTML -= 2;
+            gemAmounts[reverseColorList[gemColors[0]]] -= 2;
+            gems[0].innerHTML = gemAmounts[reverseColorList[gemColors[0]]];
+            
             displayGems(player)
         }else{
             console.log("cant take")
             chosenGems = []
         }
     }else if(gems.length == 3 && gemColors[0] != gemColors[1] && gemColors[0] != gemColors[2] && gemColors[1] != gemColors[2]){
-        if(gems[0].innerHTML > 0 && gems[1].innerHTML > 0 && gems[2].innerHTML > 0){
+        if(gemAmounts[reverseColorList[gemColors[0]]] > 0 && gemAmounts[reverseColorList[gemColors[1]]] > 0 && gemAmounts[reverseColorList[gemColors[2]]] > 0){
             // console.log(1)
             for(let i=0; i<gems.length; i++){
                 player.gems[Object.keys(colorList).find(key => colorList[key] === gemColors[i])] += 1;
                 // console.log(Object.keys(colorList).find(key => colorList[key] === gemColors[i]))
-                gems[i].innerHTML -= 1;
+                gemAmounts[reverseColorList[gemColors[i]]] -= 1;
+                gems[i].innerHTML = gemAmounts[reverseColorList[gemColors[i]]];
             }
             displayGems(player)
         }else{
@@ -465,7 +539,16 @@ function takeGems(player, gems){
         console.log("cant take")
         chosenGems = []
     }
-    console.log(gems)
+    
+    for (let i = 0; i < gemDisplays.length; i++) {
+        // console.log(gemDisplays[i].innerHTML)
+        // console.log(gemAmounts[Object.keys(gemAmounts)[i]], "colro")
+        if (gemDisplays[i].innerHTML != gemAmounts[Object.keys(gemAmounts)[i]]) {
+            console.log("nonono")
+            gems[i].innerHTML = gemAmounts[reverseColorList[gemColors[i]]];
+        }
+    }
+    // console.log(gems)
 }
 
 for(let i=0; i<Object.keys(colorList).length; i++){
@@ -489,6 +572,9 @@ function displayGems(player){
 }
 
 // purchase cards
-// function buyCard(card, player){
-
-// }
+function buyCard(card, player){
+    for (let i = 0; i < card.querySelectorAll(".cost").length; i++) {
+        const element = card.querySelectorAll(".cost")[i];
+        console.log(element.innerText)
+    }
+}
