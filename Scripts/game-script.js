@@ -313,7 +313,24 @@ function playerAmount() {
 
 // resets player amount to 1, prepares for players to join online
 function setOnline() {
-    document.getElementById("players").innerHTML = innerPlayer.repeat(1);
+    document.getElementById("players").innerHTML = 
+    `<div class="player">
+    <h4 class="player-name"></h4>
+    <div class="player-gems">
+      <div class="player-gem red">0</div>
+      <div class="player-gem green">0</div>
+      <div class="player-gem blue">0</div>
+      <div class="player-gem white">0</div>
+      <div class="player-gem black">0</div>
+      <div class="player-card red">0</div>
+      <div class="player-card green">0</div>
+      <div class="player-card blue">0</div>
+      <div class="player-card white">0</div>
+      <div class="player-card black">0</div>
+    </div>
+    <div class="player-balance">Prestige Points:</div>
+    <div class="noble-balance">Nobles:</div>
+    </div>`;
     document.getElementById("reserved-cards").innerHTML = innerReserve.repeat(1);
     setName(1)
 }
@@ -402,6 +419,7 @@ for(let i=0; i<4; i++){
 
 let board = {1:cards1, 2:cards2, 3:cards3};
 function displayCards(cardList){
+    console.log(typeof cardList)
     for(let level in cardList){
         let row = document.getElementsByClassName(`level-${level} used`);
         for(let i=0; i<row.length; i++){
@@ -423,6 +441,7 @@ function displayCards(cardList){
     }
 }
 displayCards(board);
+console.log(cards3)
 
 // sets the reserve card space of current player to the color of selected card
 // only runs if reserve space is empty
@@ -433,8 +452,10 @@ function reserveCard(player, eventCard) {
         curPlaySpace.style.border = "none";
         player.reserve = true;
         player.gold = true;
-        curPlaySpace.innerHTML = eventCard.innerHTML;
+        gemAmounts["gold"]--;
+        document.querySelector(".gem + .gold").innerHTML = gemAmounts["gold"];
 
+        curPlaySpace.innerHTML = eventCard.innerHTML;
         // level: num, the card level of the selected card
         let level = eventCard.classList[1].slice(-1);
         let row = document.getElementsByClassName(`level-${level} used`);
@@ -446,15 +467,20 @@ function reserveCard(player, eventCard) {
                 if (board[level][i].points < 1) {
                     curPlaySpace.children[1].children[0].children[0].innerHTML = "";
                 }
-
                 let costItems = curPlaySpace.children[1].children[1].children[0] 
                 costItems.innerHTML = ""
                 for (let j = 0; j < Object.keys(board[level][i].cost).length; j++) {
                     let currColor = Object.keys(board[level][i].cost)[j]
                     costItems.innerHTML = costItems.innerHTML + `<div class="${currColor} cost">${board[level][i].cost[currColor]}</div>`;
                 }
+                if (level == 3) {
+                    console.log(cards3)
+                    cards3.splice(i, 1, new Card(undefined, 3));
+                    displayCards(row);
+                }
             }
         }
+        
         nextTurn();
     } else {
         console.log("can not reserve");

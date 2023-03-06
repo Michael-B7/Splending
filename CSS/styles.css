@@ -567,6 +567,7 @@ input[type="radio"]:checked + label.radio-button {
     color: black;
     text-align: center;
     height: calc(100% - 25px);
+    position: relative;
 }
 
 .player-name {
@@ -650,10 +651,12 @@ h4 {
     justify-content: space-between;
 }
 
+.empty-card:hover > .card-content,
 .card:hover .card-content {
     opacity: .5;
 }
 
+.empty-card:hover > .card-options,
 .card:hover .card-options {
     display: block;
 }
