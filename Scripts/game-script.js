@@ -81,7 +81,7 @@ class Player {
         this.cards = {'red':0, 'green':0, 'blue':0, 'white':0, 'black':0};
         this.pp = 0;
         this.np = 0;
-        this.reserved = null;
+        this.reserved = {};
         this.gold = false;
         this.name = name;
     }
@@ -419,7 +419,13 @@ for(let i=0; i<4; i++){
 
 let board = {1:cards1, 2:cards2, 3:cards3};
 function displayCards(cardList){
-    console.log(typeof cardList)
+    let cards = document.getElementsByClassName("used");
+    for(let i=0; i<cards.length; i++){
+        cards[i].querySelector(".card-points").innerHTML = ''
+        cards[i].querySelector(".card-worth").innerHTML = ''
+        cards[i].querySelector(".card-costs").innerHTML = ''
+    }
+
     for(let level in cardList){
         let row = document.getElementsByClassName(`level-${level} used`);
         for(let i=0; i<row.length; i++){
@@ -448,22 +454,29 @@ console.log(cards3)
 const reserveSpace = document.getElementsByClassName("empty-card")
 function reserveCard(player, eventCard) {
     let curPlaySpace = reserveSpace[currentPlayer]
-    if (!player.reserve) {
+    console.log(typeof player.reserved)
+    if (!player.gold) {
         curPlaySpace.style.border = "none";
-        player.reserve = true;
         player.gold = true;
         gemAmounts["gold"]--;
         document.querySelector(".gem + .gold").innerHTML = gemAmounts["gold"];
-
+        console.log(player)
         curPlaySpace.innerHTML = eventCard.innerHTML;
         // level: num, the card level of the selected card
         let level = eventCard.classList[1].slice(-1);
         let row = document.getElementsByClassName(`level-${level} used`);
         for (let i = 0; i < row.length; i++) {
             if (row[i] == eventCard) {
-                curPlaySpace.children[1].children[0].children[0].innerHTML = board[level][i].points;
-                curPlaySpace.children[1].children[0].children[1].innerHTML = gemList[board[level][i].color];
-                curPlaySpace.style.backgroundColor = colorList[board[level][i].color]
+                player.reserved = board[level][i];
+                console.log(player.reserved)
+                console.log(player["reserved"]["points"])
+                console.log(gemList[player["reserved"]["color"]])
+                console.log(colorList[player["reserved"]["color"]])
+                
+                curPlaySpace.children[1].children[0].children[0].innerHTML = player["reserved"]["points"];
+                console.log(curPlaySpace.children[1].children[0].children[0].innerHTML)
+                curPlaySpace.children[1].children[0].children[1].innerHTML = gemList[player["reserved"]["color"]];
+                curPlaySpace.style.backgroundColor = colorList[player["reserved"]["color"]]
                 if (board[level][i].points < 1) {
                     curPlaySpace.children[1].children[0].children[0].innerHTML = "";
                 }
@@ -476,7 +489,7 @@ function reserveCard(player, eventCard) {
                 if (level == 3) {
                     console.log(cards3)
                     cards3.splice(i, 1, new Card(undefined, 3));
-                    displayCards(row);
+                    displayCards(board)
                 }
             }
         }
