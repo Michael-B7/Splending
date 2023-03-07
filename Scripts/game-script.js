@@ -35,9 +35,10 @@ document.getElementById("nav-left").addEventListener("click", function() {
     tutorial(-1);
 });
 
-
+const reserveSpace = document.getElementsByClassName("empty-card")
 function cardActions() {
     const cards = document.getElementsByClassName("card");
+
 
     for (let i = 0; i < cards.length; i++) {
         if(!cards[i].classList.contains("used")) {
@@ -451,7 +452,7 @@ console.log(cards3)
 
 // sets the reserve card space of current player to the color of selected card
 // only runs if reserve space is empty
-const reserveSpace = document.getElementsByClassName("empty-card")
+
 function reserveCard(player, eventCard) {
     let curPlaySpace = reserveSpace[currentPlayer]
     console.log(typeof player.reserved)
@@ -468,15 +469,13 @@ function reserveCard(player, eventCard) {
         for (let i = 0; i < row.length; i++) {
             if (row[i] == eventCard) {
                 player.reserved = board[level][i];
-                console.log(player.reserved)
-                console.log(player["reserved"]["points"])
-                console.log(gemList[player["reserved"]["color"]])
-                console.log(colorList[player["reserved"]["color"]])
                 
                 curPlaySpace.children[1].children[0].children[0].innerHTML = player["reserved"]["points"];
-                console.log(curPlaySpace.children[1].children[0].children[0].innerHTML)
+                curPlaySpace.children[0].innerHTML = 
+                `<div class="buy-button">Purchase</div>
+                <div class="gold-button">Use Gold</div>`
                 curPlaySpace.children[1].children[0].children[1].innerHTML = gemList[player["reserved"]["color"]];
-                curPlaySpace.style.backgroundColor = colorList[player["reserved"]["color"]]
+                curPlaySpace.style.backgroundColor = colorList[player["reserved"]["color"]];
                 if (board[level][i].points < 1) {
                     curPlaySpace.children[1].children[0].children[0].innerHTML = "";
                 }
@@ -493,7 +492,7 @@ function reserveCard(player, eventCard) {
                 }
             }
         }
-        
+        cardActions();
         nextTurn();
     } else {
         console.log("can not reserve");
@@ -572,9 +571,6 @@ function displayGems(player){
 }
 
 // purchase cards
-function buyCard(card, player){
-    for (let i = 0; i < card.querySelectorAll(".cost").length; i++) {
-        const element = card.querySelectorAll(".cost")[i];
-        console.log(element.innerText)
-    }
+function buyCard(){
+    
 }

@@ -452,15 +452,27 @@ input[type="radio"]:checked + label.radio-button {
     height: 100%;
     padding: 8px;
     display: flex;
-    flex-direction: column-reverse;
-    border-radius: 8px 0 0 8px;
+    /* flex-direction: column-reverse; */
+    border-radius: 0 8px 8px 0;
+    position: absolute;
+    writing-mode: vertical-lr;
+    transform: rotateX(180deg) rotateZ(0deg) rotateY(180deg);
 }
 
 .reserved-container .card-costs {
-    grid-template-rows: none;
     grid-auto-flow: row;
     align-items: flex-end;
+    grid-template-rows: min-content min-content;
+    grid-template-columns: repeat(4, 1fr);
+    height: 100%;
+    
 }
+
+.reserved-container .card-body {
+    width: 80%;
+    margin-left: 20%;
+}
+
 
 .card-costs {
     display: grid;
@@ -486,7 +498,7 @@ input[type="radio"]:checked + label.radio-button {
         1px -1px 0 black,
         -1px  1px 0 black,
         1px  1px 0 black;
-    -webkit-text-stroke: .25px black;
+
     width: 40px;
 }
 
@@ -508,7 +520,7 @@ input[type="radio"]:checked + label.radio-button {
         1px -1px 0 black,
         -1px  1px 0 black,
         1px  1px 0 black;
-    -webkit-text-stroke: 1px black;
+
 
     align-self: center;
     aspect-ratio: 1;
@@ -533,6 +545,7 @@ input[type="radio"]:checked + label.radio-button {
     
     gap: 32px;
     color: white;
+    font-size: 1.2rem;
     grid-area: players;
 }
 
@@ -559,6 +572,7 @@ input[type="radio"]:checked + label.radio-button {
 .reserved-container {
     flex: .25;
     margin: 0 8px;
+    position: relative;
 }
 
 .empty-card {
@@ -596,7 +610,6 @@ input[type="radio"]:checked + label.radio-button {
         .5px -.5px 0 black,
         -.5px  .5px 0 black,
         .5px  .5px 0 black;
-    -webkit-text-stroke: .5px black;
 }
 
 .player-gem {
