@@ -81,7 +81,7 @@ class Player {
         this.cards = {'red':0, 'green':0, 'blue':0, 'white':0, 'black':0};
         this.pp = 0;
         this.np = 0;
-        this.reserved = {};
+        this.reserved = false;
         this.gold = false;
         this.name = name;
     }
@@ -95,8 +95,8 @@ class Card {
     // cost: object of how many gems and color of gems card costs
     // level: num of difficulty to acquire
     constructor(image, level){
-        this.color = ranColor(colorList)
         this.image = image;
+        this.color = ranColor(colorList);
         this.level = level;
         this.calcPoints = function(level){
             const possPoints = {1:[0,0,0,0,0,0,0,1], 2:[1,1,2,2,2,3], 3:[3,4,4,5]};
@@ -151,7 +151,7 @@ class Noble{
     // np: num of point value assigned to noble
     // image: string of url of background image of noble
     constructor(image){
-        this.np = Math.floor(Math.random() * 4) + 3;
+        this.np = Math.floor(Math.random() * 3) + 4 ;
         this.image = image;
         this.calcCost = function(){
             let possCosts = [[3,3,3], [4,4]];
@@ -439,8 +439,8 @@ function displayCards(cardList){
                 cardHeader.children[0].innerHTML = card.points;
             }
             let costItems = row[i].children[1].children[1].children[0]
-            for(let i=0; i<Object.keys(card.cost).length; i++){
-                let currColor = Object.keys(card.cost)[i];
+            for(let j=0; j<Object.keys(card.cost).length; j++){
+                let currColor = Object.keys(card.cost)[j];
                 costItems.innerHTML = costItems.innerHTML + `<div class="${currColor} cost">${card.cost[currColor]}</div>`;
             }
         }
@@ -455,7 +455,7 @@ const reserveSpace = document.getElementsByClassName("empty-card")
 function reserveCard(player, eventCard) {
     let curPlaySpace = reserveSpace[currentPlayer]
     console.log(typeof player.reserved)
-    if (!player.gold) {
+    if (!player.reserved) {
         curPlaySpace.style.border = "none";
         player.gold = true;
         gemAmounts["gold"]--;
@@ -487,8 +487,16 @@ function reserveCard(player, eventCard) {
                     costItems.innerHTML = costItems.innerHTML + `<div class="${currColor} cost">${board[level][i].cost[currColor]}</div>`;
                 }
                 if (level == 3) {
-                    console.log(cards3)
+                    // console.log(cards3)
                     cards3.splice(i, 1, new Card(undefined, 3));
+                    displayCards(board)
+                }else if (level == 2) {
+                    // console.log(cards3)
+                    cards2.splice(i, 1, new Card(undefined, 2));
+                    displayCards(board)
+                }else if (level == 1) {
+                    // console.log(cards3)
+                    cards1.splice(i, 1, new Card(undefined, 1));
                     displayCards(board)
                 }
             }
@@ -577,4 +585,23 @@ function buyCard(card, player){
         const element = card.querySelectorAll(".cost")[i];
         console.log(element.innerText)
     }
+}
+
+// nobles
+let nobles = [new Noble(undefined), new Noble(undefined)]
+console.log(nobles)
+function displayNobles(){
+    let nobleHTML = document.querySelectorAll(".noble:not(.noble-stack)");
+    for(let i=0; i<nobleHTML.length; i++){
+        nobleHTML[i].children[0].innerHTML = `<div class="noble-points">${nobles[i].np}</div> <div class="noble-cost"></div>`
+        for(let j=0; j<Object.keys(nobles[i].cost).length; j++){
+            let currColor = Object.keys(nobles[i].cost)[j];
+            nobleHTML[i].children[0].children[1].innerHTML = nobleHTML[i].children[0].children[1].innerHTML + `<div class="${currColor} cost">${nobles[i].cost[currColor]}</div>`;
+        }
+    }
+}
+displayNobles()
+
+function attractNobles(noble){
+    
 }
