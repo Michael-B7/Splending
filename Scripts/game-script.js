@@ -500,6 +500,7 @@ function reserveCard(player, eventCard) {
                 }
             }
         }
+        reserveSize(curPlaySpace)
         cardActions();
         nextTurn();
     } else {
@@ -600,6 +601,17 @@ function displayNobles(){
     }
 }
 displayNobles()
+
+// sets size for reserve cards
+function reserveSize(reserveCards) {
+    let card = document.getElementsByClassName("card")
+    console.log(card[0].offsetWidth)
+    console.log(reserveCards)
+    reserveCards.style.height = card[0].offsetWidth + "px";
+    // console.log(reserveCards.style.height)
+}
+
+// console.log(cards)
 
 function attractNobles(noble){
     
