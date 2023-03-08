@@ -236,7 +236,6 @@ function selectColors(numTerms){
 }
 
 // inner HTML of displayed player
-
 // inner HTML of reserved cards
 const innerReserve = 
 `<div class="reserved-container">
