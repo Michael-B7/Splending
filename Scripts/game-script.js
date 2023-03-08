@@ -12,7 +12,6 @@ function tutorial(index) {
 }
 
 // e: number
-// 
 function shownStep(e) {
     const steps = document.querySelectorAll(".step");
     // resets back to start of index if past the last child
