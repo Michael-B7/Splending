@@ -44,10 +44,10 @@ function cardActions() {
             cards[i].classList.add("used");
             cards[i].addEventListener("click", function(e) {
                 if (e.target.innerText == "Reserve") {
-                    reserveCard(hands[currentPlayer], e.target.parentElement.parentElement)
+                    reserveCard(hands[currentPlayer], e.target.parentElement.parentElement);
                     
                 } else if (e.target.innerText == "Purchase") {
-                    buyCard(this);
+                    buyCard(hands[currentPlayer], e.target.parentElement.parentElement);
                 } 
             })
         } 
@@ -446,20 +446,20 @@ function displayCards(cardList){
     }
 }
 displayCards(board);
-console.log(cards3)
+// console.log(cards3)
 
 // sets the reserve card space of current player to the color of selected card
 // only runs if reserve space is empty
 
 function reserveCard(player, eventCard) {
     let curPlaySpace = reserveSpace[currentPlayer]
-    console.log(typeof player.reserved)
+    // console.log(typeof player.reserved)
     if (!player.reserved) {
         curPlaySpace.style.border = "none";
         player.gold = true;
         gemAmounts["gold"]--;
         document.querySelector(".gem + .gold").innerHTML = gemAmounts["gold"];
-        console.log(player)
+        // console.log(player)
         curPlaySpace.innerHTML = eventCard.innerHTML;
         // level: num, the card level of the selected card
         let level = eventCard.classList[1].slice(-1);
@@ -577,16 +577,38 @@ function displayGems(player){
 }
 
 // purchase cards
-function buyCard(card, player){
-    for (let i = 0; i < card.querySelectorAll(".cost").length; i++) {
-        const element = card.querySelectorAll(".cost")[i];
-        console.log(element.innerText)
+function buyCard(player, card){
+    let level = card.classList[1].slice(-1);
+    let row = document.getElementsByClassName(`level-${level} used`);
+    for(let i=0; i<row.length; i++){
+        if(row[i] == card){
+            let afford = false;
+            for(let j=0; j<Object.keys(board[level][i]["cost"]).length; j++){
+                let currColor = Object.keys(board[level][i]["cost"])[j]
+                if(player["gems"][currColor] >= board[level][i]["cost"][currColor]){
+                    afford = true
+                    console.log("yipeeeeeeeeeeeeeeeeeeeeeee")
+                }else{
+                    afford = false
+                    console.log("no yipeeeeeeeeeeeeeeeeeeeeeee")
+                }
+            }
+            if(afford){
+                for(let j=0; j<Object.keys(board[level][i]["cost"]).length; j++){
+                    let currColor = Object.keys(board[level][i]["cost"])[j]
+                    player["gems"][currColor] -= board[level][i]["cost"][currColor]
+                }
+                console.log(player)
+            }else{
+                console.log("cant buy")
+            }
+        }
     }
 }
 
 // nobles
 let nobles = [new Noble(undefined), new Noble(undefined)]
-console.log(nobles)
+// console.log(nobles)
 function displayNobles(){
     let nobleHTML = document.querySelectorAll(".noble:not(.noble-stack)");
     for(let i=0; i<nobleHTML.length; i++){
