@@ -500,7 +500,7 @@ function reserveCard(player, eventCard) {
                 }
             }
         }
-        reserveSize(curPlaySpace)
+        reserveSize();
         cardActions();
         nextTurn();
     } else {
@@ -603,13 +603,18 @@ function displayNobles(){
 displayNobles()
 
 // sets size for reserve cards
-function reserveSize(reserveCards) {
-    let card = document.getElementsByClassName("card")
-    console.log(card[0].offsetWidth)
-    console.log(reserveCards)
-    reserveCards.style.height = card[0].offsetWidth + "px";
-    // console.log(reserveCards.style.height)
+function reserveSize() {
+    let card = document.getElementsByClassName("card");
+    let rCard = document.getElementsByClassName("empty-card");
+    if (card[0].offsetWidth + "px" > 0) {
+        for (let i = 0; i < rCard.length; i++) {
+            rCard[i].style.height = card[0].offsetWidth + "px";
+        }
+    }
 }
+reserveSize()
+console.log(board)
+window.addEventListener("resize", reserveSize)
 
 // console.log(cards)
 
