@@ -424,10 +424,15 @@ input[type="radio"]:checked + label.radio-button {
 
 .noble,
 .tut-noble {
+    position: relative;
     width: 100%;
     height: 100%;
     background-color: burlywood;
     border: 4px solid brown;
+}
+
+.noble:hover{
+
 }
 
 .noble-content{
@@ -699,12 +704,14 @@ h4 {
 }
 
 .empty-card:hover > .card-content,
-.card:hover .card-content {
+.card:hover > .card-content,
+.noble:hover > .noble-content {
     opacity: .5;
 }
 
 .empty-card:hover > .card-options,
-.card:hover .card-options {
+.card:hover > .card-options,
+.noble:hover > .card-options {
     display: block;
 }
 

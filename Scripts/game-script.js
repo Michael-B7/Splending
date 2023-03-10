@@ -12,7 +12,6 @@ function tutorial(index) {
 }
 
 // e: number
-// 
 function shownStep(e) {
     const steps = document.querySelectorAll(".step");
     // resets back to start of index if past the last child
@@ -237,7 +236,6 @@ function selectColors(numTerms){
 }
 
 // inner HTML of displayed player
-
 // inner HTML of reserved cards
 const innerReserve = 
 `<div class="reserved-container">
