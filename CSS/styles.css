@@ -272,6 +272,10 @@ h3 {
     align-items: center;
 }
 
+.title a {
+    width: 75%;
+}
+
 a img {
     width: 100%;
     transition: .3s ease-in
@@ -616,7 +620,7 @@ input[type="radio"]:checked + label.radio-button {
 
 .reserved-container {
     flex: .25;
-    margin: 0 8px;
+    margin: 0 16px;
     position: relative;
 }
 
