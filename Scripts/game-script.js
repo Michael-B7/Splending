@@ -196,11 +196,13 @@ function updatePlayers(){
             players[i].children[1].children[iGems].innerHTML = hands[i]["gems"][colors[iGems]]
         }
         for(let iCards=5; iCards<Object.keys(hands[i]["cards"]).length+5; iCards++){
-            players[i].children[1].children[iGems].innerHTML = hands[i]["cards"][colors[iGems]]
+            // console.log(hands[i]["cards"][color)
+            players[i].children[1].children[iCards].innerHTML = hands[i]["cards"][colors[iCards-5]]
         }
-        players[i].children[2].innerHTML = hands[i]["pp"]
-        players[i].children[3].innerHTML = hands[i]["np"]
+        players[i].children[2].innerHTML = `Prestige Points: ${hands[i]["pp"]}`
+        players[i].children[3].innerHTML = `Noble Points: ${hands[i]["np"]}`
     }
+    nextTurn()
 }
 
 // sets all player box shadow to default
@@ -522,7 +524,7 @@ function reserveCard(player, eventCard) {
 // take gems
 function takeGems(player, gems){
     // console.log(gems)
-    gemColors = []
+    let gemColors = []
     for(let i=0; i<gems.length; i++){
         gemColors.push(window.getComputedStyle(gems[i]).backgroundColor);
     }
@@ -534,11 +536,12 @@ function takeGems(player, gems){
             player.gems[Object.keys(colorList).find(key => colorList[key] == gemColors[0])] += 2;
             gemAmounts[reverseColorList[gemColors[0]]] -= 2;
             gems[0].innerHTML = gemAmounts[reverseColorList[gemColors[0]]];
-            
-            displayGems(player)
+            gems[0].style.boxShadow = "2px 2px 4px rgba(255, 255, 255, 0.25)"
+            updatePlayers()
         }else{
             console.log("cant take")
             chosenGems = []
+            gems[0].style.boxShadow = "2px 2px 4px rgba(255, 255, 255, 0.25)"
         }
     }else if(gems.length == 3 && gemColors[0] != gemColors[1] && gemColors[0] != gemColors[2] && gemColors[1] != gemColors[2]){
         if(gemAmounts[reverseColorList[gemColors[0]]] > 0 && gemAmounts[reverseColorList[gemColors[1]]] > 0 && gemAmounts[reverseColorList[gemColors[2]]] > 0){
@@ -548,15 +551,22 @@ function takeGems(player, gems){
                 // console.log(Object.keys(colorList).find(key => colorList[key] === gemColors[i]))
                 gemAmounts[reverseColorList[gemColors[i]]] -= 1;
                 gems[i].innerHTML = gemAmounts[reverseColorList[gemColors[i]]];
+                gems[i].style.boxShadow = "2px 2px 4px rgba(255, 255, 255, 0.25)"
             }
-            displayGems(player)
+            updatePlayers()
         }else{
             console.log("cant take")
             chosenGems = []
+            for(let i=0; i<gems.length; i++){
+                gems[i].style.boxShadow = "2px 2px 4px rgba(255, 255, 255, 0.25)"
+            }
         }
     }else if(gems.length > 2 ){
         console.log("cant take")
         chosenGems = []
+        for(let i=0; i<gems.length; i++){
+            gems[i].style.boxShadow = "2px 2px 4px rgba(255, 255, 255, 0.25)"
+        }
     }
     
     for (let i = 0; i < gemDisplays.length; i++) {
@@ -572,22 +582,11 @@ function takeGems(player, gems){
 
 for(let i=0; i<Object.keys(colorList).length; i++){
     document.getElementsByClassName(`gem ${Object.keys(colorList)[i]}`)[0].addEventListener("click", function(e){
+        e.target.style.boxShadow = `0 0 10px 5px rgb(188, 188, 188)`
         chosenGems.push(e.target)
         takeGems(hands[currentPlayer], chosenGems)
         // console.log(hands)
     })
-}
-
-// display gems
-function displayGems(player){
-    let elem = document.querySelector(`.player${currentPlayer}`);
-    let colors = Object.keys(colorList);
-    for(let i=0; i<colors.length; i++){
-        elem.querySelector(".player-gems").children[i].innerHTML = player.gems[colors[i]];
-        
-    }
-    // console.log(elem)
-    nextTurn();
 }
 
 // purchase cards
@@ -612,6 +611,7 @@ function buyCard(player, card){
                 for(let j=0; j<Object.keys(board[level][i]["cost"]).length; j++){
                     let currColor = Object.keys(board[level][i]["cost"])[j]
                     player["gems"][currColor] -= board[level][i]["cost"][currColor]
+                    player["pp"] += board[level][i]["points"]
                 }
                 player["cards"][color] ++;
                 if (level == 3) {
@@ -627,6 +627,7 @@ function buyCard(player, card){
                     cards1.splice(i, 1, new Card(undefined, 1));
                     displayCards(board)
                 }
+                updatePlayers()
             }else{
                 console.log("cant buy")
             }
