@@ -61,6 +61,7 @@ cardActions();
     // curPlaySpace.style.border = "4px dashed white"
     // nextTurn()`
 
+const colors = ["red", "green", "blue", "white", "black"];
 const colorList = {"red":'rgb(182, 45, 46)', "green":'rgb(33, 113, 74)', "blue":'rgb(21, 87, 163)', "white":'rgb(188, 188, 188)', "black":'rgb(44, 33, 29)'};
 const reverseColorList = {'rgb(182, 45, 46)':"red", 'rgb(33, 113, 74)':"green", 'rgb(21, 87, 163)':"blue", 'rgb(188, 188, 188)':"white", 'rgb(44, 33, 29)':"black"};
 const gemList = {"red":'ruby', "green":'emerald', "blue":'sapphire', "white":'diamond', "black":'onyx'}
@@ -187,6 +188,19 @@ function nextTurn() {
     } 
     playerGlow()
     chosenGems = [];
+}
+
+function updatePlayers(){
+    for(let i=0; i<hands.length; i++){
+        for(let iGems=0; iGems<Object.keys(hands[i]["gems"]).length; iGems++){
+            players[i].children[1].children[iGems].innerHTML = hands[i]["gems"][colors[iGems]]
+        }
+        for(let iCards=5; iCards<Object.keys(hands[i]["cards"]).length+5; iCards++){
+            players[i].children[1].children[iGems].innerHTML = hands[i]["cards"][colors[iGems]]
+        }
+        players[i].children[2].innerHTML = hands[i]["pp"]
+        players[i].children[3].innerHTML = hands[i]["np"]
+    }
 }
 
 // sets all player box shadow to default
@@ -580,6 +594,7 @@ function displayGems(player){
 function buyCard(player, card){
     let level = card.classList[1].slice(-1);
     let row = document.getElementsByClassName(`level-${level} used`);
+    let color = reverseColorList[window.getComputedStyle(card).backgroundColor]
     for(let i=0; i<row.length; i++){
         if(row[i] == card){
             let afford = false;
@@ -598,7 +613,20 @@ function buyCard(player, card){
                     let currColor = Object.keys(board[level][i]["cost"])[j]
                     player["gems"][currColor] -= board[level][i]["cost"][currColor]
                 }
-                console.log(player)
+                player["cards"][color] ++;
+                if (level == 3) {
+                    // console.log(cards3)
+                    cards3.splice(i, 1, new Card(undefined, 3));
+                    displayCards(board)
+                }else if (level == 2) {
+                    // console.log(cards3)
+                    cards2.splice(i, 1, new Card(undefined, 2));
+                    displayCards(board)
+                }else if (level == 1) {
+                    // console.log(cards3)
+                    cards1.splice(i, 1, new Card(undefined, 1));
+                    displayCards(board)
+                }
             }else{
                 console.log("cant buy")
             }
