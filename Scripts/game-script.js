@@ -265,6 +265,8 @@ document.getElementById("start-game").addEventListener("click", () => {
     for (let i = 0; i < document.querySelectorAll(".gem").length; i++) {
         document.querySelectorAll(".gem")[i].style.display = "flex";
     }
+    updatePlayers();
+    currentPlayer = 0;
     playerGlow();
 })
 
@@ -518,7 +520,7 @@ function reserveCard(player, eventCard) {
             }
         })
 
-        reserveSize();
+        // reserveSize();
         cardActions();
         nextTurn();
     } else {
@@ -665,9 +667,9 @@ function reserveSize() {
         }
     }
 }
-reserveSize()
-console.log(board)
-window.addEventListener("resize", reserveSize)
+// reserveSize()
+// console.log(board)
+// window.addEventListener("resize", reserveSize)
 
 // console.log(cards)
 

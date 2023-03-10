@@ -272,6 +272,10 @@ h3 {
     align-items: center;
 }
 
+.title a {
+    width: 80%;
+}
+
 a img {
     width: 100%;
     transition: .3s ease-in
