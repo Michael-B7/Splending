@@ -38,16 +38,15 @@ const reserveSpace = document.getElementsByClassName("empty-card")
 function cardActions() {
     const cards = document.getElementsByClassName("card");
 
-
     for (let i = 0; i < cards.length; i++) {
         if(!cards[i].classList.contains("used")) {
             cards[i].classList.add("used");
             cards[i].addEventListener("click", function(e) {
-                if (e.target.innerText == "Reserve") {
-                    reserveCard(hands[currentPlayer], e.target.parentElement.parentElement);
+                if (e.target.classList.contains("reserve-button")) {
+                    reserveCard(hands[currentPlayer], e.target.parentElement.parentElement)
                     
-                } else if (e.target.innerText == "Purchase") {
-                    buyCard(hands[currentPlayer], e.target.parentElement.parentElement);
+                } else if (e.target.classList.contains("buy-button")) {
+                    buyCard(this);
                 } 
             })
         } 
@@ -399,9 +398,6 @@ function openModal(icon) {
     if (icon.classList.contains("fa-circle-question")) {
         modalHeader.innerText = "How to play";
         document.getElementById("settings").style.display = "flex";
-    } else if (icon.classList.contains("fa-chart-simple")) {
-        modalHeader.innerText = "Statistics";
-        document.getElementById("statistics").style.display = "flex";
     } else {
         modalHeader.innerText = "Settings";
         document.getElementById("settings").style.display = "flex";
@@ -514,6 +510,15 @@ function reserveCard(player, eventCard) {
                 }
             }
         }
+        curPlaySpace.addEventListener("click", function(e) {
+            if (e.target.classList.contains("buy-button")) {
+                buyCard(this);
+            } else if (e.target.classList.contains("gold-button")) {
+                useGold(this)
+            }
+        })
+
+        reserveSize();
         cardActions();
         nextTurn();
     } else {
@@ -650,6 +655,26 @@ function displayNobles(){
 }
 displayNobles()
 
+// sets size for reserve cards
+function reserveSize() {
+    let card = document.getElementsByClassName("card");
+    let rCard = document.getElementsByClassName("empty-card");
+    if (card[0].offsetWidth + "px" > 0) {
+        for (let i = 0; i < rCard.length; i++) {
+            rCard[i].style.height = card[0].offsetWidth + "px";
+        }
+    }
+}
+reserveSize()
+console.log(board)
+window.addEventListener("resize", reserveSize)
+
+// console.log(cards)
+
 function attractNobles(noble){
     
+}
+
+function useGold(card) {
+    console.log(card)
 }
