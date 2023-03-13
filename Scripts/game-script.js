@@ -618,63 +618,85 @@ for(let i=0; i<Object.keys(colorList).length; i++){
 
 // purchase cards
 function buyCard(player, card, reserved){
-    let level = card.classList[1].slice(-1);
-    let row = document.getElementsByClassName(`level-${level} used`);
     let color = reverseColorList[window.getComputedStyle(card).backgroundColor]
-    for(let i=0; i<row.length; i++){
-        if(row[i] == card){
-            let afford = false;
-            for(let j=0; j<Object.keys(board[level][i]["cost"]).length; j++){
-                let currColor = Object.keys(board[level][i]["cost"])[j]
-                if(player["gems"][currColor] >= board[level][i]["cost"][currColor]){
-                    afford = true
-                    console.log("yipeeeeeeeeeeeeeeeeeeeeeee")
+    if (!reserved) {
+        let level = card.classList[1].slice(-1);
+        let row = document.getElementsByClassName(`level-${level} used`);
+        for(let i=0; i<row.length; i++){
+            if(row[i] == card){
+                let afford = checkAfford(player, board[level][i])
+                if(afford){
+                    returnGems(player, board[level][i])
+                    player["cards"][color] ++;
+                        if (level == 3) {
+                            // console.log(cards3)
+                            cards3.splice(i, 1, new Card(undefined, 3));
+                            displayCards(board)
+                        }else if (level == 2) {
+                            // console.log(cards3)
+                            cards2.splice(i, 1, new Card(undefined, 2));
+                            displayCards(board)
+                        }else if (level == 1) {
+                            // console.log(cards3)
+                            cards1.splice(i, 1, new Card(undefined, 1));
+                            displayCards(board)
+                        }
+                    updatePlayers();
+                    nextTurn();
                 }else{
-                    afford = false
-                    console.log("no yipeeeeeeeeeeeeeeeeeeeeeee")
+                    alert("cant buy")
                 }
-            }
-            if(afford){
-                for(let j=0; j<Object.keys(board[level][i]["cost"]).length; j++){
-                    let currColor = Object.keys(board[level][i]["cost"])[j]
-                    console.log(currColor)
-                    player["gems"][currColor] -= board[level][i]["cost"][currColor]
-                    player["pp"] += board[level][i]["points"]
-                    if (player["gold"] == currColor) {
-                        gemAmounts[currColor] += (board[level][i]["cost"][currColor] -10)
-                    } else {
-                        gemAmounts[currColor] += board[level][i]["cost"][currColor]
-                    }
-
-                    document.querySelector(`.gem.${currColor}`).innerHTML = gemAmounts[currColor];
-                }
-                player["cards"][color] ++;
-                if (!reserved) {
-                    if (level == 3) {
-                        // console.log(cards3)
-                        cards3.splice(i, 1, new Card(undefined, 3));
-                        displayCards(board)
-                    }else if (level == 2) {
-                        // console.log(cards3)
-                        cards2.splice(i, 1, new Card(undefined, 2));
-                        displayCards(board)
-                    }else if (level == 1) {
-                        // console.log(cards3)
-                        cards1.splice(i, 1, new Card(undefined, 1));
-                        displayCards(board)
-                    }
-                } else {
-                    let curPlaySpace = reserveSpace[currentPlayer]
-                    curPlaySpace.style.backgroundColor = "rgba(0, 0, 0, 0)";
-                    curPlaySpace.style.border = "4px dashed white"
-                    player["reserved"] = false;
-                }
-                updatePlayers();
-                nextTurn();
-            }else{
-                console.log("cant buy")
             }
         }
+    } else {
+        let afford = checkAfford(player, player["reserved"])
+        if (afford) {
+            returnGems(player, player["reserved"])
+            player["cards"][color] ++;
+            
+            let curPlaySpace = reserveSpace[currentPlayer]
+            curPlaySpace.style.backgroundColor = "rgba(0, 0, 0, 0)";
+            curPlaySpace.style.border = "4px dashed white"
+            curPlaySpace.innerHTML = ""
+            player["reserved"] = false;
+
+            updatePlayers();
+            nextTurn();
+        } else {
+            alert("cant buy")
+        }
+    }
+    
+}
+
+function checkAfford(player, card) {
+    let afford = false
+    for(let j=0; j<Object.keys(card["cost"]).length; j++){
+        let currColor = Object.keys(card["cost"])[j]
+        if(player["gems"][currColor] >= card["cost"][currColor]){
+            afford = true
+            console.log("yipeeeeeeeeeeeeeeeeeeeeeee")
+        }else{
+            afford = false
+            console.log("no yipeeeeeeeeeeeeeeeeeeeeeee")
+        }
+    }
+    return afford;
+}
+
+function returnGems(player, card) {
+    for(let j=0; j<Object.keys(card["cost"]).length; j++){
+        let currColor = Object.keys(card["cost"])[j]
+        console.log(currColor)
+        player["gems"][currColor] -= card["cost"][currColor]
+        player["pp"] += card["points"]
+        if (player["gold"] == currColor) {
+            gemAmounts[currColor] += (card["cost"][currColor] -10)
+        } else {
+            gemAmounts[currColor] += card["cost"][currColor]
+        }
+
+        document.querySelector(`.gem.${currColor}`).innerHTML = gemAmounts[currColor];
     }
 }
 
