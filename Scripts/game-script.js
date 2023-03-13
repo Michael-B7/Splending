@@ -653,13 +653,12 @@ function buyCard(player, card, reserved){
         if (afford) {
             returnGems(player, player["reserved"])
             player["cards"][color] ++;
-            
+            player["gold"] = false;
             let curPlaySpace = reserveSpace[currentPlayer]
             curPlaySpace.style.backgroundColor = "rgba(0, 0, 0, 0)";
             curPlaySpace.style.border = "4px dashed white"
             curPlaySpace.innerHTML = ""
             player["reserved"] = false;
-
             updatePlayers();
             nextTurn();
         } else {
@@ -673,7 +672,7 @@ function checkAfford(player, card) {
     let afford = false
     for(let j=0; j<Object.keys(card["cost"]).length; j++){
         let currColor = Object.keys(card["cost"])[j]
-        if(player["gems"][currColor] >= card["cost"][currColor]){
+        if(player["gems"][currColor] >= (card["cost"][currColor] - player["cards"][currColor]*10) ){
             afford = true
             console.log("yipeeeeeeeeeeeeeeeeeeeeeee")
         }else{
@@ -688,12 +687,12 @@ function returnGems(player, card) {
     for(let j=0; j<Object.keys(card["cost"]).length; j++){
         let currColor = Object.keys(card["cost"])[j]
         console.log(currColor)
-        player["gems"][currColor] -= card["cost"][currColor]
+        player["gems"][currColor] -= (card["cost"][currColor] - player["cards"][currColor]*10)
         player["pp"] += card["points"]
         if (player["gold"] == currColor) {
             gemAmounts[currColor] += (card["cost"][currColor] -10)
         } else {
-            gemAmounts[currColor] += card["cost"][currColor]
+            gemAmounts[currColor] += (card["cost"][currColor] - player["cards"][currColor]*10)
         }
 
         document.querySelector(`.gem.${currColor}`).innerHTML = gemAmounts[currColor];
