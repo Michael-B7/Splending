@@ -212,7 +212,7 @@ function updatePlayers(){
         players[i].children[2].innerHTML = `Prestige Points: ${hands[i]["pp"]}`
         players[i].children[3].innerHTML = `Noble Points: ${hands[i]["np"]}`
     }
-    nextTurn()
+    
 }
 
 // sets all player box shadow to default
@@ -277,6 +277,7 @@ document.getElementById("start-game").addEventListener("click", () => {
         document.querySelectorAll(".gem")[i].style.display = "flex";
     }
     updatePlayers();
+    nextTurn();
     currentPlayer = 0;
     playerGlow();
 })
@@ -308,7 +309,7 @@ function playerAmount() {
     let innerPlayers = "";
     for(let i=0; i<playerAmount; i++){
         let innerPlayer = `<div class="player player${i}">
-        <h4 class="player-name"></h4>
+        <h4 class="player-name">Player</h4>
         <div class="player-gems">
           <div class="player-gem red">0</div>
           <div class="player-gem green">0</div>
@@ -567,7 +568,8 @@ function takeGems(player, gems){
             gemAmounts[reverseColorList[gemColors[0]]] -= 20;
             gems[0].innerHTML = gemAmounts[reverseColorList[gemColors[0]]];
             gems[0].style.boxShadow = "2px 2px 4px rgba(255, 255, 255, 0.25)"
-            updatePlayers()
+            updatePlayers();
+            nextTurn();
         }else{
             console.log("cant take")
             chosenGems = []
@@ -583,7 +585,8 @@ function takeGems(player, gems){
                 gems[i].innerHTML = gemAmounts[reverseColorList[gemColors[i]]];
                 gems[i].style.boxShadow = "2px 2px 4px rgba(255, 255, 255, 0.25)"
             }
-            updatePlayers()
+            updatePlayers();
+            nextTurn();
         }else{
             console.log("cant take")
             chosenGems = []
@@ -659,7 +662,8 @@ function buyCard(player, card){
                     cards1.splice(i, 1, new Card(undefined, 1));
                     displayCards(board)
                 }
-                updatePlayers()
+                updatePlayers();
+                nextTurn();
             }else{
                 console.log("cant buy")
             }
@@ -725,7 +729,8 @@ function attractNobles(player, noble){
                     player["np"] = nobles[i]["points"]
                     nobles.splice(i, 1, new Noble(undefined));
                     displayNobles()
-                    updatePlayers()
+                    updatePlayers();
+                    nextTurn();
                 }else{
                     console.log("cant attract")
                 }
@@ -741,8 +746,8 @@ function useGold(player, space) {
         for (let i = 0; i < modalGems.length; i++) {
             modalGems[i].addEventListener("click", (e) => {
                 let selectedColor = e.target.classList[1];
-                player["gems"][selectedColor] += 1;
-                displayGems(player);
+                player["gems"][selectedColor] += 10;
+                updatePlayers();
                 player.gold = false;
 
                 modal.style.display = "none";
