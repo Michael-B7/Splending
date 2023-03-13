@@ -44,7 +44,7 @@ function cardActions() {
             cards[i].addEventListener("click", function(e) {
                 if (e.target.classList.contains("reserve-button")) {
                     reserveCard(hands[currentPlayer], e.target.parentElement.parentElement)
-                    
+
                 } else if (e.target.classList.contains("buy-button")) {
                     buyCard(this);
                 } 
@@ -300,7 +300,13 @@ function playerAmount() {
     }
     const playerColumn = document.getElementById("players");
     playerColumn.innerHTML = innerPlayers;
-    document.getElementById("reserved-cards").innerHTML = innerReserve.repeat(playerAmount);
+    const reserveRow = document.getElementById("reserved-cards");
+    reserveRow.innerHTML = innerReserve.repeat(playerAmount);
+    console.log(reserveRow.children)
+    for (let i = 0; i < reserveRow.children.length; i++) {
+        reserveRow.children[i].classList.add(i)
+    }
+
     if (playerAmount < 4) {
         playerColumn.style.justifyContent = "normal";
     } else {
@@ -378,14 +384,19 @@ for (let i = 0; i < modalIcons.length; i++) {
 // sets correct modal content
 // parameter: string, takes in the icon that is selected
 function openModal(icon) {
-    document.getElementById("modal-username").innerText = localStorage.getItem("userName");
     if (icon.classList.contains("fa-circle-question")) {
         modalHeader.innerText = "How to play";
-        document.getElementById("settings").style.display = "flex";
+        document.getElementById("how-play").style.display = "flex";
     } else {
         modalHeader.innerText = "Settings";
         document.getElementById("settings").style.display = "flex";
     }
+}
+
+function goldMenu() {
+    modal.style.display = "block";
+    modalHeader.innerText = "How to play";
+    document.getElementById("select-gold").style.display = "flex";
 }
 
 // changes css variables to color blind friendly colors and back
@@ -498,7 +509,7 @@ function reserveCard(player, eventCard) {
             if (e.target.classList.contains("buy-button")) {
                 buyCard(this);
             } else if (e.target.classList.contains("gold-button")) {
-                useGold(this)
+                useGold(player, curPlaySpace)
             }
         })
 
@@ -527,6 +538,7 @@ function takeGems(player, gems){
             gems[0].innerHTML = gemAmounts[reverseColorList[gemColors[0]]];
             
             displayGems(player)
+            nextTurn();
         }else{
             console.log("cant take")
             chosenGems = []
@@ -541,6 +553,7 @@ function takeGems(player, gems){
                 gems[i].innerHTML = gemAmounts[reverseColorList[gemColors[i]]];
             }
             displayGems(player)
+            nextTurn();
         }else{
             console.log("cant take")
             chosenGems = []
@@ -577,8 +590,6 @@ function displayGems(player){
         elem.querySelector(".player-gems").children[i].innerHTML = player.gems[colors[i]];
         
     }
-    // console.log(elem)
-    nextTurn();
 }
 
 // purchase cards
@@ -621,9 +632,27 @@ window.addEventListener("resize", reserveSize)
 // console.log(cards)
 
 function attractNobles(noble){
-    
+    console.log(noble)
 }
 
-function useGold(card) {
-    console.log(card)
+function useGold(player, space) {
+    if (space.parentElement.classList[1] == currentPlayer && player.gold) {
+        goldMenu()
+        const modalGems = document.getElementsByClassName("select-gem");
+        for (let i = 0; i < modalGems.length; i++) {
+            modalGems[i].addEventListener("click", (e) => {
+                let selectedColor = e.target.classList[1];
+                player["gems"][selectedColor] += 1;
+                displayGems(player);
+                player.gold = false;
+
+                modal.style.display = "none";
+                for (let i = 0; i < modalSections.length; i++) {
+                    modalSections[i].style.display = "none";
+                }
+            })
+        }
+    } else {
+        console.log("booo")
+    }
 }
