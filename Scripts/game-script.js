@@ -193,11 +193,9 @@ function nextTurn() {
 function updatePlayers(){
     for(let i=0; i<hands.length; i++){
         for(let iGems=0; iGems<Object.keys(hands[i]["gems"]).length; iGems++){
-            // console.log(players[i])
             players[i].children[1].children[iGems].innerHTML = hands[i]["gems"][colors[iGems]]
         }
         for(let iCards=5; iCards<Object.keys(hands[i]["cards"]).length+5; iCards++){
-            // console.log(hands[i]["cards"][color)
             players[i].children[1].children[iCards].innerHTML = hands[i]["cards"][colors[iCards-5]]
         }
         players[i].children[2].innerHTML = `Prestige Points: ${hands[i]["pp"]}`
@@ -326,7 +324,6 @@ function playerAmount() {
     playerColumn.innerHTML = innerPlayers;
     const reserveRow = document.getElementById("reserved-cards");
     reserveRow.innerHTML = innerReserve.repeat(playerCount);
-    // console.log(reserveRow.children)
     for (let i = 0; i < reserveRow.children.length; i++) {
         reserveRow.children[i].classList.add(i)
     }
@@ -451,7 +448,6 @@ let board = {1:cards1, 2:cards2, 3:cards3};
 function displayCards(cardList){
     let cards = document.getElementsByClassName("card");
     for(let i=0; i<cards.length; i++){
-        // console.log(cards[i])
         cards[i].querySelector(".card-points").innerHTML = ''
         cards[i].querySelector(".card-worth").innerHTML = ''
         cards[i].querySelector(".card-costs").innerHTML = ''
@@ -478,20 +474,16 @@ function displayCards(cardList){
     }
 }
 displayCards(board);
-// console.log(cards3)
 
 // sets the reserve card space of current player to the color of selected card
 // only runs if reserve space is empty
 
 function reserveCard(player, eventCard) {
     let curPlaySpace = reserveSpace[currentPlayer]
-    // console.log(typeof player.reserved)
     if (!player.reserved) {
         curPlaySpace.style.border = "none";
-        // player.gold = true;
         gemAmounts["gold"]--;
         document.querySelector(".gem + .gold").innerHTML = gemAmounts["gold"];
-        // console.log(player)
         curPlaySpace.innerHTML = eventCard.innerHTML;
         // level: num, the card level of the selected card
         let level = eventCard.classList[1].slice(-1);
@@ -516,25 +508,26 @@ function reserveCard(player, eventCard) {
                     costItems.innerHTML = costItems.innerHTML + `<div class="${currColor} cost">${board[level][i].cost[currColor]}</div>`;
                 }
                 if (level == 3) {
-                    // console.log(cards3)
                     cards3.splice(i, 1, new Card(undefined, 3));
                     displayCards(board)
                 }else if (level == 2) {
-                    // console.log(cards3)
                     cards2.splice(i, 1, new Card(undefined, 2));
                     displayCards(board)
                 }else if (level == 1) {
-                    // console.log(cards3)
                     cards1.splice(i, 1, new Card(undefined, 1));
                     displayCards(board)
                 }
             }
         }
-        curPlaySpace.addEventListener("click", function(e) {
+        curPlaySpace.children[0].addEventListener("click", function(e) {
             if (e.target.classList.contains("buy-button")) {
                 buyCard(hands[currentPlayer], e.target.parentElement.parentElement, true);
             } else if (e.target.classList.contains("gold-button")) {
-                useGold(player, curPlaySpace)
+                if (curPlaySpace.parentElement.classList[1] == currentPlayer && !player.gold) {
+                    goldMenu()
+                } else {
+                    console.log("booo")
+                }
             }
         })
 
@@ -548,14 +541,11 @@ function reserveCard(player, eventCard) {
 
 // take gems
 function takeGems(player, gems){
-    // console.log(gems)
+
     let gemColors = []
     for(let i=0; i<gems.length; i++){
         gemColors.push(window.getComputedStyle(gems[i]).backgroundColor);
     }
-    // console.log(gems[0].innerHTML)
-    // console.log(gems.length)
-    // console.log(gemColors[0], gemColors[1])
     if(gems.length == 2 && gemColors[0] == gemColors[1]){
         if(gemAmounts[reverseColorList[gemColors[0]]] >= 40){
             player.gems[Object.keys(colorList).find(key => colorList[key] == gemColors[0])] += 20;
@@ -571,10 +561,9 @@ function takeGems(player, gems){
         }
     }else if(gems.length == 3 && gemColors[0] != gemColors[1] && gemColors[0] != gemColors[2] && gemColors[1] != gemColors[2]){
         if(gemAmounts[reverseColorList[gemColors[0]]] > 0 && gemAmounts[reverseColorList[gemColors[1]]] > 0 && gemAmounts[reverseColorList[gemColors[2]]] > 0){
-            // console.log(1)
+
             for(let i=0; i<gems.length; i++){
                 player.gems[Object.keys(colorList).find(key => colorList[key] === gemColors[i])] += 10;
-                // console.log(Object.keys(colorList).find(key => colorList[key] === gemColors[i]))
                 gemAmounts[reverseColorList[gemColors[i]]] -= 10;
                 gems[i].innerHTML = gemAmounts[reverseColorList[gemColors[i]]];
                 gems[i].style.boxShadow = "2px 2px 4px rgba(255, 255, 255, 0.25)"
@@ -597,14 +586,11 @@ function takeGems(player, gems){
     }
     
     for (let i = 0; i < gemDisplays.length; i++) {
-        // console.log(gemDisplays[i].innerHTML)
-        // console.log(gemAmounts[Object.keys(gemAmounts)[i]], "colro")
         if (gemDisplays[i].innerHTML != gemAmounts[Object.keys(gemAmounts)[i]]) {
             console.log("nonono")
             gems[i].innerHTML = gemAmounts[reverseColorList[gemColors[i]]];
         }
     }
-    // console.log(gems)
 }
 
 for(let i=0; i<Object.keys(colorList).length; i++){
@@ -612,14 +598,14 @@ for(let i=0; i<Object.keys(colorList).length; i++){
         e.target.style.boxShadow = `0 0 10px 5px rgb(188, 188, 188)`
         chosenGems.push(e.target)
         takeGems(hands[currentPlayer], chosenGems)
-        // console.log(hands)
     })
 }
 
 // purchase cards
 function buyCard(player, card, reserved){
-    let color = reverseColorList[window.getComputedStyle(card).backgroundColor]
+    console.log("double")
     if (!reserved) {
+        let color = reverseColorList[window.getComputedStyle(card).backgroundColor]
         let level = card.classList[1].slice(-1);
         let row = document.getElementsByClassName(`level-${level} used`);
         for(let i=0; i<row.length; i++){
@@ -629,15 +615,12 @@ function buyCard(player, card, reserved){
                     returnGems(player, board[level][i])
                     player["cards"][color] ++;
                         if (level == 3) {
-                            // console.log(cards3)
                             cards3.splice(i, 1, new Card(undefined, 3));
                             displayCards(board)
                         }else if (level == 2) {
-                            // console.log(cards3)
                             cards2.splice(i, 1, new Card(undefined, 2));
                             displayCards(board)
                         }else if (level == 1) {
-                            // console.log(cards3)
                             cards1.splice(i, 1, new Card(undefined, 1));
                             displayCards(board)
                         }
@@ -652,7 +635,7 @@ function buyCard(player, card, reserved){
         let afford = checkAfford(player, player["reserved"])
         if (afford) {
             returnGems(player, player["reserved"])
-            player["cards"][color] ++;
+            player["cards"][player["reserved"]["color"]] ++;
             player["gold"] = false;
             let curPlaySpace = reserveSpace[currentPlayer]
             curPlaySpace.style.backgroundColor = "rgba(0, 0, 0, 0)";
@@ -701,7 +684,6 @@ function returnGems(player, card) {
 
 // nobles
 let nobles = [new Noble(undefined), new Noble(undefined)]
-// console.log(nobles)
 function displayNobles(){
     let nobleHTML = document.querySelectorAll(".noble:not(.noble-stack)");
     for(let i=0; i<nobleHTML.length; i++){
@@ -729,10 +711,6 @@ function reserveSize() {
     }
 }
 // reserveSize()
-// console.log(board)
-// window.addEventListener("resize", reserveSize)
-
-// console.log(cards)
 
 function attractNobles(player, noble){
     let noblesHTML = document.querySelectorAll(".noble:not(.noble-stack)");
@@ -746,10 +724,8 @@ function attractNobles(player, noble){
                     let currColor = Object.keys(nobles[i]["cost"])[j]
                     if(player["cards"][currColor] >= nobles[i]["cost"][currColor]){
                         afford = true
-                        // console.log("yipeeeeeeeeeeeeeeeeeeeeeee")
                     }else{
                         afford = false
-                        // console.log("no yipeeeeeeeeeeeeeeeeeeeeeee")
                     }
                 }
                 if(afford){
@@ -767,25 +743,18 @@ function attractNobles(player, noble){
     }
 }
 
-function useGold(player, space) {
-    if (space.parentElement.classList[1] == currentPlayer && !player.gold) {
-        goldMenu()
-        const modalGems = document.getElementsByClassName("select-gem");
-        for (let i = 0; i < modalGems.length; i++) {
-            modalGems[i].addEventListener("click", (e) => {
-                let selectedColor = e.target.classList[1];
-                player["gems"][selectedColor] += 10;
-                player["gold"] = selectedColor;
-                updatePlayers();
+const modalGems = document.getElementsByClassName("select-gem");
+for (let i = 0; i < modalGems.length; i++) {
+    modalGems[i].addEventListener("click", (e) => {
+        let selectedColor = e.target.classList[1];
+        console.log(`awoooga ${i}`)
+        hands[currentPlayer]["gems"][selectedColor] += 10;
+        hands[currentPlayer]["gold"] = selectedColor;
+        updatePlayers();
 
-                console.log(player)
-                modal.style.display = "none";
-                for (let i = 0; i < modalSections.length; i++) {
-                    modalSections[i].style.display = "none";
-                }
-            })
+        modal.style.display = "none";
+        for (let i = 0; i < modalSections.length; i++) {
+            modalSections[i].style.display = "none";
         }
-    } else {
-        console.log("booo")
-    }
+    })
 }
