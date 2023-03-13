@@ -54,12 +54,6 @@ function cardActions() {
 };
 cardActions();
 
-// sets reserve card space back to defualt
-    // let curPlaySpace = reserveSpace[currentPlayer - 1]
-    // curPlaySpace.style.backgroundColor = "rgba(0, 0, 0, 0)";
-    // curPlaySpace.style.border = "4px dashed white"
-    // nextTurn()`
-
 const colors = ["red", "green", "blue", "white", "black"];
 const colorList = {"red":'rgb(182, 45, 46)', "green":'rgb(33, 113, 74)', "blue":'rgb(21, 87, 163)', "white":'rgb(188, 188, 188)', "black":'rgb(44, 33, 29)'};
 const reverseColorList = {'rgb(182, 45, 46)':"red", 'rgb(33, 113, 74)':"green", 'rgb(21, 87, 163)':"blue", 'rgb(188, 188, 188)':"white", 'rgb(44, 33, 29)':"black"};
@@ -197,7 +191,6 @@ function nextTurn() {
 }
 
 function updatePlayers(){
-    console.log(hands.length)
     for(let i=0; i<hands.length; i++){
         for(let iGems=0; iGems<Object.keys(hands[i]["gems"]).length; iGems++){
             // console.log(players[i])
@@ -495,7 +488,7 @@ function reserveCard(player, eventCard) {
     // console.log(typeof player.reserved)
     if (!player.reserved) {
         curPlaySpace.style.border = "none";
-        player.gold = true;
+        // player.gold = true;
         gemAmounts["gold"]--;
         document.querySelector(".gem + .gold").innerHTML = gemAmounts["gold"];
         // console.log(player)
@@ -539,7 +532,7 @@ function reserveCard(player, eventCard) {
         }
         curPlaySpace.addEventListener("click", function(e) {
             if (e.target.classList.contains("buy-button")) {
-                buyCard(hands[currentPlayer], e.target.parentElement.parentElement);
+                buyCard(hands[currentPlayer], e.target.parentElement.parentElement, true);
             } else if (e.target.classList.contains("gold-button")) {
                 useGold(player, curPlaySpace)
             }
@@ -564,7 +557,7 @@ function takeGems(player, gems){
     // console.log(gems.length)
     // console.log(gemColors[0], gemColors[1])
     if(gems.length == 2 && gemColors[0] == gemColors[1]){
-        if(gemAmounts[reverseColorList[gemColors[0]]] >= 4){
+        if(gemAmounts[reverseColorList[gemColors[0]]] >= 40){
             player.gems[Object.keys(colorList).find(key => colorList[key] == gemColors[0])] += 20;
             gemAmounts[reverseColorList[gemColors[0]]] -= 20;
             gems[0].innerHTML = gemAmounts[reverseColorList[gemColors[0]]];
@@ -624,7 +617,7 @@ for(let i=0; i<Object.keys(colorList).length; i++){
 }
 
 // purchase cards
-function buyCard(player, card){
+function buyCard(player, card, reserved){
     let level = card.classList[1].slice(-1);
     let row = document.getElementsByClassName(`level-${level} used`);
     let color = reverseColorList[window.getComputedStyle(card).backgroundColor]
@@ -647,22 +640,34 @@ function buyCard(player, card){
                     console.log(currColor)
                     player["gems"][currColor] -= board[level][i]["cost"][currColor]
                     player["pp"] += board[level][i]["points"]
-                    gemAmounts[currColor] += board[level][i]["cost"][currColor]
+                    if (player["gold"] == currColor) {
+                        gemAmounts[currColor] += (board[level][i]["cost"][currColor] -10)
+                    } else {
+                        gemAmounts[currColor] += board[level][i]["cost"][currColor]
+                    }
+
                     document.querySelector(`.gem.${currColor}`).innerHTML = gemAmounts[currColor];
                 }
                 player["cards"][color] ++;
-                if (level == 3) {
-                    // console.log(cards3)
-                    cards3.splice(i, 1, new Card(undefined, 3));
-                    displayCards(board)
-                }else if (level == 2) {
-                    // console.log(cards3)
-                    cards2.splice(i, 1, new Card(undefined, 2));
-                    displayCards(board)
-                }else if (level == 1) {
-                    // console.log(cards3)
-                    cards1.splice(i, 1, new Card(undefined, 1));
-                    displayCards(board)
+                if (!reserved) {
+                    if (level == 3) {
+                        // console.log(cards3)
+                        cards3.splice(i, 1, new Card(undefined, 3));
+                        displayCards(board)
+                    }else if (level == 2) {
+                        // console.log(cards3)
+                        cards2.splice(i, 1, new Card(undefined, 2));
+                        displayCards(board)
+                    }else if (level == 1) {
+                        // console.log(cards3)
+                        cards1.splice(i, 1, new Card(undefined, 1));
+                        displayCards(board)
+                    }
+                } else {
+                    let curPlaySpace = reserveSpace[currentPlayer]
+                    curPlaySpace.style.backgroundColor = "rgba(0, 0, 0, 0)";
+                    curPlaySpace.style.border = "4px dashed white"
+                    player["reserved"] = false;
                 }
                 updatePlayers();
                 nextTurn();
@@ -742,16 +747,17 @@ function attractNobles(player, noble){
 }
 
 function useGold(player, space) {
-    if (space.parentElement.classList[1] == currentPlayer && player.gold) {
+    if (space.parentElement.classList[1] == currentPlayer && !player.gold) {
         goldMenu()
         const modalGems = document.getElementsByClassName("select-gem");
         for (let i = 0; i < modalGems.length; i++) {
             modalGems[i].addEventListener("click", (e) => {
                 let selectedColor = e.target.classList[1];
                 player["gems"][selectedColor] += 10;
+                player["gold"] = selectedColor;
                 updatePlayers();
-                player.gold = false;
 
+                console.log(player)
                 modal.style.display = "none";
                 for (let i = 0; i < modalSections.length; i++) {
                     modalSections[i].style.display = "none";
