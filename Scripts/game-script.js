@@ -46,8 +46,8 @@ function cardActions() {
                     reserveCard(hands[currentPlayer], e.target.parentElement.parentElement)
                     
                 } else if (e.target.classList.contains("buy-button")) {
-                    buyCard(this);
-                } 
+                    buyCard(hands[currentPlayer], e.target.parentElement.parentElement);
+                }
             })
         } 
     }
@@ -64,7 +64,7 @@ const colors = ["red", "green", "blue", "white", "black"];
 const colorList = {"red":'rgb(182, 45, 46)', "green":'rgb(33, 113, 74)', "blue":'rgb(21, 87, 163)', "white":'rgb(188, 188, 188)', "black":'rgb(44, 33, 29)'};
 const reverseColorList = {'rgb(182, 45, 46)':"red", 'rgb(33, 113, 74)':"green", 'rgb(21, 87, 163)':"blue", 'rgb(188, 188, 188)':"white", 'rgb(44, 33, 29)':"black"};
 const gemList = {"red":'ruby', "green":'emerald', "blue":'sapphire', "white":'diamond', "black":'onyx'}
-let gemAmounts = {"red": 8, "green": 8, "blue": 8, "white": 8, "black": 8, "gold": 4} 
+let gemAmounts = {"red": 80, "green": 80, "blue": 80, "white": 80, "black": 80, "gold": 4} 
 const players = document.getElementsByClassName("player");
 const gemDisplays = document.querySelectorAll(".gem");
 
@@ -113,18 +113,18 @@ class Card {
         this.points = this.calcPoints(level);
         this.calcCost = function(level, points){
             let possCosts = {
-                1:[[1,1,1,1], [1,1,1,2], [1,2,2], [1,1,3], [1,2], [2,2], [3]],
-                2:{1:[[2,2,3], [2,3,3]], 2:[[1,2,4], [3,5], [5]]},
-                3:{3:[[3,3,3,5]], 4:[[7], [3,3,6]]}
+                1:[[10,10,10,10], [10,10,10,20], [10,20,20], [10,10,30], [10,20], [20,20], [30]],
+                2:{1:[[20,20,30], [20,30,30]], 2:[[10,20,40], [30,50], [50]]},
+                3:{3:[[30,30,30,50]], 4:[[70], [30,30,60]]}
             }
 
             let costNums;
             if(level == 1 && points == 1){
-                costNums = [4];
+                costNums = [40];
             }else if(level == 2 && points == 3){
-                costNums = [6];
+                costNums = [60];
             }else if(level == 3 && points == 5){
-                costNums = [3,7]
+                costNums = [30,70]
             }else if(level == 1){
                 costNums = possCosts[1][Math.floor(Math.random() * possCosts[1].length)]
             }else if(level == 2){
@@ -151,7 +151,7 @@ class Noble{
     // np: num of point value assigned to noble
     // image: string of url of background image of noble
     constructor(image){
-        this.np = Math.floor(Math.random() * 3) + 4 ;
+        this.points = Math.floor(Math.random() * 3) + 4 ;
         this.image = image;
         this.calcCost = function(){
             let possCosts = [[3,3,3], [4,4]];
@@ -172,6 +172,17 @@ let hands = []
 for(let i=0; i<playerCount; i++){
     hands.push(new Player);
 }
+
+hands[0]["cards"]["red"] = 10
+hands[0]["cards"]["blue"] = 10
+hands[0]["cards"]["green"] = 10
+hands[0]["cards"]["white"] = 10
+hands[0]["cards"]["black"] = 10
+// hands[0]["gems"]["red"] = 100
+// hands[0]["gems"]["blue"] = 100
+// hands[0]["gems"]["green"] = 100
+// hands[0]["gems"]["white"] = 100
+// hands[0]["gems"]["black"] = 100
 
 let chosenGems = [];
 
@@ -432,8 +443,9 @@ for(let i=0; i<4; i++){
 
 let board = {1:cards1, 2:cards2, 3:cards3};
 function displayCards(cardList){
-    let cards = document.getElementsByClassName("used");
+    let cards = document.getElementsByClassName("card");
     for(let i=0; i<cards.length; i++){
+        // console.log(cards[i])
         cards[i].querySelector(".card-points").innerHTML = ''
         cards[i].querySelector(".card-worth").innerHTML = ''
         cards[i].querySelector(".card-costs").innerHTML = ''
@@ -514,7 +526,7 @@ function reserveCard(player, eventCard) {
         }
         curPlaySpace.addEventListener("click", function(e) {
             if (e.target.classList.contains("buy-button")) {
-                buyCard(this);
+                buyCard(hands[currentPlayer], e.target.parentElement.parentElement);
             } else if (e.target.classList.contains("gold-button")) {
                 useGold(this)
             }
@@ -540,8 +552,8 @@ function takeGems(player, gems){
     // console.log(gemColors[0], gemColors[1])
     if(gems.length == 2 && gemColors[0] == gemColors[1]){
         if(gemAmounts[reverseColorList[gemColors[0]]] >= 4){
-            player.gems[Object.keys(colorList).find(key => colorList[key] == gemColors[0])] += 2;
-            gemAmounts[reverseColorList[gemColors[0]]] -= 2;
+            player.gems[Object.keys(colorList).find(key => colorList[key] == gemColors[0])] += 20;
+            gemAmounts[reverseColorList[gemColors[0]]] -= 20;
             gems[0].innerHTML = gemAmounts[reverseColorList[gemColors[0]]];
             gems[0].style.boxShadow = "2px 2px 4px rgba(255, 255, 255, 0.25)"
             updatePlayers()
@@ -554,9 +566,9 @@ function takeGems(player, gems){
         if(gemAmounts[reverseColorList[gemColors[0]]] > 0 && gemAmounts[reverseColorList[gemColors[1]]] > 0 && gemAmounts[reverseColorList[gemColors[2]]] > 0){
             // console.log(1)
             for(let i=0; i<gems.length; i++){
-                player.gems[Object.keys(colorList).find(key => colorList[key] === gemColors[i])] += 1;
+                player.gems[Object.keys(colorList).find(key => colorList[key] === gemColors[i])] += 10;
                 // console.log(Object.keys(colorList).find(key => colorList[key] === gemColors[i]))
-                gemAmounts[reverseColorList[gemColors[i]]] -= 1;
+                gemAmounts[reverseColorList[gemColors[i]]] -= 10;
                 gems[i].innerHTML = gemAmounts[reverseColorList[gemColors[i]]];
                 gems[i].style.boxShadow = "2px 2px 4px rgba(255, 255, 255, 0.25)"
             }
@@ -619,6 +631,8 @@ function buyCard(player, card){
                     let currColor = Object.keys(board[level][i]["cost"])[j]
                     player["gems"][currColor] -= board[level][i]["cost"][currColor]
                     player["pp"] += board[level][i]["points"]
+                    gemAmounts[currColor] += board[level][i]["cost"][currColor]
+                    document.querySelector(`.gem + .${currColor}`).innerHTML = gemAmounts[currColor];
                 }
                 player["cards"][color] ++;
                 if (level == 3) {
@@ -648,7 +662,11 @@ let nobles = [new Noble(undefined), new Noble(undefined)]
 function displayNobles(){
     let nobleHTML = document.querySelectorAll(".noble:not(.noble-stack)");
     for(let i=0; i<nobleHTML.length; i++){
-        nobleHTML[i].children[0].innerHTML = `<div class="noble-points">${nobles[i].np}</div> <div class="noble-cost"></div>`
+        if(!nobleHTML[i].children[1].children[0].classList.contains("used")){
+            nobleHTML[i].children[1].children[0].addEventListener("click", function(e){attractNobles(hands[currentPlayer], e.target.parentElement.parentElement)});
+            nobleHTML[i].children[1].children[0].classList.add("used")
+        }
+        nobleHTML[i].children[0].innerHTML = `<div class="noble-points">${nobles[i].points}</div> <div class="noble-cost"></div>`
         for(let j=0; j<Object.keys(nobles[i].cost).length; j++){
             let currColor = Object.keys(nobles[i].cost)[j];
             nobleHTML[i].children[0].children[1].innerHTML = nobleHTML[i].children[0].children[1].innerHTML + `<div class="${currColor} cost">${nobles[i].cost[currColor]}</div>`;
@@ -673,8 +691,36 @@ function reserveSize() {
 
 // console.log(cards)
 
-function attractNobles(noble){
-    
+function attractNobles(player, noble){
+    let noblesHTML = document.querySelectorAll(".noble:not(.noble-stack)");
+    if(player["np"] > 0){
+        console.log("you already have noble")
+    }else{
+        for(let i=0; i<noblesHTML.length; i++){
+            if(noblesHTML[i] == noble){
+                let afford = false;
+                for(let j=0; j<Object.keys(nobles[i]["cost"]).length; j++){
+                    let currColor = Object.keys(nobles[i]["cost"])[j]
+                    if(player["cards"][currColor] >= nobles[i]["cost"][currColor]){
+                        afford = true
+                        // console.log("yipeeeeeeeeeeeeeeeeeeeeeee")
+                    }else{
+                        afford = false
+                        // console.log("no yipeeeeeeeeeeeeeeeeeeeeeee")
+                    }
+                }
+                if(afford){
+                    player["pp"] += nobles[i]["points"]
+                    player["np"] = nobles[i]["points"]
+                    nobles.splice(i, 1, new Noble(undefined));
+                    displayNobles()
+                    updatePlayers()
+                }else{
+                    console.log("cant attract")
+                }
+            }
+        }
+    }
 }
 
 function useGold(card) {
