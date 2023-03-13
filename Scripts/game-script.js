@@ -167,17 +167,13 @@ class Noble{
     }
 }
 
-let playerCount = 4;
-let hands = []
-for(let i=0; i<playerCount; i++){
-    hands.push(new Player);
-}
+let hands = [];
 
-hands[0]["cards"]["red"] = 10
-hands[0]["cards"]["blue"] = 10
-hands[0]["cards"]["green"] = 10
-hands[0]["cards"]["white"] = 10
-hands[0]["cards"]["black"] = 10
+// hands[0]["cards"]["red"] = 10
+// hands[0]["cards"]["blue"] = 10
+// hands[0]["cards"]["green"] = 10
+// hands[0]["cards"]["white"] = 10
+// hands[0]["cards"]["black"] = 10
 // hands[0]["gems"]["red"] = 100
 // hands[0]["gems"]["blue"] = 100
 // hands[0]["gems"]["green"] = 100
@@ -201,8 +197,10 @@ function nextTurn() {
 }
 
 function updatePlayers(){
+    console.log(hands.length)
     for(let i=0; i<hands.length; i++){
         for(let iGems=0; iGems<Object.keys(hands[i]["gems"]).length; iGems++){
+            // console.log(players[i])
             players[i].children[1].children[iGems].innerHTML = hands[i]["gems"][colors[iGems]]
         }
         for(let iCards=5; iCards<Object.keys(hands[i]["cards"]).length+5; iCards++){
@@ -304,10 +302,13 @@ function setName(pAmount) {
 // displays how many players are in a game
 // updates on game setting dropdown
 function playerAmount() {
-    let playerAmount = 4;
-    playerAmount = document.getElementById("player-amount").value;
+    let playerCount = document.getElementById("player-amount").value;
+    hands = []
+    for(let i=0; i<playerCount; i++){
+        hands.push(new Player);
+    }
     let innerPlayers = "";
-    for(let i=0; i<playerAmount; i++){
+    for(let i=0; i<playerCount; i++){
         let innerPlayer = `<div class="player player${i}">
         <h4 class="player-name">Player</h4>
         <div class="player-gems">
@@ -331,18 +332,18 @@ function playerAmount() {
     const playerColumn = document.getElementById("players");
     playerColumn.innerHTML = innerPlayers;
     const reserveRow = document.getElementById("reserved-cards");
-    reserveRow.innerHTML = innerReserve.repeat(playerAmount);
-    console.log(reserveRow.children)
+    reserveRow.innerHTML = innerReserve.repeat(playerCount);
+    // console.log(reserveRow.children)
     for (let i = 0; i < reserveRow.children.length; i++) {
         reserveRow.children[i].classList.add(i)
     }
 
-    if (playerAmount < 4) {
+    if (playerCount < 4) {
         playerColumn.style.justifyContent = "normal";
     } else {
         playerColumn.style.justifyContent = "space-between";
     }
-    setName(playerAmount)
+    setName(playerCount)
 }
 
 // resets player amount to 1, prepares for players to join online
@@ -643,10 +644,11 @@ function buyCard(player, card){
             if(afford){
                 for(let j=0; j<Object.keys(board[level][i]["cost"]).length; j++){
                     let currColor = Object.keys(board[level][i]["cost"])[j]
+                    console.log(currColor)
                     player["gems"][currColor] -= board[level][i]["cost"][currColor]
                     player["pp"] += board[level][i]["points"]
                     gemAmounts[currColor] += board[level][i]["cost"][currColor]
-                    document.querySelector(`.gem + .${currColor}`).innerHTML = gemAmounts[currColor];
+                    document.querySelector(`.gem.${currColor}`).innerHTML = gemAmounts[currColor];
                 }
                 player["cards"][color] ++;
                 if (level == 3) {
