@@ -613,11 +613,11 @@ input[type="radio"]:checked + label.radio-button {
 .attack {
     grid-area: attack;
     justify-self: end;
-    cursor: pointer;
 }
 
 .attack img {
     height: 24px;
+    opacity: 30%;
 }
 
 #reserved-cards {

@@ -6,10 +6,14 @@ document.getElementById("create").addEventListener("click", () => {
     setName(4)
 })
 
+
+
 let indexValue = 1;
 function tutorial(index) {
     shownStep(indexValue += index);
 }
+
+let attackIcons;
 
 // e: number
 function shownStep(e) {
@@ -163,16 +167,7 @@ class Noble{
 
 let hands = [];
 
-// hands[0]["cards"]["red"] = 10
-// hands[0]["cards"]["blue"] = 10
-// hands[0]["cards"]["green"] = 10
-// hands[0]["cards"]["white"] = 10
-// hands[0]["cards"]["black"] = 10
-// hands[0]["gems"]["red"] = 100
-// hands[0]["gems"]["blue"] = 100
-// hands[0]["gems"]["green"] = 100
-// hands[0]["gems"]["white"] = 100
-// hands[0]["gems"]["black"] = 100
+
 
 let chosenGems = [];
 
@@ -199,6 +194,11 @@ function updatePlayers(){
             players[i].children[2].children[iCards].innerHTML = hands[i]["cards"][colors[iCards-5]]
         }
         players[i].children[3].innerHTML = `Prestige Points: ${hands[i]["pp"]}`
+        if(hands[i]["np"] > 0){
+            players[i].children[1].children[0].style.opacity = 1
+        }else{
+            players[i].children[1].children[0].style.opacity = .3
+        }
         players[i].children[4].innerHTML = `Noble Points: ${hands[i]["np"]}`
     }
     
@@ -298,6 +298,16 @@ function playerAmount() {
     for(let i=0; i<playerCount; i++){
         hands.push(new Player);
     }
+    // hands[0]["cards"]["red"] = 10
+    // hands[0]["cards"]["blue"] = 10
+    // hands[0]["cards"]["green"] = 10
+    // hands[0]["cards"]["white"] = 10
+    // hands[0]["cards"]["black"] = 10
+    // hands[1]["cards"]["red"] = 10
+    // hands[1]["cards"]["blue"] = 10
+    // hands[1]["cards"]["green"] = 10
+    // hands[1]["cards"]["white"] = 10
+    // hands[1]["cards"]["black"] = 10
     let innerPlayers = "";
     for(let i=0; i<playerCount; i++){
         let innerPlayer = `<div class="player player${i}">
@@ -335,6 +345,16 @@ function playerAmount() {
         playerColumn.style.justifyContent = "space-between";
     }
     setName(playerCount)
+    attackIcons = document.querySelectorAll(".attack img");
+    for(let i=0; i<attackIcons.length; i++){
+        attackIcons[i].addEventListener("click", function(e){
+            if(e.target.style.opacity != 1 || hands[currentPlayer]["np"] == 0 || e.target.parentElement.parentElement.classList[1].slice(-1) == currentPlayer){
+                alert("bababooy")
+            }else{
+                nobleAttack(hands[currentPlayer], hands[e.target.parentElement.parentElement.classList[1].slice(-1)]);
+            }
+        })
+    }
 }
 
 // resets player amount to 1, prepares for players to join online
@@ -553,8 +573,21 @@ function takeGems(player, gems){
             gemAmounts[reverseColorList[gemColors[0]]] -= 20;
             gems[0].innerHTML = gemAmounts[reverseColorList[gemColors[0]]];
             gems[0].style.boxShadow = "2px 2px 4px rgba(255, 255, 255, 0.25)"
-            updatePlayers();
-            nextTurn();
+            let total = 0;
+            for(let i=0; i<Object.keys(hands[currentPlayer]["gems"]).length; i++){
+                total += hands[currentPlayer]["gems"][Object.keys(hands[currentPlayer]["gems"])[i]]
+            }
+            if(total > 100){
+                console.log(total)
+                alert("too many")
+                player.gems[Object.keys(colorList).find(key => colorList[key] == gemColors[0])] -= 20;
+                gemAmounts[reverseColorList[gemColors[0]]] += 20;
+                gems[0].innerHTML = gemAmounts[reverseColorList[gemColors[0]]];
+            }else{
+                console.log(total)
+                updatePlayers();
+                nextTurn();
+            }
         }else{
             console.log("cant take")
             chosenGems = []
@@ -569,8 +602,23 @@ function takeGems(player, gems){
                 gems[i].innerHTML = gemAmounts[reverseColorList[gemColors[i]]];
                 gems[i].style.boxShadow = "2px 2px 4px rgba(255, 255, 255, 0.25)"
             }
-            updatePlayers();
-            nextTurn();
+            let total = 0;
+            for(let i=0; i<Object.keys(hands[currentPlayer]["gems"]).length; i++){
+                total += hands[currentPlayer]["gems"][Object.keys(hands[currentPlayer]["gems"])[i]]
+            }
+            
+            if(total >= 100){
+                console.log(total)
+                alert("too many")
+                for(let i=0; i<gems.length; i++){
+                    player.gems[Object.keys(colorList).find(key => colorList[key] === gemColors[i])] -= 10;
+                    gemAmounts[reverseColorList[gemColors[i]]] += 10;
+                    gems[i].innerHTML = gemAmounts[reverseColorList[gemColors[i]]];
+                }
+            }else{
+                updatePlayers();
+                nextTurn();
+            }
         }else{
             console.log("cant take")
             chosenGems = []
@@ -758,4 +806,32 @@ for (let i = 0; i < modalGems.length; i++) {
             modalSections[i].style.display = "none";
         }
     })
+}
+
+function nobleAttack(attacker, defender){
+    let newNpD = defender["np"] - attacker["np"];
+    console.log(newNpD)
+    let differenceD = defender["np"] - newNpD
+    console.log(differenceD)
+    let newNpA = attacker["np"] - defender["np"];
+    console.log(newNpA)
+    let differenceA = attacker["np"] - newNpA
+    console.log(differenceA)
+    defender["pp"] -= differenceD;
+   
+    if(newNpD < 0){
+        defender["np"] = 0
+    }else{
+        defender["np"] = newNpD
+    }
+    attacker["pp"] -= differenceA;
+    if(newNpA < 0){
+        attacker["np"] = 0
+    }else{
+        attacker["np"] = newNpA
+    }
+    console.log(attacker)
+    console.log(defender)
+    updatePlayers();
+    nextTurn();
 }
