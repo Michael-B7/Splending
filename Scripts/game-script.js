@@ -193,13 +193,13 @@ function nextTurn() {
 function updatePlayers(){
     for(let i=0; i<hands.length; i++){
         for(let iGems=0; iGems<Object.keys(hands[i]["gems"]).length; iGems++){
-            players[i].children[1].children[iGems].innerHTML = hands[i]["gems"][colors[iGems]]
+            players[i].children[2].children[iGems].innerHTML = hands[i]["gems"][colors[iGems]]
         }
         for(let iCards=5; iCards<Object.keys(hands[i]["cards"]).length+5; iCards++){
-            players[i].children[1].children[iCards].innerHTML = hands[i]["cards"][colors[iCards-5]]
+            players[i].children[2].children[iCards].innerHTML = hands[i]["cards"][colors[iCards-5]]
         }
-        players[i].children[2].innerHTML = `Prestige Points: ${hands[i]["pp"]}`
-        players[i].children[3].innerHTML = `Noble Points: ${hands[i]["np"]}`
+        players[i].children[3].innerHTML = `Prestige Points: ${hands[i]["pp"]}`
+        players[i].children[4].innerHTML = `Noble Points: ${hands[i]["np"]}`
     }
     
 }
@@ -254,7 +254,7 @@ function selectColors(numTerms){
 // inner HTML of reserved cards
 const innerReserve = 
 `<div class="reserved-container">
-<h4 class="player-name">Player</h4>      
+<h4 class="player-name">Player</h4>    
 <div class="empty-card"></div>
 </div>`
 
@@ -302,6 +302,7 @@ function playerAmount() {
     for(let i=0; i<playerCount; i++){
         let innerPlayer = `<div class="player player${i}">
         <h4 class="player-name">Player</h4>
+        <div class="attack"> <img src="/Images/sword.png" alt=""> </div>  
         <div class="player-gems">
           <div class="player-gem red">0</div>
           <div class="player-gem green">0</div>

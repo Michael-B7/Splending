@@ -605,9 +605,19 @@ input[type="radio"]:checked + label.radio-button {
 
     grid-template-rows: min-content min-content min-content;
     grid-template-areas:
-    "player player"
+    "player attack"
     "gem gem"
     "prestige noble";
+}
+
+.attack {
+    grid-area: attack;
+    justify-self: end;
+    cursor: pointer;
+}
+
+.attack img {
+    height: 24px;
 }
 
 #reserved-cards {
