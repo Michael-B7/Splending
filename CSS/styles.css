@@ -627,7 +627,7 @@ input[type="radio"]:checked + label.radio-button {
 
 .attack img {
     height: 24px;
-    opacity: 25%;
+    opacity: 30%;
 }
 
 #reserved-cards {
