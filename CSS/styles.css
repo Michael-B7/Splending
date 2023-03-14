@@ -16,7 +16,7 @@ body {
     margin: 0;
     background-color: #242830;
     background-image: url("https://www.transparenttextures.com/patterns/always-grey.png");
-    overflow-y: hidden;
+    /* overflow-y: hidden; */
 }
 
 #start {
@@ -131,6 +131,12 @@ h2 {
     justify-content: center;
 } 
 
+.rule-hero .title a {
+    width: 100%;
+    padding-top: 48px;
+}
+
+.rule-hero h1,
 .step a {
     text-decoration: none;
     font-size: 2rem;
@@ -145,6 +151,10 @@ h2 {
     background-color: rgba(58, 66, 99, .75);
     text-shadow: 2px 4px 4px rgba(0, 0, 0, 0.25);
     margin-top: 24px;
+}
+
+.rule-hero h1 {
+    font-size: 4rem;
 }
 
 /* How to Play footer */
@@ -613,11 +623,11 @@ input[type="radio"]:checked + label.radio-button {
 .attack {
     grid-area: attack;
     justify-self: end;
-    cursor: pointer;
 }
 
 .attack img {
     height: 24px;
+    opacity: 25%;
 }
 
 #reserved-cards {
@@ -736,7 +746,6 @@ h4 {
 }
 
 .ingame-settings {
-    display: none;
     grid-area: settings;
     display: flex;
     flex-direction: column;
@@ -847,6 +856,51 @@ input:focus + .slider {
 
 input:checked + .slider:before {
     transform: translateX(26px);
+}
+
+.rule-hero {
+    height: 95vh;
+    background: url(/Images/church-ceiling.jpg);
+    background-position: top;
+    background-size:cover;
+    align-items: center;
+}
+
+.rules {
+    margin: 0 10%;
+}
+
+.rule {
+    color: white;
+    column-gap: 10%;
+    row-gap: 16px;
+
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas: 
+    "header header"
+    "single single";
+
+    /* border: 1px solid red; */
+}
+
+.rule h2 {
+    padding: 5vh 0 0 0;
+    font-size: 2rem;
+
+    grid-area: header;
+}
+
+.rule h2 ~ p {
+    grid-area: single;
+}
+
+.stretch-width {
+    grid-area: single;
+}
+
+.subsection-whole {
+    grid-area: single;
 }
 
 .red {
