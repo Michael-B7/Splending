@@ -82,6 +82,7 @@ class Player {
         this.reserved = false;
         this.gold = false;
         this.name = name;
+        this.attackable = false;
     }
 }
 
@@ -181,6 +182,10 @@ function nextTurn() {
         currentPlayer = 0
     }
     
+    if(singlePlayer && currentPlayer != 0){
+        cpuTurn()
+    }
+
     if (tutPop) {
     modal.style.display = "block"
     document.querySelector("#feedback").style.display = "flex"
@@ -205,6 +210,7 @@ function updatePlayers(){
         players[i].children[3].innerHTML = `Prestige Points: ${hands[i]["pp"]}`
         if(hands[i]["np"] > 0){
             players[i].children[1].children[0].style.opacity = 1
+            hands[i]["attackable"] = true;
         }else{
             players[i].children[1].children[0].style.opacity = .3
         }
@@ -267,8 +273,13 @@ const innerReserve =
 <div class="empty-card"></div>
 </div>`
 
+let singlePlayer = false
+
 // start game button, removes settings, displays board
 document.getElementById("start-game").addEventListener("click", () => {
+    if(document.querySelector("#single-player input").checked){
+        singlePlayer = true;
+    }
     winPoints = document.getElementById("points").value;
     document.getElementById("game-settings").style.display = "none";
     document.getElementById("board").style.display = "grid";
@@ -403,22 +414,6 @@ function setOnline() {
 
 document.getElementById("name").value = localStorage.getItem("userName");
 document.getElementById("player-amount").addEventListener("change", playerAmount);
-
-// event listener on settings radio buttons, displays or hides local/online
-const radioButtons = document.querySelectorAll(`input[type="radio"]`);
-for (let i = 0; i < radioButtons.length; i++) {
-    const element = radioButtons[i];
-
-    element.addEventListener("click", () => {
-        if (element.value == "online") {
-            document.getElementsByClassName("local")[0].style.display = "none"
-            setOnline();
-        } else {
-            document.getElementById("players").innerHTML = ""
-            playerAmount()
-        } document.getElementsByClassName(element.value)[0].style.display = "flex"
-    })
-}
 
 const modal = document.getElementById("modal");
 const modalIcons = document.querySelectorAll(".open-modal");
@@ -915,5 +910,26 @@ function checkWin(player){
         document.querySelector(".win .modal-text").style.textAlign = "center"
         document.querySelector(".win .modal-text").innerHTML = `<h4>Congratulations!</h4><p>Player ${currentPlayer} Won!</p>`
         return true
+    }
+}
+
+function cpuTurn(){
+    const attackChance = Math.ceil(Math.random()*10)
+    let attackable = f[];
+    for(let hand in hands){
+        if(hand["attackable"]){
+            attackable.push(hand)
+        }
+    }
+    if(attackChance == 10 && (hands[currentPlayer]["np"] > 0)){
+        nobleAttack(hands[currentPlayer], attackable[Math.floor(Math.random()*attackable.length)])
+    }else if(){
+
+    }else if(){
+
+    }else if(){
+
+    }else{
+        
     }
 }
