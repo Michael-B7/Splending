@@ -437,7 +437,6 @@ function openModal(icon) {
 
 function goldMenu() {
     modal.style.display = "block";
-    modalHeader.innerText = "How to play";
     document.getElementById("select-gold").style.display = "flex";
 }
 
@@ -591,7 +590,10 @@ function takeGems(player, gems){
                 nextTurn();
             }
         }else{
-            console.log("cant take")
+            modal.style.display = "block";
+            document.getElementById("modal-error").style.display = "flex";
+            document.querySelector("#modal-error .modal-text").innerText = "Can not collect gem"
+
             chosenGems = []
             gems[0].style.boxShadow = "2px 2px 4px rgba(255, 255, 255, 0.25)"
         }
@@ -620,6 +622,7 @@ function takeGems(player, gems){
                     gems[i].innerHTML = gemAmounts[reverseColorList[gemColors[i]]];
                 }
             }else{
+                console.log(total)
                 updatePlayers();
                 nextTurn();
             }
@@ -656,7 +659,6 @@ for(let i=0; i<Object.keys(colorList).length; i++){
 
 // purchase cards
 function buyCard(player, card, reserved){
-    console.log("double")
     if (!reserved) {
         let color = reverseColorList[window.getComputedStyle(card).backgroundColor]
         let level = card.classList[1].slice(-1);

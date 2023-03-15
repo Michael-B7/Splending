@@ -879,7 +879,8 @@ input:checked + .slider:before {
     grid-template-columns: 1fr 1fr;
     grid-template-areas: 
     "header header"
-    "single single";
+    "single single"
+    "second second";
 
     /* border: 1px solid red; */
 }
@@ -895,12 +896,29 @@ input:checked + .slider:before {
     grid-area: single;
 }
 
-.stretch-width {
-    grid-area: single;
+.rule p {
+    font-size: 18px;
 }
 
 .subsection-whole {
     grid-area: single;
+}
+
+.subsection-second {
+    grid-area: second;
+}
+
+.subsection-second ol {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+.image-container {
+    width: 100%;
+}
+
+.image-container img {
+    width: 100%;
 }
 
 .red {
