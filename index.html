@@ -361,16 +361,6 @@
                       <option value="4" selected="selected">4</option>
                   </select>
               </div>
-              <div class="game-setting online">
-                  <div id="link-wrapper">
-                    Invite Link:
-                    <div id="inv-link">541153</div>
-                  </div>
-                  <div id="link-wrapper">
-                    QR Code:
-                    <div id="inv-qr">541153</div>
-                  </div>
-              </div>
               <div class="game-setting">
                   <div id="local">
                     <input type="radio" name="option" id="option1" value="local" checked="checked">
@@ -378,7 +368,7 @@
                   </div>
                   <div id="online">
                     <input type="radio" name="option" id="option2" value="online">
-                    <label class="radio-button button" for="option2">Online</label>
+                    <label class="radio-button button" for="option2">Single Player</label>
                   </div>
               </div>
             </div>
@@ -401,9 +391,9 @@
       <div class="modal-content">
         <h2 id="modal-header"></h2>
         <div id="settings" class="modal-section">
-          <h3>Colorblind mode</h3>
+          <h3>Tutorial Pop-ups</h3>
           <label class="switch">
-            <input id="color-check" type="checkbox">
+            <input id="color-check" type="checkbox" checked>
             <span class="slider"></span>
           </label>
         </div>
@@ -424,15 +414,11 @@
           </div>
         </div>
 
-        <div class="actions modal-section">
+        <div id="feedback" class="modal-section">
           <div class="modal-text"></div>
         </div>
 
         <div class="win modal-section">
-          <div class="modal-text"></div>
-        </div>
-
-        <div class="error modal-section">
           <div class="modal-text"></div>
         </div>
 

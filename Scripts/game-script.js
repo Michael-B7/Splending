@@ -57,6 +57,7 @@ function cardActions() {
 };
 cardActions();
 
+let tutPop = true;
 const colors = ["red", "green", "blue", "white", "black"];
 const colorList = {"red":'rgb(182, 45, 46)', "green":'rgb(33, 113, 74)', "blue":'rgb(21, 87, 163)', "white":'rgb(188, 188, 188)', "black":'rgb(44, 33, 29)'};
 const reverseColorList = {'rgb(182, 45, 46)':"red", 'rgb(33, 113, 74)':"green", 'rgb(21, 87, 163)':"blue", 'rgb(188, 188, 188)':"white", 'rgb(44, 33, 29)':"black"};
@@ -166,8 +167,6 @@ class Noble{
 
 let hands = [];
 
-
-
 let chosenGems = [];
 
 let currentPlayer = 0;
@@ -182,11 +181,14 @@ function nextTurn() {
         currentPlayer = 0
     }
     
+    if (tutPop) {
     modal.style.display = "block"
-    document.querySelector(".actions").style.display = "flex"
-    document.querySelector(".actions .modal-text").style.display = "block"
-    // document.querySelector(".actions .modal-text").style.textAlign = "center"
-    document.querySelector(".actions .modal-text").innerHTML = `<h4>It is Player ${currentPlayer}'s Turn</h4><p>You Can:<br>1. Take Two of One Color Gem<br>2. Take One of Three Different Color Gems<br>3. Buy a Development Card<br>4. Reserve a Development Card<br>5. Attract a Noble<br>6. Attack Another Player's Noble</p>`
+    document.querySelector("#feedback").style.display = "flex"
+    document.querySelector("#feedback .modal-text").style.display = "block"
+    // document.querySelector("#feedback .modal-text").style.textAlign = "center"
+    console.log(currentPlayer)
+    document.querySelector("#feedback .modal-text").innerHTML = `<h4>It is Player ${currentPlayer+1}'s Turn</h4><p>You Can:<br>1. Take Two of One Color Gem<br>2. Take One of Three Different Color Gems<br>3. Buy a Development Card<br>4. Reserve a Development Card<br>5. Attract a Noble<br>6. Attack Another Player's Noble</p>`
+    }
 
     playerGlow()
     chosenGems = [];
@@ -268,15 +270,22 @@ const innerReserve =
 // start game button, removes settings, displays board
 document.getElementById("start-game").addEventListener("click", () => {
     winPoints = document.getElementById("points").value;
-    console.log(winPoints)
     document.getElementById("game-settings").style.display = "none";
     document.getElementById("board").style.display = "grid";
     for (let i = 0; i < document.querySelectorAll(".gem").length; i++) {
         document.querySelectorAll(".gem")[i].style.display = "flex";
     }
     updatePlayers();
-    nextTurn();
+    // nextTurn();
     currentPlayer = 0;
+    if (tutPop) {
+        modal.style.display = "block"
+        document.querySelector("#feedback").style.display = "flex"
+        document.querySelector("#feedback .modal-text").style.display = "block"
+        // document.querySelector("#feedback .modal-text").style.textAlign = "center"
+        // console.log(currentPlayer)
+        document.querySelector("#feedback .modal-text").innerHTML = `<h4>It is Player ${currentPlayer+1}'s Turn</h4><p>You Can:<br>1. Take Two of One Color Gem<br>2. Take One of Three Different Color Gems<br>3. Buy a Development Card<br>4. Reserve a Development Card<br>5. Attract a Noble<br>6. Attack Another Player's Noble</p>`
+    }
     playerGlow();
 })
 
@@ -307,12 +316,12 @@ function playerAmount() {
     for(let i=0; i<playerCount; i++){
         hands.push(new Player);
     }
-    hands[0]["pp"] = 10
-    hands[0]["cards"]["red"] = 10
-    hands[0]["cards"]["blue"] = 10
-    hands[0]["cards"]["green"] = 10
-    hands[0]["cards"]["white"] = 10
-    hands[0]["cards"]["black"] = 10
+    // hands[0]["pp"] = 10
+    // hands[0]["cards"]["red"] = 10
+    // hands[0]["cards"]["blue"] = 10
+    // hands[0]["cards"]["green"] = 10
+    // hands[0]["cards"]["white"] = 10
+    // hands[0]["cards"]["black"] = 10
     // hands[1]["cards"]["red"] = 10
     // hands[1]["cards"]["blue"] = 10
     // hands[1]["cards"]["green"] = 10
@@ -371,22 +380,23 @@ function playerAmount() {
 function setOnline() {
     document.getElementById("players").innerHTML = 
     `<div class="player">
-    <h4 class="player-name"></h4>
-    <div class="player-gems">
-      <div class="player-gem red">0</div>
-      <div class="player-gem green">0</div>
-      <div class="player-gem blue">0</div>
-      <div class="player-gem white">0</div>
-      <div class="player-gem black">0</div>
-      <div class="player-card red">0</div>
-      <div class="player-card green">0</div>
-      <div class="player-card blue">0</div>
-      <div class="player-card white">0</div>
-      <div class="player-card black">0</div>
-    </div>
-    <div class="player-balance">Prestige Points:</div>
-    <div class="noble-balance">Nobles:</div>
-    </div>`;
+        <h4 class="player-name">Player</h4>
+        <div class="attack"> <img src="/Images/sword.png" alt=""> </div>  
+        <div class="player-gems">
+          <div class="player-gem red">0</div>
+          <div class="player-gem green">0</div>
+          <div class="player-gem blue">0</div>
+          <div class="player-gem white">0</div>
+          <div class="player-gem black">0</div>
+          <div class="player-card red">0</div>
+          <div class="player-card green">0</div>
+          <div class="player-card blue">0</div>
+          <div class="player-card white">0</div>
+          <div class="player-card black">0</div>
+        </div>
+        <div class="player-balance">Prestige Points:</div>
+        <div class="noble-balance">Nobles:</div>
+        </div>`
     document.getElementById("reserved-cards").innerHTML = innerReserve.repeat(1);
     setName(1)
 }
@@ -405,7 +415,6 @@ for (let i = 0; i < radioButtons.length; i++) {
             setOnline();
         } else {
             document.getElementById("players").innerHTML = ""
-            document.getElementsByClassName("online")[0].style.display = "none"
             playerAmount()
         } document.getElementsByClassName(element.value)[0].style.display = "flex"
     })
@@ -439,6 +448,7 @@ window.onclick = function(e) {
             location.reload()
         }
         modal.style.display = "none";
+        document.getElementById("modal-header").innerText = ""
         for (let i = 0; i < modalSections.length; i++) {
             modalSections[i].style.display = "none";
         }
@@ -449,42 +459,26 @@ window.onclick = function(e) {
 for (let i = 0; i < modalIcons.length; i++) {
     modalIcons[i].addEventListener("click", (e) => {
         modal.style.display = "block";
-        console.log(e.target)
         if (e.target.classList.contains("fa-circle-question")) {
-            
+            document.getElementById("modal-header").innerText = "How to play"
             document.getElementById("how-play").style.display = "flex";
+            document.querySelector("#how-play .modal-text").innerText = "playgaminging";
         } else {
+            document.getElementById("modal-header").innerText = "Settings"
             document.getElementById("settings").style.display = "flex";
         }
     })
 }
 
-// sets correct modal content
-// parameter: string, takes in the icon that is selected
-function openModal(icon) {
-    if (icon.classList.contains("fa-circle-question")) {
-        modalHeader.innerText = "How to play";
-        document.getElementById("how-play").style.display = "flex";
-    } else {
-        modalHeader.innerText = "Settings";
-        document.getElementById("settings").style.display = "flex";
-    }
-}
 
 // changes css variables to color blind friendly colors and back
-// document.getElementById("color-check").addEventListener("change", function() {
-//     if (this.checked) {
-//       document.documentElement.style.setProperty('--red', 'rgb(213, 94, 0)');
-//       document.documentElement.style.setProperty('--green', 'rgb(0, 158, 115)');
-//       document.documentElement.style.setProperty('--blue', 'rgb(0, 114, 178)');
-//       document.documentElement.style.setProperty('--gold', 'rgb(240, 228, 66)');
-//     } else {
-//       document.documentElement.style.setProperty('--red', '#B62D2E');
-//       document.documentElement.style.setProperty('--green', '#21714A');
-//       document.documentElement.style.setProperty('--blue', '#1557A3');
-//       document.documentElement.style.setProperty('--gold', '#B8B030');
-//     }
-// });
+document.getElementById("color-check").addEventListener("change", function() {
+    if (this.checked) {
+        tutPop = true;
+    } else {
+        tutPop = false;
+    }
+});
 
 // display cards
 let cards1 = []; let cards2 = []; let cards3 = [];
@@ -602,8 +596,6 @@ function takeGems(player, gems){
     for(let i=0; i<Object.keys(hands[currentPlayer]["gems"]).length; i++){
         total += hands[currentPlayer]["gems"][Object.keys(hands[currentPlayer]["gems"])[i]]
     }
-    console.log(total)
-    console.log(gems.length)
     if (total == 90) {
         if (gemAmounts[reverseColorList[gemColors[0]]] > 0) {
             player.gems[Object.keys(colorList).find(key => colorList[key] == gemColors[0])] += 10;
@@ -640,26 +632,25 @@ function takeGems(player, gems){
             }
             if(total > 100){
                 modal.style.display = "block"
-                document.querySelector(".error").style.display = "flex"
-                document.querySelector(".error .modal-text").style.display = "block"
-                document.querySelector(".error .modal-text").style.textAlign = "center"
-                document.querySelector(".error .modal-text").innerHTML = "<h4>You Have Too Many Gems</h4><p>Players Can Have a Maximum of 100 Gems</p>"
+                document.querySelector("#feedback").style.display = "flex"
+                document.querySelector("#feedback .modal-text").style.display = "block"
+                document.querySelector("#feedback .modal-text").style.textAlign = "center"
+                document.querySelector("#feedback .modal-text").innerHTML = "<h4>You Have Too Many Gems</h4><p>Players Can Have a Maximum of 100 Gems<br>(Excluding Gems Gained from Gold)</p>"
                 chosenGems = []
                 gems[0].style.boxShadow = "2px 2px 4px rgba(255, 255, 255, 0.25)"
                 player.gems[Object.keys(colorList).find(key => colorList[key] == gemColors[0])] -= 20;
                 gemAmounts[reverseColorList[gemColors[0]]] += 20;
                 gems[0].innerHTML = gemAmounts[reverseColorList[gemColors[0]]];
             }else{
-                console.log(total)
                 updatePlayers();
                 nextTurn();
             }
         }else{
             modal.style.display = "block"
-            document.querySelector(".error").style.display = "flex"
-            document.querySelector(".error .modal-text").style.display = "block"
-            document.querySelector(".error .modal-text").style.textAlign = "center"
-            document.querySelector(".error .modal-text").innerHTML = "<h4>Cannot Take Two of This Gem</h4><p>If a Gem Has Less Than 40 Gems in the Stack You Cannot Take Two</p>"
+            document.querySelector("#feedback").style.display = "flex"
+            document.querySelector("#feedback .modal-text").style.display = "block"
+            document.querySelector("#feedback .modal-text").style.textAlign = "center"
+            document.querySelector("#feedback .modal-text").innerHTML = "<h4>Cannot Take Two of This Gem</h4><p>If a Gem Has Less Than 40 Gems in the Stack You Cannot Take Two</p>"
             chosenGems = []
             gems[0].style.boxShadow = "2px 2px 4px rgba(255, 255, 255, 0.25)"
         }
@@ -679,10 +670,10 @@ function takeGems(player, gems){
             
             if(total > 100){
                 modal.style.display = "block"
-                document.querySelector(".error").style.display = "flex"
-                document.querySelector(".error .modal-text").style.display = "block"
-                document.querySelector(".error .modal-text").style.textAlign = "center"
-                document.querySelector(".error .modal-text").innerHTML = "<h4>You Have Too Many Gems</h4><p>Players Can Have a Maximum of 100 Gems</p>"
+                document.querySelector("#feedback").style.display = "flex"
+                document.querySelector("#feedback .modal-text").style.display = "block"
+                document.querySelector("#feedback .modal-text").style.textAlign = "center"
+                document.querySelector("#feedback .modal-text").innerHTML = "<h4>You Have Too Many Gems</h4><p>Players Can Have a Maximum of 100 Gems</p>"
                 chosenGems = []
                 for(let i=0; i<gems.length; i++){
                     gems[i].style.boxShadow = "2px 2px 4px rgba(255, 255, 255, 0.25)"
@@ -691,16 +682,15 @@ function takeGems(player, gems){
                     gems[i].innerHTML = gemAmounts[reverseColorList[gemColors[i]]];
                 }
             }else{
-                console.log(total)
                 updatePlayers();
                 nextTurn();
             }
         }else{
             modal.style.display = "block"
-            document.querySelector(".error").style.display = "flex"
-            document.querySelector(".error .modal-text").style.display = "block"
-            document.querySelector(".error .modal-text").style.textAlign = "center"
-            document.querySelector(".error .modal-text").innerHTML = "<h4>Cannot Take These Gems</h4>"
+            document.querySelector("#feedback").style.display = "flex"
+            document.querySelector("#feedback .modal-text").style.display = "block"
+            document.querySelector("#feedback .modal-text").style.textAlign = "center"
+            document.querySelector("#feedback .modal-text").innerHTML = "<h4>Cannot Take These Gems</h4>"
             chosenGems = []
             for(let i=0; i<gems.length; i++){
                 gems[i].style.boxShadow = "2px 2px 4px rgba(255, 255, 255, 0.25)"
@@ -708,10 +698,10 @@ function takeGems(player, gems){
         }
     }else if(gems.length > 2 ){
         modal.style.display = "block"
-        document.querySelector(".error").style.display = "flex"
-        document.querySelector(".error .modal-text").style.display = "block"
-        document.querySelector(".error .modal-text").style.textAlign = "center"
-        document.querySelector(".error .modal-text").innerHTML = "<h4>Cannot Take These Gems</h4><p>You Can Take Either One of Three Different Colors of Gems or Two of the Same Color of Gem</p>"
+        document.querySelector("#feedback").style.display = "flex"
+        document.querySelector("#feedback .modal-text").style.display = "block"
+        document.querySelector("#feedback .modal-text").style.textAlign = "center"
+        document.querySelector("#feedback .modal-text").innerHTML = "<h4>Cannot Take These Gems</h4><p>You Can Take Either One of Three Different Colors of Gems or Two of the Same Color of Gem</p>"
         chosenGems = []
         for(let i=0; i<gems.length; i++){
             gems[i].style.boxShadow = "2px 2px 4px rgba(255, 255, 255, 0.25)"
@@ -788,10 +778,8 @@ function checkAfford(player, card) {
         let currColor = Object.keys(card["cost"])[j]
         if(player["gems"][currColor] >= (card["cost"][currColor] - player["cards"][currColor]*10) ){
             afford = true
-            console.log("yipeeeeeeeeeeeeeeeeeeeeeee")
         }else{
             afford = false
-            console.log("no yipeeeeeeeeeeeeeeeeeeeeeee")
         }
     }
     return afford;
@@ -800,7 +788,6 @@ function checkAfford(player, card) {
 function returnGems(player, card) {
     for(let j=0; j<Object.keys(card["cost"]).length; j++){
         let currColor = Object.keys(card["cost"])[j]
-        // console.log(currColor)
         if(!((card["cost"][currColor] - player["cards"][currColor]*10) < 0)){
             player["gems"][currColor] -= (card["cost"][currColor] - player["cards"][currColor]*10)
         }
@@ -811,7 +798,6 @@ function returnGems(player, card) {
                 player["gold"] = false
             }
         } else {
-            console.log(card["cost"][currColor] - player["cards"][currColor]*10)
             if(!((card["cost"][currColor] - player["cards"][currColor]*10) < 0)){
                 gemAmounts[currColor] += (card["cost"][currColor] - player["cards"][currColor]*10)
             }
@@ -900,13 +886,10 @@ for (let i = 0; i < modalGems.length; i++) {
 
 function nobleAttack(attacker, defender){
     let newNpD = defender["np"] - attacker["np"];
-    console.log(newNpD)
     let differenceD = defender["np"] - newNpD
     console.log(differenceD)
     let newNpA = attacker["np"] - defender["np"];
-    console.log(newNpA)
     let differenceA = attacker["np"] - newNpA
-    console.log(differenceA)
     defender["pp"] -= differenceD;
    
     if(newNpD < 0){
@@ -920,8 +903,6 @@ function nobleAttack(attacker, defender){
     }else{
         attacker["np"] = newNpA
     }
-    console.log(attacker)
-    console.log(defender)
     updatePlayers();
     nextTurn();
 }
