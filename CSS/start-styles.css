@@ -16,72 +16,6 @@ body {
     align-items: center;
 }
 
-.top-frame {
-    position: absolute;
-    width: 100%;
-    height: 24px;
-    background: url(/Images/top.png);
-}
-
-.right-frame {
-    position: absolute;
-    width: 18px;
-    height: 100%;
-    right: 0;
-    background: url(/Images/rightwing.png);
-}
-
-.bottom-frame {
-    position: absolute;
-    width: 100%;
-    height: 28px;
-    bottom: 0;
-    background: url(/Images/bot.png);
-}
-
-.left-frame {
-    position: absolute;
-    width: 19px;
-    height: 100%;
-    background: url(/Images/leftwing.png);
-}
-
-.tr-corner {
-    position: absolute;
-    height: 149px;
-    width: 150px;
-    background: url(/Images/topright.png);
-    z-index: 1;
-    right: 0;
-}
-
-.tl-corner {
-    position: absolute;
-    height: 149px;
-    width: 150px;
-    background: url(/Images/topleft.png);
-    z-index: 1;
-}
-
-.br-corner {
-    position: absolute;
-    height: 149px;
-    width: 150px;
-    background: url(/Images/bottomright.png);
-    z-index: 1;
-    bottom: 0;
-    right: 0;
-}
-
-.bl-corner {
-    position: absolute;
-    height: 149px;
-    width: 150px;
-    background: url(/Images/bottomleft.png);
-    z-index: 1;
-    bottom: 0;
-}
-
 header {
     display: flex;
     flex-wrap: wrap;
@@ -510,6 +444,7 @@ h3 {
     margin: 5px;
     border-radius: 50%;
 }
+
 
 [class$="green"] {
     background-color: #21714A;
