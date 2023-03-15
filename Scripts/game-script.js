@@ -1,12 +1,11 @@
+let winPoints = 0
+
 document.getElementById("create").addEventListener("click", () => {
     document.getElementById("start").style.display = 'none'; 
     document.getElementById("game").style.display = 'flex';
-
     playerAmount()
     setName(4)
 })
-
-
 
 let indexValue = 1;
 function tutorial(index) {
@@ -175,12 +174,20 @@ let currentPlayer = 0;
 // current player begins at player 1
 // function will add 1 to current player
 function nextTurn() {
-    
+    let win = checkWin(hands[currentPlayer])
+    if(win){return}
     currentPlayer += 1;
     if(currentPlayer > players.length-1) {
         // resets back to start of index if past the last child
         currentPlayer = 0
-    } 
+    }
+    
+    modal.style.display = "block"
+    document.querySelector(".actions").style.display = "flex"
+    document.querySelector(".actions .modal-text").style.display = "block"
+    // document.querySelector(".actions .modal-text").style.textAlign = "center"
+    document.querySelector(".actions .modal-text").innerHTML = `<h4>It is Player ${currentPlayer}'s Turn</h4><p>You Can:<br>1. Take Two of One Color Gem<br>2. Take One of Three Different Color Gems<br>3. Buy a Development Card<br>4. Reserve a Development Card<br>5. Attract a Noble<br>6. Attack Another Player's Noble</p>`
+
     playerGlow()
     chosenGems = [];
 }
@@ -260,6 +267,8 @@ const innerReserve =
 
 // start game button, removes settings, displays board
 document.getElementById("start-game").addEventListener("click", () => {
+    winPoints = document.getElementById("points").value;
+    console.log(winPoints)
     document.getElementById("game-settings").style.display = "none";
     document.getElementById("board").style.display = "grid";
     for (let i = 0; i < document.querySelectorAll(".gem").length; i++) {
@@ -298,11 +307,12 @@ function playerAmount() {
     for(let i=0; i<playerCount; i++){
         hands.push(new Player);
     }
-    // hands[0]["cards"]["red"] = 10
-    // hands[0]["cards"]["blue"] = 10
-    // hands[0]["cards"]["green"] = 10
-    // hands[0]["cards"]["white"] = 10
-    // hands[0]["cards"]["black"] = 10
+    hands[0]["pp"] = 10
+    hands[0]["cards"]["red"] = 10
+    hands[0]["cards"]["blue"] = 10
+    hands[0]["cards"]["green"] = 10
+    hands[0]["cards"]["white"] = 10
+    hands[0]["cards"]["black"] = 10
     // hands[1]["cards"]["red"] = 10
     // hands[1]["cards"]["blue"] = 10
     // hands[1]["cards"]["green"] = 10
@@ -407,11 +417,31 @@ const modalSections = document.querySelectorAll(".modal-section");
 const modalHeader = document.getElementById("modal-header");
 // removes modal from display when modal content is not clicked
 window.onclick = function(e) {
+    let gemClick = true
+    for(let i=0; i<document.querySelectorAll(".gems .gem").length-1; i++){
+        if(e.target != document.querySelectorAll(".gems .gem")[i]){
+            gemClick = false
+        }else{
+            gemClick = true
+            break
+        }
+    }
+
+    if(!gemClick){
+        chosenGems = []
+        for(let i=0; i<document.querySelectorAll(".gems .gem").length-1; i++){
+            document.querySelectorAll(".gems .gem")[i].style.boxShadow = "2px 2px 4px rgba(255, 255, 255, 0.25)"
+        }
+    }
+    
     if (e.target == modal) {
-      modal.style.display = "none";
-      for (let i = 0; i < modalSections.length; i++) {
-        modalSections[i].style.display = "none";
-      }
+        if(document.querySelector(".win").style.display == "flex"){
+            location.reload()
+        }
+        modal.style.display = "none";
+        for (let i = 0; i < modalSections.length; i++) {
+            modalSections[i].style.display = "none";
+        }
     }
 }
 
@@ -419,7 +449,13 @@ window.onclick = function(e) {
 for (let i = 0; i < modalIcons.length; i++) {
     modalIcons[i].addEventListener("click", (e) => {
         modal.style.display = "block";
-        openModal(e.target)
+        console.log(e.target)
+        if (e.target.classList.contains("fa-circle-question")) {
+            
+            document.getElementById("how-play").style.display = "flex";
+        } else {
+            document.getElementById("settings").style.display = "flex";
+        }
     })
 }
 
@@ -433,11 +469,6 @@ function openModal(icon) {
         modalHeader.innerText = "Settings";
         document.getElementById("settings").style.display = "flex";
     }
-}
-
-function goldMenu() {
-    modal.style.display = "block";
-    document.getElementById("select-gold").style.display = "flex";
 }
 
 // changes css variables to color blind friendly colors and back
@@ -544,7 +575,8 @@ function reserveCard(player, eventCard) {
                 buyCard(hands[currentPlayer], e.target.parentElement.parentElement, true);
             } else if (e.target.classList.contains("gold-button")) {
                 if (curPlaySpace.parentElement.classList[1] == currentPlayer && !player.gold) {
-                    goldMenu()
+                    modal.style.display = "block";
+                    document.getElementById("select-gold").style.display = "flex";
                 } else {
                     console.log("booo")
                 }
@@ -607,7 +639,11 @@ function takeGems(player, gems){
                 total += hands[currentPlayer]["gems"][Object.keys(hands[currentPlayer]["gems"])[i]]
             }
             if(total > 100){
-                alert("too many")
+                modal.style.display = "block"
+                document.querySelector(".error").style.display = "flex"
+                document.querySelector(".error .modal-text").style.display = "block"
+                document.querySelector(".error .modal-text").style.textAlign = "center"
+                document.querySelector(".error .modal-text").innerHTML = "<h4>You Have Too Many Gems</h4><p>Players Can Have a Maximum of 100 Gems</p>"
                 chosenGems = []
                 gems[0].style.boxShadow = "2px 2px 4px rgba(255, 255, 255, 0.25)"
                 player.gems[Object.keys(colorList).find(key => colorList[key] == gemColors[0])] -= 20;
@@ -619,10 +655,11 @@ function takeGems(player, gems){
                 nextTurn();
             }
         }else{
-            modal.style.display = "block";
-            document.getElementById("modal-error").style.display = "flex";
-            document.querySelector("#modal-error .modal-text").innerText = "Can not collect gem"
-
+            modal.style.display = "block"
+            document.querySelector(".error").style.display = "flex"
+            document.querySelector(".error .modal-text").style.display = "block"
+            document.querySelector(".error .modal-text").style.textAlign = "center"
+            document.querySelector(".error .modal-text").innerHTML = "<h4>Cannot Take Two of This Gem</h4><p>If a Gem Has Less Than 40 Gems in the Stack You Cannot Take Two</p>"
             chosenGems = []
             gems[0].style.boxShadow = "2px 2px 4px rgba(255, 255, 255, 0.25)"
         }
@@ -641,8 +678,11 @@ function takeGems(player, gems){
             }
             
             if(total > 100){
-                console.log(total)
-                alert("too many")
+                modal.style.display = "block"
+                document.querySelector(".error").style.display = "flex"
+                document.querySelector(".error .modal-text").style.display = "block"
+                document.querySelector(".error .modal-text").style.textAlign = "center"
+                document.querySelector(".error .modal-text").innerHTML = "<h4>You Have Too Many Gems</h4><p>Players Can Have a Maximum of 100 Gems</p>"
                 chosenGems = []
                 for(let i=0; i<gems.length; i++){
                     gems[i].style.boxShadow = "2px 2px 4px rgba(255, 255, 255, 0.25)"
@@ -656,14 +696,22 @@ function takeGems(player, gems){
                 nextTurn();
             }
         }else{
-            console.log("cant take")
+            modal.style.display = "block"
+            document.querySelector(".error").style.display = "flex"
+            document.querySelector(".error .modal-text").style.display = "block"
+            document.querySelector(".error .modal-text").style.textAlign = "center"
+            document.querySelector(".error .modal-text").innerHTML = "<h4>Cannot Take These Gems</h4>"
             chosenGems = []
             for(let i=0; i<gems.length; i++){
                 gems[i].style.boxShadow = "2px 2px 4px rgba(255, 255, 255, 0.25)"
             }
         }
     }else if(gems.length > 2 ){
-        console.log("cant take")
+        modal.style.display = "block"
+        document.querySelector(".error").style.display = "flex"
+        document.querySelector(".error .modal-text").style.display = "block"
+        document.querySelector(".error .modal-text").style.textAlign = "center"
+        document.querySelector(".error .modal-text").innerHTML = "<h4>Cannot Take These Gems</h4><p>You Can Take Either One of Three Different Colors of Gems or Two of the Same Color of Gem</p>"
         chosenGems = []
         for(let i=0; i<gems.length; i++){
             gems[i].style.boxShadow = "2px 2px 4px rgba(255, 255, 255, 0.25)"
@@ -876,4 +924,15 @@ function nobleAttack(attacker, defender){
     console.log(defender)
     updatePlayers();
     nextTurn();
+}
+
+function checkWin(player){
+    if(player["pp"] >= winPoints){
+        modal.style.display = "block"
+        document.querySelector(".win").style.display = "flex"
+        document.querySelector(".win .modal-text").style.display = "block"
+        document.querySelector(".win .modal-text").style.textAlign = "center"
+        document.querySelector(".win .modal-text").innerHTML = `<h4>Congratulations!</h4><p>Player ${currentPlayer} Won!</p>`
+        return true
+    }
 }
