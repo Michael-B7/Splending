@@ -580,6 +580,8 @@ function takeGems(player, gems){
             if(total > 100){
                 console.log(total)
                 alert("too many")
+                chosenGems = []
+                gems[0].style.boxShadow = "2px 2px 4px rgba(255, 255, 255, 0.25)"
                 player.gems[Object.keys(colorList).find(key => colorList[key] == gemColors[0])] -= 20;
                 gemAmounts[reverseColorList[gemColors[0]]] += 20;
                 gems[0].innerHTML = gemAmounts[reverseColorList[gemColors[0]]];
@@ -607,10 +609,12 @@ function takeGems(player, gems){
                 total += hands[currentPlayer]["gems"][Object.keys(hands[currentPlayer]["gems"])[i]]
             }
             
-            if(total >= 100){
+            if(total > 100){
                 console.log(total)
                 alert("too many")
+                chosenGems = []
                 for(let i=0; i<gems.length; i++){
+                    gems[i].style.boxShadow = "2px 2px 4px rgba(255, 255, 255, 0.25)"
                     player.gems[Object.keys(colorList).find(key => colorList[key] === gemColors[i])] -= 10;
                     gemAmounts[reverseColorList[gemColors[i]]] += 10;
                     gems[i].innerHTML = gemAmounts[reverseColorList[gemColors[i]]];
@@ -685,7 +689,6 @@ function buyCard(player, card, reserved){
         if (afford) {
             returnGems(player, player["reserved"])
             player["cards"][player["reserved"]["color"]] ++;
-            player["gold"] = false;
             let curPlaySpace = reserveSpace[currentPlayer]
             curPlaySpace.style.backgroundColor = "rgba(0, 0, 0, 0)";
             curPlaySpace.style.border = "4px dashed white"
@@ -718,13 +721,21 @@ function checkAfford(player, card) {
 function returnGems(player, card) {
     for(let j=0; j<Object.keys(card["cost"]).length; j++){
         let currColor = Object.keys(card["cost"])[j]
-        console.log(currColor)
-        player["gems"][currColor] -= (card["cost"][currColor] - player["cards"][currColor]*10)
+        // console.log(currColor)
+        if(!((card["cost"][currColor] - player["cards"][currColor]*10) < 0)){
+            player["gems"][currColor] -= (card["cost"][currColor] - player["cards"][currColor]*10)
+        }
         player["pp"] += card["points"]
         if (player["gold"] == currColor) {
-            gemAmounts[currColor] += (card["cost"][currColor] -10)
+            if(!((card["cost"][currColor] - 10 - player["cards"][currColor]*10) < 0)){
+                gemAmounts[currColor] += (card["cost"][currColor] - 10 - player["cards"][currColor]*10)
+                player["gold"] = false
+            }
         } else {
-            gemAmounts[currColor] += (card["cost"][currColor] - player["cards"][currColor]*10)
+            console.log(card["cost"][currColor] - player["cards"][currColor]*10)
+            if(!((card["cost"][currColor] - player["cards"][currColor]*10) < 0)){
+                gemAmounts[currColor] += (card["cost"][currColor] - player["cards"][currColor]*10)
+            }
         }
 
         document.querySelector(`.gem.${currColor}`).innerHTML = gemAmounts[currColor];
