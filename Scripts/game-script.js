@@ -607,7 +607,7 @@ function takeGems(player, gems){
                 total += hands[currentPlayer]["gems"][Object.keys(hands[currentPlayer]["gems"])[i]]
             }
             
-            if(total >= 100){
+            if(total > 100){
                 console.log(total)
                 alert("too many")
                 for(let i=0; i<gems.length; i++){

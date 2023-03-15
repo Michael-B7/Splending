@@ -16,7 +16,7 @@ body {
     margin: 0;
     background-color: #242830;
     background-image: url("https://www.transparenttextures.com/patterns/always-grey.png");
-    overflow-y: hidden;
+    /* overflow-y: hidden; */
 }
 
 #start {
