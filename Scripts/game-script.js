@@ -566,18 +566,47 @@ function takeGems(player, gems){
     for(let i=0; i<gems.length; i++){
         gemColors.push(window.getComputedStyle(gems[i]).backgroundColor);
     }
+    let total = 0;
+    for(let i=0; i<Object.keys(hands[currentPlayer]["gems"]).length; i++){
+        total += hands[currentPlayer]["gems"][Object.keys(hands[currentPlayer]["gems"])[i]]
+    }
+    console.log(total)
+    console.log(gems.length)
+    if (total == 90) {
+        if (gemAmounts[reverseColorList[gemColors[0]]] > 0) {
+            player.gems[Object.keys(colorList).find(key => colorList[key] == gemColors[0])] += 10;
+            gemAmounts[reverseColorList[gemColors[0]]] -= 10;
+            gems[0].innerHTML = gemAmounts[reverseColorList[gemColors[0]]];
+            gems[0].style.boxShadow = "2px 2px 4px rgba(255, 255, 255, 0.25)"
+            updatePlayers();
+            nextTurn();
+        } 
+    }
+    if (total == 80 && gems.length == 2) {
+        for(let i=0; i<gems.length; i++){
+            if (gemAmounts[reverseColorList[gemColors[i]]] > 0) {
+                player.gems[Object.keys(colorList).find(key => colorList[key] == gemColors[i])] += 10;
+                gemAmounts[reverseColorList[gemColors[i]]] -= 10;
+                gems[i].innerHTML = gemAmounts[reverseColorList[gemColors[i]]];
+                updatePlayers();
+                nextTurn();
+            } 
+        }
+        for(let i=0; i<gems.length; i++){
+            gems[i].style.boxShadow = "2px 2px 4px rgba(255, 255, 255, 0.25)"
+        }
+    }
     if(gems.length == 2 && gemColors[0] == gemColors[1]){
         if(gemAmounts[reverseColorList[gemColors[0]]] >= 40){
             player.gems[Object.keys(colorList).find(key => colorList[key] == gemColors[0])] += 20;
             gemAmounts[reverseColorList[gemColors[0]]] -= 20;
             gems[0].innerHTML = gemAmounts[reverseColorList[gemColors[0]]];
             gems[0].style.boxShadow = "2px 2px 4px rgba(255, 255, 255, 0.25)"
-            let total = 0;
+            total = 0;
             for(let i=0; i<Object.keys(hands[currentPlayer]["gems"]).length; i++){
                 total += hands[currentPlayer]["gems"][Object.keys(hands[currentPlayer]["gems"])[i]]
             }
             if(total > 100){
-                console.log(total)
                 alert("too many")
                 chosenGems = []
                 gems[0].style.boxShadow = "2px 2px 4px rgba(255, 255, 255, 0.25)"
@@ -606,7 +635,7 @@ function takeGems(player, gems){
                 gems[i].innerHTML = gemAmounts[reverseColorList[gemColors[i]]];
                 gems[i].style.boxShadow = "2px 2px 4px rgba(255, 255, 255, 0.25)"
             }
-            let total = 0;
+            total = 0;
             for(let i=0; i<Object.keys(hands[currentPlayer]["gems"]).length; i++){
                 total += hands[currentPlayer]["gems"][Object.keys(hands[currentPlayer]["gems"])[i]]
             }
