@@ -182,9 +182,9 @@ function nextTurn() {
         currentPlayer = 0
     }
     
-    if(singlePlayer && currentPlayer != 0){
-        cpuTurn()
-    }
+    // if(singlePlayer && currentPlayer != 0){
+    //     cpuTurn()
+    // }
 
     if (tutPop) {
     modal.style.display = "block"
@@ -582,7 +582,7 @@ function reserveCard(player, eventCard) {
 
 // take gems
 function takeGems(player, gems){
-
+    let take = false
     let gemColors = []
     for(let i=0; i<gems.length; i++){
         gemColors.push(window.getComputedStyle(gems[i]).backgroundColor);
@@ -599,6 +599,7 @@ function takeGems(player, gems){
             gems[0].style.boxShadow = "2px 2px 4px rgba(255, 255, 255, 0.25)"
             updatePlayers();
             nextTurn();
+            take = true
         } 
     }
     if (total == 80 && gems.length == 2) {
@@ -609,6 +610,7 @@ function takeGems(player, gems){
                 gems[i].innerHTML = gemAmounts[reverseColorList[gemColors[i]]];
                 updatePlayers();
                 nextTurn();
+                take = true;
             } 
         }
         for(let i=0; i<gems.length; i++){
@@ -639,6 +641,7 @@ function takeGems(player, gems){
             }else{
                 updatePlayers();
                 nextTurn();
+                take = true;
             }
         }else{
             modal.style.display = "block"
@@ -679,6 +682,7 @@ function takeGems(player, gems){
             }else{
                 updatePlayers();
                 nextTurn();
+                take = true;
             }
         }else{
             modal.style.display = "block"
@@ -709,6 +713,7 @@ function takeGems(player, gems){
             gems[i].innerHTML = gemAmounts[reverseColorList[gemColors[i]]];
         }
     }
+    return take;
 }
 
 for(let i=0; i<Object.keys(colorList).length; i++){
@@ -908,28 +913,30 @@ function checkWin(player){
         document.querySelector(".win").style.display = "flex"
         document.querySelector(".win .modal-text").style.display = "block"
         document.querySelector(".win .modal-text").style.textAlign = "center"
-        document.querySelector(".win .modal-text").innerHTML = `<h4>Congratulations!</h4><p>Player ${currentPlayer} Won!</p>`
+        document.querySelector(".win .modal-text").innerHTML = `<h4>Congratulations!</h4><p>Player ${currentPlayer+1} Won!</p>`
         return true
     }
 }
 
-function cpuTurn(){
-    const attackChance = Math.ceil(Math.random()*10)
-    let attackable = f[];
-    for(let hand in hands){
-        if(hand["attackable"]){
-            attackable.push(hand)
-        }
-    }
-    if(attackChance == 10 && (hands[currentPlayer]["np"] > 0)){
-        nobleAttack(hands[currentPlayer], attackable[Math.floor(Math.random()*attackable.length)])
-    }else if(){
+// function cpuTurn(){
+//     const attackChance = Math.ceil(Math.random()*10)
+//     let attackable = [];
+//     for(let hand in hands){
+//         if(hand["attackable"]){
+//             attackable.push(hand)
+//         }
+//     }
+//     if(attackChance == 10 && (hands[currentPlayer]["np"] > 0)){
+//         nobleAttack(hands[currentPlayer], attackable[Math.floor(Math.random()*attackable.length)])
+//     }else if(hands[currentPlayer]["cards"] >= [nobles][0]["cost"]){
 
-    }else if(){
+//     }else if(hands[currentPlayer]["cards"] >= [nobles][0]["cost"]){
 
-    }else if(){
+//     }else if(){
 
-    }else{
+//     }else if(){
         
-    }
-}
+//     }else{
+        
+//     }
+// }
