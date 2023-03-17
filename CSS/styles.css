@@ -229,6 +229,7 @@ h3 {
 .step-rule .tut-noble {
     height: 120px;
     width: 80px;
+    border-radius: 8px;
 }
 
 /* beginning of game styles */

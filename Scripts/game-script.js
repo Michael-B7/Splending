@@ -323,12 +323,12 @@ function playerAmount() {
     for(let i=0; i<playerCount; i++){
         hands.push(new Player);
     }
-    // hands[0]["pp"] = 10
-    // hands[0]["cards"]["red"] = 10
-    // hands[0]["cards"]["blue"] = 10
-    // hands[0]["cards"]["green"] = 10
-    // hands[0]["cards"]["white"] = 10
-    // hands[0]["cards"]["black"] = 10
+    // hands[0]["pp"] = 1
+    // hands[0]["cards"]["red"] = 1
+    // hands[0]["cards"]["blue"] = 1
+    // hands[0]["cards"]["green"] = 1
+    // hands[0]["cards"]["white"] = 1
+    // hands[0]["cards"]["black"] = 1
     // hands[1]["cards"]["red"] = 10
     // hands[1]["cards"]["blue"] = 10
     // hands[1]["cards"]["green"] = 10
@@ -443,7 +443,8 @@ window.onclick = function(e) {
             location.reload()
         }
         modal.style.display = "none";
-        document.getElementById("modal-header").innerText = ""
+        modalHeader.innerText = "";
+        document.querySelectorAll(".modal-content")[0].style.width = "500px";
         for (let i = 0; i < modalSections.length; i++) {
             modalSections[i].style.display = "none";
         }
@@ -455,11 +456,12 @@ for (let i = 0; i < modalIcons.length; i++) {
     modalIcons[i].addEventListener("click", (e) => {
         modal.style.display = "block";
         if (e.target.classList.contains("fa-circle-question")) {
-            document.getElementById("modal-header").innerText = "How to play"
+            document.getElementById("modal-header").innerText = "How to play";
             document.getElementById("how-play").style.display = "flex";
-            document.querySelector("#how-play .modal-text").innerText = "playgaminging";
+            console.log( document.querySelectorAll(".modal-content"))
+            document.querySelectorAll(".modal-content")[0].style.width = "1000px";
         } else {
-            document.getElementById("modal-header").innerText = "Settings"
+            document.getElementById("modal-header").innerText = "Settings";
             document.getElementById("settings").style.display = "flex";
         }
     })
@@ -544,43 +546,52 @@ function reserveCard(player, eventCard) {
                 let costItems = curPlaySpace.children[1].children[1].children[0] 
                 costItems.innerHTML = ""
                 for (let j = 0; j < Object.keys(board[level][i].cost).length; j++) {
-                    let currColor = Object.keys(board[level][i].cost)[j]
+                    let currColor = Object.keys(board[level][i].cost)[j];
                     costItems.innerHTML = costItems.innerHTML + `<div class="${currColor} cost">${board[level][i].cost[currColor]}</div>`;
                 }
                 if (level == 3) {
                     cards3.splice(i, 1, new Card(undefined, 3));
-                    displayCards(board)
+                    displayCards(board);
                 }else if (level == 2) {
                     cards2.splice(i, 1, new Card(undefined, 2));
-                    displayCards(board)
+                    displayCards(board);
                 }else if (level == 1) {
                     cards1.splice(i, 1, new Card(undefined, 1));
-                    displayCards(board)
+                    displayCards(board);
                 }
             }
         }
         curPlaySpace.children[0].addEventListener("click", function(e) {
             if (e.target.classList.contains("buy-button")) {
-                buyCard(hands[currentPlayer], e.target.parentElement.parentElement, true);
-            } else if (e.target.classList.contains("gold-button")) {
-                if (curPlaySpace.parentElement.classList[1] == currentPlayer && !player.gold) {
-                    modal.style.display = "block";
-                    document.getElementById("select-gold").style.display = "flex";
+                if (curPlaySpace.parentElement.classList[1] == currentPlayer) {
+                    buyCard(hands[currentPlayer], e.target.parentElement.parentElement, true);
                 } else {
                     modal.style.display = "block";
-            document.querySelector("#feedback").style.display = "flex";
-            document.querySelector("#feedback .modal-text").innerHTML = "<h4>No Gold</h4><p>You have already used your gold.</p>";
+                    document.querySelector("#feedback").style.display = "flex";
+                    document.querySelector("#feedback .modal-text").innerHTML = "<h4>Not Your Card</h4><p>You may only buy your own reserved card.</p>";
+                }
+            } else if (e.target.classList.contains("gold-button")) {
+                if (curPlaySpace.parentElement.classList[1] == currentPlayer && !player.gold ) {
+                    modal.style.display = "block";
+                    document.getElementById("select-gold").style.display = "flex";
+                } else if (curPlaySpace.parentElement.classList[1] != currentPlayer) {
+                    modal.style.display = "block";
+                    document.querySelector("#feedback").style.display = "flex";
+                    document.querySelector("#feedback .modal-text").innerHTML = "<h4>Not Your Gold</h4><p>Use gold from your own reserve space.</p>";
+                } else {
+                    modal.style.display = "block";
+                    document.querySelector("#feedback").style.display = "flex";
+                    document.querySelector("#feedback .modal-text").innerHTML = "<h4>No Gold</h4><p>You have already used your gold.</p>";
                 }
             }
-        })
+        });
 
-        // reserveSize();
         cardActions();
         nextTurn();
     } else {
         modal.style.display = "block";
-            document.querySelector("#feedback").style.display = "flex";
-            document.querySelector("#feedback .modal-text").innerHTML = "<h4>Cannot Reserve Card</h4><p>You have already reserved a card.</p>";
+        document.querySelector("#feedback").style.display = "flex";
+        document.querySelector("#feedback .modal-text").innerHTML = "<h4>Cannot Reserve Card</h4><p>You have already reserved a card.</p>";
     }
 }
 
@@ -618,7 +629,7 @@ function takeGems(player, gems){
             } 
         }
         for(let i=0; i<gems.length; i++){
-            gems[i].style.boxShadow = "2px 2px 4px rgba(255, 255, 255, 0.25)"
+            gems[i].style.boxShadow = "2px 2px 4px rgba(255, 255, 255, 0.25)";
         }
     }
     if(gems.length == 2 && gemColors[0] == gemColors[1]){
@@ -755,7 +766,8 @@ function buyCard(player, card, reserved){
         }
     } else {
         let afford = checkAfford(player, player["reserved"])
-        if (afford) {
+        console.log(player.gold)
+        if (afford && player["gold"]) {
             returnGems(player, player["reserved"])
             player["cards"][player["reserved"]["color"]] ++;
             let curPlaySpace = reserveSpace[currentPlayer]
@@ -765,6 +777,10 @@ function buyCard(player, card, reserved){
             player["reserved"] = false;
             updatePlayers();
             nextTurn();
+        } else if(!player["gold"]){
+            modal.style.display = "block";
+            modalHeader.innerText = "Use Gold Before Purchasing"
+            document.getElementById("select-gold").style.display = "flex";
         } else {
             modal.style.display = "block";
             document.querySelector("#feedback").style.display = "flex";
@@ -777,11 +793,13 @@ function buyCard(player, card, reserved){
 function checkAfford(player, card) {
     let afford = false
     for(let j=0; j<Object.keys(card["cost"]).length; j++){
-        let currColor = Object.keys(card["cost"])[j]
+        let currColor = Object.keys(card["cost"])[j];
         if(player["gems"][currColor] >= (card["cost"][currColor] - player["cards"][currColor]*10) ){
-            afford = true
+            afford = true;
         }else{
-            afford = false
+            console.log("john")
+            afford = false;
+            break;
         }
     }
     return afford;
@@ -866,8 +884,8 @@ function attractNobles(player, noble){
                     nextTurn();
                 }else{
                     modal.style.display = "block";
-            document.querySelector("#feedback").style.display = "flex";
-            document.querySelector("#feedback .modal-text").innerHTML = "<h4>Cannot Attract Noble</h4><p>You do not wealth required to attract this noble.</p>";
+                    document.querySelector("#feedback").style.display = "flex";
+                    document.querySelector("#feedback .modal-text").innerHTML = "<h4>Cannot Attract Noble</h4><p>You do not wealth required to attract this noble.</p>";
                 }
             }
         }
@@ -880,8 +898,11 @@ for (let i = 0; i < modalGems.length; i++) {
         let selectedColor = e.target.classList[1];
         hands[currentPlayer]["gems"][selectedColor] += 10;
         hands[currentPlayer]["gold"] = selectedColor;
+        gemAmounts["gold"]++;
+        document.querySelector(`.gem.gold`).innerHTML = gemAmounts["gold"];
         updatePlayers();
 
+        modalHeader.innerText = "";
         modal.style.display = "none";
         for (let i = 0; i < modalSections.length; i++) {
             modalSections[i].style.display = "none";
