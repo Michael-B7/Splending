@@ -50,10 +50,8 @@ header {
 
 .button-box {
     background-color: #A5B1C5;
-    width: 25%;
     padding: 16px;
     display: grid;
-    grid-template-columns: 1fr 1fr;
     grid-template-rows: auto auto;
     gap: 16px;
 
@@ -61,19 +59,7 @@ header {
     border-radius: 16px;
 }
 
-#create {
-    grid-column: 1 / 2;
-    grid-row: 1 / 2;
-}
-
-#join {
-    grid-column: 2 / 3;
-    grid-row: 1 / 2;
-}
-
 #name {
-    grid-column: 1 / 3;
-    grid-row: 2 / 3;
     cursor: auto;
     color: white;
 }
@@ -779,7 +765,7 @@ h4 {
 }
 
 .modal-content {
-    background-color: #A5B1C5;
+    background-color: rgba(165, 177, 197, 0.95);
     border: #242830 solid 3px;
     
     position: absolute;
@@ -806,6 +792,22 @@ h4 {
 
 .modal-section h3 {
     color: black;
+}
+
+#feedback {
+    display: flex;
+}
+
+#feedback .modal-text {
+    text-align: center;
+}
+
+#feedback .modal-text p {
+    text-align: center;
+}
+
+#feedback .modal-text h4{
+    text-align: center;
 }
 
 .switch {
