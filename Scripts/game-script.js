@@ -112,9 +112,9 @@ class Card {
         this.points = this.calcPoints(level);
         this.calcCost = function(level, points){
             let possCosts = {
-                1:[[10,10,10,10], [10,10,10,20], [10,20,20], [10,10,30], [10,20], [20,20], [30]],
-                2:{1:[[20,20,30], [20,30,30]], 2:[[10,20,40], [30,50], [50]]},
-                3:{3:[[30,30,30,50]], 4:[[70], [30,30,60]]}
+                1:[[10,10,10,10,0], [10,10,10,20,0], [10,20,20,0,0], [10,10,30,0,0], [10,20,0,0,0], [20,20,0,0,0], [30,0,0,0,0]],
+                2:{1:[[20,20,30,0,0], [20,30,30,0,0]], 2:[[10,20,40,0,0], [30,50,0,0,0], [50,0,0,0,0]]},
+                3:{3:[[30,30,30,50,0]], 4:[[70,0,0,0,0], [30,30,60,0,0]]}
             }
 
             let costNums;
@@ -513,7 +513,10 @@ function displayCards(cardList){
             let costItems = row[i].children[1].children[1].children[0]
             for(let j=0; j<Object.keys(card.cost).length; j++){
                 let currColor = Object.keys(card.cost)[j];
-                costItems.innerHTML = costItems.innerHTML + `<div class="${currColor} cost">${card.cost[currColor]}</div>`;
+                console.log(card)
+                if (card["cost"][currColor] > 0) {
+                    costItems.innerHTML = costItems.innerHTML + `<div class="${currColor} cost">${card.cost[currColor]}</div>`;
+                }
             }
         }
     }
@@ -961,14 +964,14 @@ function cpuTurn(){
 
     if(attackChance == 10 && (hands[currentPlayer]["np"] > 0)){
         nobleAttack(hands[currentPlayer], attackable[Math.floor(Math.random()*attackable.length)])
-    }else if(hands[currentPlayer]["cards"] >= nobles[0]["cost"]){
-        attractNobles(hands[currentPlayer], nobles[0])
-    }
-    else if(hands[currentPlayer]["cards"] >= nobles[1]["cost"]){
-        attractNobles(hands[currentPlayer], nobles[1])
+    }else if(hands[currentPlayer]["cards"] >= [nobles][0]["cost"]){
+        attractNobles(hands[currentPlayer], nobles[0]);
+    }else if(hands[currentPlayer]["cards"] >= [nobles][1]["cost"]){
+        attractNobles(hands[currentPlayer], nobles[1]);
     }else if(){
+        
     }else if(){
-
+        
     }else if(){
         
     }else{
