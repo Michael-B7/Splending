@@ -182,11 +182,12 @@ function nextTurn() {
         currentPlayer = 0
     }
     
-    // if(singlePlayer && currentPlayer != 0){
-    //     cpuTurn()
-    // }
+    if(singlePlayer && currentPlayer != 0){
+        cpuTurn()
+        console.log(0)
+    }
 
-    if (tutPop) {
+    if (tutPop || (singlePlayer && currentPlayer != 0)) {
     modal.style.display = "block"
     document.querySelector("#feedback").style.display = "flex"
     document.querySelector("#feedback .modal-text").style.textAlign = "left"
@@ -513,7 +514,6 @@ function displayCards(cardList){
             let costItems = row[i].children[1].children[1].children[0]
             for(let j=0; j<Object.keys(card.cost).length; j++){
                 let currColor = Object.keys(card.cost)[j];
-                console.log(card)
                 if (card["cost"][currColor] > 0) {
                     costItems.innerHTML = costItems.innerHTML + `<div class="${currColor} cost">${card.cost[currColor]}</div>`;
                 }
@@ -961,20 +961,37 @@ function cpuTurn(){
             attackable.push(hand)
         }
     }
+    let ranNum = Math.floor(Math.random()*4);
+    let ranLevel = Math.floor(Math.random()*3)
+    let gemTake = Math.floor(Math.random()*2);
+    let gemsTaken;
+    if(gemTake == 0){
+        gemsTaken = selectColors(3)
+    }else{
+        gemsTaken = selectColors(2)
+    }
 
     if(attackChance == 10 && (hands[currentPlayer]["np"] > 0)){
         nobleAttack(hands[currentPlayer], attackable[Math.floor(Math.random()*attackable.length)])
-    }else if(hands[currentPlayer]["cards"] >= [nobles][0]["cost"]){
+    }else if(hands[currentPlayer]["cards"] >= nobles[0]["cost"]){
         attractNobles(hands[currentPlayer], nobles[0]);
-    }else if(hands[currentPlayer]["cards"] >= [nobles][1]["cost"]){
+    }else if(hands[currentPlayer]["cards"] >= nobles[1]["cost"]){
         attractNobles(hands[currentPlayer], nobles[1]);
-    }else if(){
-        
-    }else if(){
-        
-    }else if(){
-        
+    }else if(hands[currentPlayer]["reserved"] && checkAfford(hands[currentPlayer], document.getElementsByClassName("empty-card")[currentPlayer])){
+        buyCard(hands[currentPlayer], document.getElementsByClassName("empty-card")[currentPlayer], true)
+    }else if(checkAfford(hands[currentPlayer], document.querySelectorAll(".level-3.used")[ranNum])){
+        buyCard(hands[currentPlayer], hands[currentPlayer], document.querySelectorAll(".level-3.used")[ranNum], false)
+    }else if(checkAfford(hands[currentPlayer], document.querySelectorAll(".level-2.used")[ranNum])){
+        buyCard(hands[currentPlayer], hands[currentPlayer], document.querySelectorAll(".level-2.used")[ranNum], false)
+    }else if(checkAfford(hands[currentPlayer], document.querySelectorAll(".level-1.used")[ranNum])){
+        buyCard(hands[currentPlayer], hands[currentPlayer], document.querySelectorAll(".level-1.used")[ranNum], false)
+    }else if(gemTake == 0 && takeGems(hands[currentPlayer], [document.querySelector(`.gem.${gemsTaken[0]}`),document.querySelector(`.gem.${gemsTaken[1]}`),document.querySelector(`.gem.${gemsTaken[2]}`)])){
+        takeGems(hands[currentPlayer], [document.querySelector(`.gem.${gemsTaken[0]}`),document.querySelector(`.gem.${gemsTaken[1]}`),document.querySelector(`.gem.${gemsTaken[2]}`)])
+    }else if(gemTake == 1 && takeGems(hands[currentPlayer], [document.querySelector(`.gem.${gemstaken[0]}`),document.querySelector(`.gem.${gemsTaken[1]}`)])){
+        takeGems(hands[currentPlayer], [document.querySelector(`.gem.${gemstaken[0]}`),document.querySelector(`.gem.${gemsTaken[1]}`)])
     }else{
-        
+        reserveCard(hands[currentPlayer], document.querySelectorAll(`.level-${ranLevel}.used`)[ranNum])
     }
+    // updatePlayers()
+    // nextTurn()
 }
