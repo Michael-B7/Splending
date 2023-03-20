@@ -458,7 +458,6 @@ for (let i = 0; i < modalIcons.length; i++) {
         if (e.target.classList.contains("fa-circle-question")) {
             document.getElementById("modal-header").innerText = "How to play";
             document.getElementById("how-play").style.display = "flex";
-            console.log( document.querySelectorAll(".modal-content"))
             document.querySelectorAll(".modal-content")[0].style.width = "1000px";
         } else {
             document.getElementById("modal-header").innerText = "Settings";
@@ -510,7 +509,6 @@ function displayCards(cardList){
             let costItems = row[i].children[1].children[1].children[0]
             for(let j=0; j<Object.keys(card.cost).length; j++){
                 let currColor = Object.keys(card.cost)[j];
-                console.log(card)
                 if (card["cost"][currColor] > 0) {
                     costItems.innerHTML = costItems.innerHTML + `<div class="${currColor} cost">${card.cost[currColor]}</div>`;
                 }
@@ -649,7 +647,7 @@ function takeGems(player, gems){
                 modal.style.display = "block"
                 document.querySelector("#feedback").style.display = "flex"
                 
-                document.querySelector("#feedback .modal-text").innerHTML = "<h4>You Have Too Many Gems</h4><p>Players Can Have a Maximum of 100 Gems<br>(Excluding Gems Gained from Gold)</p>"
+                document.querySelector("#feedback .modal-text").innerHTML = "<h4>You Have Too Many Gems</h4><p>Players can have a maximum of 100 gems<br>(Excluding gems gained from gold)</p>"
                 chosenGems = []
                 gems[0].style.boxShadow = "2px 2px 4px rgba(255, 255, 255, 0.25)"
                 player.gems[Object.keys(colorList).find(key => colorList[key] == gemColors[0])] -= 20;
@@ -664,7 +662,7 @@ function takeGems(player, gems){
             modal.style.display = "block"
             document.querySelector("#feedback").style.display = "flex"
             
-            document.querySelector("#feedback .modal-text").innerHTML = "<h4>Cannot Take Two of This Gem</h4><p>If a Gem Has Less Than 40 Gems in the Stack You Cannot Take Two</p>"
+            document.querySelector("#feedback .modal-text").innerHTML = "<h4>Cannot Take Two of This Gem</h4><p>If a gem has less than 40 gems in the stack you cannot take two</p>"
             chosenGems = []
             gems[0].style.boxShadow = "2px 2px 4px rgba(255, 255, 255, 0.25)"
         }
@@ -686,7 +684,7 @@ function takeGems(player, gems){
                 modal.style.display = "block"
                 document.querySelector("#feedback").style.display = "flex"
                 
-                document.querySelector("#feedback .modal-text").innerHTML = "<h4>You Have Too Many Gems</h4><p>Players Can Have a Maximum of 100 Gems</p>"
+                document.querySelector("#feedback .modal-text").innerHTML = "<h4>You Have Too Many Gems</h4><p>Players can have a maximum of 100 gems</p>"
                 chosenGems = []
                 for(let i=0; i<gems.length; i++){
                     gems[i].style.boxShadow = "2px 2px 4px rgba(255, 255, 255, 0.25)"
@@ -712,7 +710,7 @@ function takeGems(player, gems){
     }else if(gems.length > 2 ){
         modal.style.display = "block"
         document.querySelector("#feedback").style.display = "flex"
-        document.querySelector("#feedback .modal-text").innerHTML = "<h4>Cannot Take These Gems</h4><p>You Can Take Either One of Three Different Colors of Gems or Two of the Same Color of Gem</p>"
+        document.querySelector("#feedback .modal-text").innerHTML = "<h4>Cannot Take These Gems</h4><p>You can take either one of three different colors of gems or two of the same color of gem</p>"
         chosenGems = []
         for(let i=0; i<gems.length; i++){
             gems[i].style.boxShadow = "2px 2px 4px rgba(255, 255, 255, 0.25)"
@@ -732,11 +730,15 @@ for(let i=0; i<Object.keys(colorList).length; i++){
     document.getElementsByClassName(`gem ${Object.keys(colorList)[i]}`)[0].addEventListener("click", function(e){
         e.target.style.boxShadow = `0 0 10px 5px rgb(188, 188, 188)`
         chosenGems.push(e.target)
+        console.log(chosenGems)
         takeGems(hands[currentPlayer], chosenGems)
     })
 }
 
 // purchase cards
+// player: int, current player
+// card: object, card trying to be bought
+// reserved: booleon, true if purchasing from reserved spot
 function buyCard(player, card, reserved){
     if (!reserved) {
         let color = reverseColorList[window.getComputedStyle(card).backgroundColor]
@@ -769,7 +771,6 @@ function buyCard(player, card, reserved){
         }
     } else {
         let afford = checkAfford(player, player["reserved"])
-        console.log(player.gold)
         if (afford && player["gold"]) {
             returnGems(player, player["reserved"])
             player["cards"][player["reserved"]["color"]] ++;
@@ -949,26 +950,26 @@ function checkWin(player){
 //         nobleAttack(hands[currentPlayer], attackable[Math.floor(Math.random()*attackable.length)])
 //     }else if(hands[currentPlayer]["cards"] >= [nobles][0]["cost"]){
 
-function cpuTurn(){
-    const attackChance = Math.ceil(Math.random()*10)
-    let attackable = [];
-    for(let hand in hands){
-        if(hand["attackable"]){
-            attackable.push(hand)
-        }
-    }
-    if(attackChance == 10 && (hands[currentPlayer]["np"] > 0)){
-        nobleAttack(hands[currentPlayer], attackable[Math.floor(Math.random()*attackable.length)])
-    }else if(hands[currentPlayer]["cards"] >= [nobles][0]["cost"]){
-        attractNobles(hands[currentPlayer], nobles[0]);
-    }else if(hands[currentPlayer]["cards"] >= [nobles][1]["cost"]){
-        attractNobles(hands[currentPlayer], nobles[1]);
-    }else if(){
-    }else if(){
+// function cpuTurn(){
+//     const attackChance = Math.ceil(Math.random()*10)
+//     let attackable = [];
+//     for(let hand in hands){
+//         if(hand["attackable"]){
+//             attackable.push(hand)
+//         }
+//     }
+//     if(attackChance == 10 && (hands[currentPlayer]["np"] > 0)){
+//         nobleAttack(hands[currentPlayer], attackable[Math.floor(Math.random()*attackable.length)])
+//     }else if(hands[currentPlayer]["cards"] >= [nobles][0]["cost"]){
+//         attractNobles(hands[currentPlayer], nobles[0]);
+//     }else if(hands[currentPlayer]["cards"] >= [nobles][1]["cost"]){
+//         attractNobles(hands[currentPlayer], nobles[1]);
+//     }else if(){
+//     }else if(){
         
-    }else if(){
+//     }else if(){
         
-    }else{
+//     }else{
         
-    }
-}
+//     }
+// }
