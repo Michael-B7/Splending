@@ -324,20 +324,6 @@ function playerAmount() {
     for(let i=0; i<playerCount; i++){
         hands.push(new Player);
     }
-    hands[0]["pp"] = 1
-    hands[0]["cards"]["red"] = 4
-    hands[0]["cards"]["blue"] = 4
-    hands[0]["cards"]["green"] = 4
-    hands[0]["cards"]["white"] = 4
-    hands[0]["cards"]["black"] = 4
-    cpuTurn()
-    console.log(JSON.stringify(hands[0]["cards"]["white"]))
-    console.log(JSON.stringify(nobles[0]["cost"]))  
-    // hands[1]["cards"]["red"] = 10
-    // hands[1]["cards"]["blue"] = 10
-    // hands[1]["cards"]["green"] = 10
-    // hands[1]["cards"]["white"] = 10
-    // hands[1]["cards"]["black"] = 10
     let innerPlayers = "";
     for(let i=0; i<playerCount; i++){
         let innerPlayer = `<div class="player player${i}">
