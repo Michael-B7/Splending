@@ -160,10 +160,26 @@ class Noble{
             for(let i=0; i<costNums.length; i++){
                 cost[colors[i]] = costNums[i];
             }
+            cost = colorSort(cost);
             return cost;
         }
         this.cost = this.calcCost();
     }
+}
+
+
+function colorSort(cost) {
+    let entries = Object.entries(cost);
+    let keys = Object.keys(cost);
+    let tempObj = {};
+    for (let i = 0; i < entries.length; i++) {
+        for (let j = 0; j < colors.length; j++) {
+            if (keys[i] == colors[j]) {
+                tempObj[colors[j]] = entries[i][1];
+            }
+        }
+    }
+    return tempObj;
 }
 
 let hands = [];
@@ -183,8 +199,9 @@ function nextTurn() {
     }
     
     if(singlePlayer && currentPlayer != 0){
+        console.log("start cpu")
         cpuTurn()
-        console.log(0)
+        console.log("end cpu")
     }
 
     if (tutPop || (singlePlayer && currentPlayer != 0)) {
@@ -252,16 +269,22 @@ function ranColor(colors){
 
 // makes sure the cost object of a card does not have a repeated key
 function selectColors(numTerms){
-    let colors = new Set();
-    while(colors.size < numTerms){
-        colors.add(ranColor(colorList));
+    let colorSet = new Set();
+    while(colorSet.size < numTerms){
+        colorSet.add(ranColor(colorList));
     };
     let temp = [];
-    colors.forEach(function(value){
+    colorSet.forEach(function(value){
         temp.push(value)
     });
-    colors = temp;
-    return colors;
+    colorSet = temp;
+
+    let tempArray = []
+    for (let i = 0; i < colors.length; i++) {
+        tempArray.push()
+    }
+
+    return colorSet;
 }
 
 // inner HTML of displayed player
@@ -330,9 +353,6 @@ function playerAmount() {
     hands[0]["cards"]["green"] = 4
     hands[0]["cards"]["white"] = 4
     hands[0]["cards"]["black"] = 4
-    cpuTurn()
-    console.log(JSON.stringify(hands[0]["cards"]["white"]))
-    console.log(JSON.stringify(nobles[0]["cost"]))  
     // hands[1]["cards"]["red"] = 10
     // hands[1]["cards"]["blue"] = 10
     // hands[1]["cards"]["green"] = 10
@@ -605,6 +625,7 @@ function takeGems(player, gems){
     let take = false
     let gemColors = []
     for(let i=0; i<gems.length; i++){
+        console.log(gems[i])
         gemColors.push(window.getComputedStyle(gems[i]).backgroundColor);
     }
     let total = 0;
@@ -804,8 +825,10 @@ function checkAfford(player, card) {
         let currColor = Object.keys(card["cost"])[j];
         if(player["gems"][currColor] >= (card["cost"][currColor] - player["cards"][currColor]*10) ){
             afford = true;
+            console.log("bought card")
+            // console.log()
         }else{
-            console.log("john")
+            console.log("can't afford")
             afford = false;
             break;
         }
@@ -953,9 +976,18 @@ function checkWin(player){
     }
 }
 
-
+function checkPrice(obj, type) {
+    let keys = Object.keys(obj)
+    for (let i = 0; i < keys.length; i++) {
+        if (!(hands[currentPlayer][type] >= obj[keys[i]])) {
+            return false;
+        }
+    }
+    return true;
+}
 
 function cpuTurn(){
+    let player = hands[currentPlayer];
     const attackChance = Math.ceil(Math.random()*10)
     let attackable = [];
     for(let hand in hands){
@@ -967,32 +999,58 @@ function cpuTurn(){
     let ranLevel = Math.floor(Math.random()*3)
     let gemTake = Math.floor(Math.random()*2);
     let gemsTaken;
+
     if(gemTake == 0){
         gemsTaken = selectColors(3)
     }else{
         gemsTaken = selectColors(2)
     }
 
-    if(attackChance == 10 && (hands[currentPlayer]["np"] > 0)){
-        nobleAttack(hands[currentPlayer], attackable[Math.floor(Math.random()*attackable.length)])
-    }else if(hands[currentPlayer]["cards"] >= nobles[0]["cost"]){
-        attractNobles(hands[currentPlayer], nobles[0]);
-    }else if(hands[currentPlayer]["cards"] >= nobles[1]["cost"]){
-        attractNobles(hands[currentPlayer], nobles[1]);
-    }else if(hands[currentPlayer]["reserved"] && checkAfford(hands[currentPlayer], document.getElementsByClassName("empty-card")[currentPlayer])){
-        buyCard(hands[currentPlayer], document.getElementsByClassName("empty-card")[currentPlayer], true)
-    }else if(checkAfford(hands[currentPlayer], document.querySelectorAll(".level-3.used")[ranNum])){
-        buyCard(hands[currentPlayer], hands[currentPlayer], document.querySelectorAll(".level-3.used")[ranNum], false)
-    }else if(checkAfford(hands[currentPlayer], document.querySelectorAll(".level-2.used")[ranNum])){
-        buyCard(hands[currentPlayer], hands[currentPlayer], document.querySelectorAll(".level-2.used")[ranNum], false)
-    }else if(checkAfford(hands[currentPlayer], document.querySelectorAll(".level-1.used")[ranNum])){
-        buyCard(hands[currentPlayer], hands[currentPlayer], document.querySelectorAll(".level-1.used")[ranNum], false)
-    }else if(gemTake == 0 && takeGems(hands[currentPlayer], [document.querySelector(`.gem.${gemsTaken[0]}`),document.querySelector(`.gem.${gemsTaken[1]}`),document.querySelector(`.gem.${gemsTaken[2]}`)])){
-        takeGems(hands[currentPlayer], [document.querySelector(`.gem.${gemsTaken[0]}`),document.querySelector(`.gem.${gemsTaken[1]}`),document.querySelector(`.gem.${gemsTaken[2]}`)])
-    }else if(gemTake == 1 && takeGems(hands[currentPlayer], [document.querySelector(`.gem.${gemstaken[0]}`),document.querySelector(`.gem.${gemsTaken[1]}`)])){
-        takeGems(hands[currentPlayer], [document.querySelector(`.gem.${gemstaken[0]}`),document.querySelector(`.gem.${gemsTaken[1]}`)])
+    // console.log(gemsTaken)
+    // console.log(takeGems(player, [document.querySelector(`.gem.${gemsTaken[0]}`), document.querySelector(`.gem.${gemsTaken[1]}`), document.querySelector(`.gem.${gemsTaken[2]}`)] ))
+
+    if(attackChance == 10 && (player["np"] > 0)){
+        console.log("attack")
+        nobleAttack(player, attackable[Math.floor(Math.random()*attackable.length)]);
+        return;
+    }else if(checkPrice(nobles[0], "cost")){
+        console.log("noble1")
+        attractNobles(player, nobles[0]);
+        return;
+    }else if(checkPrice(nobles[1], "cost")){
+        console.log("noble2")
+        attractNobles(player, nobles[1]);
+        return;
+    }else if(player["reserved"]){
+        console.log("has reserved")
+        if (checkAfford(player, player["reserved"])) {
+            console.log("buy reserve")
+            buyCard(player, document.getElementsByClassName("empty-card")[currentPlayer], true)
+            return;
+        };
+    }else if(checkAfford(player, board[3][ranNum])){
+        console.log("buy3")
+        buyCard(player, document.querySelectorAll(".level-3.used")[ranNum], false)
+        return;
+    }else if(checkAfford(player, board[2][ranNum])){
+        console.log("buy2")
+        buyCard(player, document.querySelectorAll(".level-2.used")[ranNum], false)
+        return;
+    }else if(checkAfford(player, board[1][ranNum])){
+        console.log("buy1")
+        buyCard(player, document.querySelectorAll(".level-1.used")[ranNum], false)
+        return;
+    }else if(gemTake == 0 ){
+        console.log("gem2")
+        takeGems(player, [document.querySelector(`.gem.${gemsTaken[0]}`), document.querySelector(`.gem.${gemsTaken[1]}`), document.querySelector(`.gem.${gemsTaken[2]}`)])
+        return;
+    }else if(gemTake == 1){
+        console.log("gem3")
+        takeGems(player, [document.querySelector(`.gem.${gemsTaken[0]}`), document.querySelector(`.gem.${gemsTaken[1]}`)]);
+        return;
     }else{
-        reserveCard(hands[currentPlayer], document.querySelectorAll(`.level-${ranLevel}.used`)[ranNum])
+        reserveCard(player, document.querySelectorAll(`.level-${ranLevel}.used`)[ranNum]);
+        return;
     }
     // updatePlayers()
     // nextTurn()
