@@ -347,12 +347,12 @@ function playerAmount() {
     for(let i=0; i<playerCount; i++){
         hands.push(new Player);
     }
-    hands[0]["pp"] = 1
-    hands[0]["cards"]["red"] = 4
-    hands[0]["cards"]["blue"] = 4
-    hands[0]["cards"]["green"] = 4
-    hands[0]["cards"]["white"] = 4
-    hands[0]["cards"]["black"] = 4
+    // hands[0]["pp"] = 1
+    // hands[0]["cards"]["red"] = 4
+    // hands[0]["cards"]["blue"] = 4
+    // hands[0]["cards"]["green"] = 4
+    // hands[0]["cards"]["white"] = 4
+    // hands[0]["cards"]["black"] = 4
     // hands[1]["cards"]["red"] = 10
     // hands[1]["cards"]["blue"] = 10
     // hands[1]["cards"]["green"] = 10
@@ -659,6 +659,7 @@ function takeGems(player, gems){
         }
     }
     if(gems.length == 2 && gemColors[0] == gemColors[1]){
+        console.log(123)
         if(gemAmounts[reverseColorList[gemColors[0]]] >= 40){
             player.gems[Object.keys(colorList).find(key => colorList[key] == gemColors[0])] += 20;
             gemAmounts[reverseColorList[gemColors[0]]] -= 20;
@@ -825,8 +826,6 @@ function checkAfford(player, card) {
         let currColor = Object.keys(card["cost"])[j];
         if(player["gems"][currColor] >= (card["cost"][currColor] - player["cards"][currColor]*10) ){
             afford = true;
-            console.log("bought card")
-            // console.log()
         }else{
             console.log("can't afford")
             afford = false;
@@ -1002,8 +1001,8 @@ function cpuTurn(){
 
     if(gemTake == 0){
         gemsTaken = selectColors(3)
-    }else{
-        gemsTaken = selectColors(2)
+    }else {
+        gemsTaken = selectColors(1)
     }
 
     // console.log(gemsTaken)
@@ -1011,47 +1010,76 @@ function cpuTurn(){
 
     if(attackChance == 10 && (player["np"] > 0)){
         console.log("attack")
+
+        modal.style.display = "block"
+        document.querySelector("#feedback").style.display = "flex";
+        document.querySelector("#feedback .modal-text").innerHTML = `<h4>CPU ${currentPlayer} Ended Turn</h4><p>CPU ${currentPlayer} attacked a player</p>`;
         nobleAttack(player, attackable[Math.floor(Math.random()*attackable.length)]);
         return;
     }else if(checkPrice(nobles[0], "cost")){
         console.log("noble1")
+        modal.style.display = "block";
+        document.querySelector("#feedback").style.display = "flex";
+        document.querySelector("#feedback .modal-text").innerHTML = `<h4>CPU ${currentPlayer} Ended Turn</h4><p>CPU ${currentPlayer} attracted a noble</p>`;
         attractNobles(player, nobles[0]);
         return;
     }else if(checkPrice(nobles[1], "cost")){
         console.log("noble2")
+        modal.style.display = "block";
+        document.querySelector("#feedback").style.display = "flex";
+        document.querySelector("#feedback .modal-text").innerHTML = `<h4>CPU ${currentPlayer} Ended Turn</h4><p>CPU ${currentPlayer} attracted a noble</p>`;
         attractNobles(player, nobles[1]);
         return;
     }else if(player["reserved"]){
         console.log("has reserved")
         if (checkAfford(player, player["reserved"])) {
             console.log("buy reserve")
+            modal.style.display = "block";
+            document.querySelector("#feedback").style.display = "flex";
+            document.querySelector("#feedback .modal-text").innerHTML = `<h4>CPU ${currentPlayer} Ended Turn</h4><p>CPU ${currentPlayer} bought their reserve card</p>`;
             buyCard(player, document.getElementsByClassName("empty-card")[currentPlayer], true)
             return;
         };
     }else if(checkAfford(player, board[3][ranNum])){
         console.log("buy3")
+        modal.style.display = "block";
+        document.querySelector("#feedback").style.display = "flex";
+        document.querySelector("#feedback .modal-text").innerHTML = `<h4>CPU ${currentPlayer} Ended Turn</h4><p>CPU ${currentPlayer} bought a level 3 card</p>`;
         buyCard(player, document.querySelectorAll(".level-3.used")[ranNum], false)
         return;
     }else if(checkAfford(player, board[2][ranNum])){
         console.log("buy2")
+        modal.style.display = "block";
+        document.querySelector("#feedback").style.display = "flex";
+        document.querySelector("#feedback .modal-text").innerHTML = `<h4>CPU ${currentPlayer} Ended Turn</h4><p>CPU ${currentPlayer} bought a level 2 card</p>`;
         buyCard(player, document.querySelectorAll(".level-2.used")[ranNum], false)
         return;
     }else if(checkAfford(player, board[1][ranNum])){
         console.log("buy1")
+        modal.style.display = "block";
+        document.querySelector("#feedback").style.display = "flex";
+        document.querySelector("#feedback .modal-text").innerHTML = `<h4>CPU ${currentPlayer} Ended Turn</h4><p>CPU ${currentPlayer} bought a level 1 card</p>`;
         buyCard(player, document.querySelectorAll(".level-1.used")[ranNum], false)
         return;
     }else if(gemTake == 0 ){
-        console.log("gem2")
-        takeGems(player, [document.querySelector(`.gem.${gemsTaken[0]}`), document.querySelector(`.gem.${gemsTaken[1]}`), document.querySelector(`.gem.${gemsTaken[2]}`)])
+        console.log("gem3")
+        modal.style.display = "block";
+        document.querySelector("#feedback").style.display = "flex";
+        document.querySelector("#feedback .modal-text").innerHTML = `<h4>CPU ${currentPlayer} Ended Turn</h4><p>CPU ${currentPlayer} collected three gems</p>`;
+        takeGems(player, [document.querySelector(`.gem.${gemsTaken[0]}`), document.querySelector(`.gem.${gemsTaken[1]}`), document.querySelector(`.gem.${gemsTaken[2]}`)]);
         return;
     }else if(gemTake == 1){
-        console.log("gem3")
-        takeGems(player, [document.querySelector(`.gem.${gemsTaken[0]}`), document.querySelector(`.gem.${gemsTaken[1]}`)]);
+        console.log("gem2")
+        modal.style.display = "block";
+        document.querySelector("#feedback").style.display = "flex";
+        document.querySelector("#feedback .modal-text").innerHTML = `<h4>CPU ${currentPlayer} Ended Turn</h4><p>CPU ${currentPlayer} collected two gems</p>`;
+        takeGems(player, [document.querySelector(`.gem.${gemsTaken[0]}`), document.querySelector(`.gem.${gemsTaken[0]}`)]);
         return;
     }else{
+        modal.style.display = "block";
+        document.querySelector("#feedback").style.display = "flex";
+        document.querySelector("#feedback .modal-text").innerHTML = `<h4>CPU ${currentPlayer} Ended Turn</h4><p>CPU ${currentPlayer} reserved a card</p>`;
         reserveCard(player, document.querySelectorAll(`.level-${ranLevel}.used`)[ranNum]);
         return;
     }
-    // updatePlayers()
-    // nextTurn()
 }
