@@ -572,7 +572,9 @@ function reserveCard(player, eventCard) {
                 costItems.innerHTML = ""
                 for (let j = 0; j < Object.keys(board[level][i].cost).length; j++) {
                     let currColor = Object.keys(board[level][i].cost)[j];
-                    costItems.innerHTML = costItems.innerHTML + `<div class="${currColor} cost">${board[level][i].cost[currColor]}</div>`;
+                    if (board[level][i].cost[currColor] > 0) {
+                        costItems.innerHTML = costItems.innerHTML + `<div class="${currColor} cost">${board[level][i].cost[currColor]}</div>`;
+                    }
                 }
                 if (level == 3) {
                     cards3.splice(i, 1, new Card(undefined, 3));
@@ -625,7 +627,6 @@ function takeGems(player, gems){
     let take = false
     let gemColors = []
     for(let i=0; i<gems.length; i++){
-        console.log(gems[i])
         gemColors.push(window.getComputedStyle(gems[i]).backgroundColor);
     }
     let total = 0;
@@ -659,7 +660,6 @@ function takeGems(player, gems){
         }
     }
     if(gems.length == 2 && gemColors[0] == gemColors[1]){
-        console.log(123)
         if(gemAmounts[reverseColorList[gemColors[0]]] >= 40){
             player.gems[Object.keys(colorList).find(key => colorList[key] == gemColors[0])] += 20;
             gemAmounts[reverseColorList[gemColors[0]]] -= 20;
@@ -756,7 +756,6 @@ for(let i=0; i<Object.keys(colorList).length; i++){
     document.getElementsByClassName(`gem ${Object.keys(colorList)[i]}`)[0].addEventListener("click", function(e){
         e.target.style.boxShadow = `0 0 10px 5px rgb(188, 188, 188)`
         chosenGems.push(e.target)
-        console.log(chosenGems)
         takeGems(hands[currentPlayer], chosenGems)
     })
 }
@@ -841,7 +840,7 @@ function returnGems(player, card) {
         if(!((card["cost"][currColor] - player["cards"][currColor]*10) < 0)){
             player["gems"][currColor] -= (card["cost"][currColor] - player["cards"][currColor]*10)
         }
-        player["pp"] += card["points"]
+
         if (player["gold"] == currColor) {
             if(!((card["cost"][currColor] - 10 - player["cards"][currColor]*10) < 0)){
                 gemAmounts[currColor] += (card["cost"][currColor] - 10 - player["cards"][currColor]*10)
@@ -855,6 +854,7 @@ function returnGems(player, card) {
 
         document.querySelector(`.gem.${currColor}`).innerHTML = gemAmounts[currColor];
     }
+    player["pp"] += card["points"]
 }
 
 // nobles
@@ -1004,9 +1004,6 @@ function cpuTurn(){
     }else {
         gemsTaken = selectColors(1)
     }
-
-    // console.log(gemsTaken)
-    // console.log(takeGems(player, [document.querySelector(`.gem.${gemsTaken[0]}`), document.querySelector(`.gem.${gemsTaken[1]}`), document.querySelector(`.gem.${gemsTaken[2]}`)] ))
 
     if(attackChance == 10 && (player["np"] > 0)){
         console.log("attack")

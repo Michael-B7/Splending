@@ -1,0 +1,117 @@
+@media screen and (max-width: 1350px) {
+    .cost {
+        width: 30px;
+        height: 30px;
+    }
+    
+    .reserved-container .card-costs .cost {
+        width: 30px;
+        height: 30px;
+    }
+}
+
+@media screen and (max-width: 950px) {
+    .gamer-zone {
+        width: 100vh; 
+        display: grid;
+        grid-template-rows: min-content min-content 1fr min-content 1fr;
+        grid-template-columns: 1fr min-content;
+        grid-template-areas: 
+        "title settings"
+        "reserved reserved"
+        "board board"
+        "gems gems"
+        "players players";
+        gap: 16px;
+        padding: 0;
+    }
+
+    .reserved-container .card-content {
+        flex-direction: column;
+    }
+    
+    .reserved-container .card-header {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        background-color: rgba(255, 255, 255, .35);
+        border-radius: 8px 8px 0 0;
+        height: auto;
+
+        transform: none;
+        writing-mode: inherit;
+        position: inherit;
+        padding: 0;
+    }
+
+    .reserved-container .card-body {
+        margin: 0;
+    }
+
+    /* .empty-card {
+        height: 100%;
+    } */
+
+    #reserved-cards,
+    .gems,
+    #board,
+    #game-settings,
+    .player {
+        border-radius: 0;
+    }
+
+    .ingame-settings {
+        border-radius: 0 0 0 8px;
+    }
+
+    #board .used, .noble {
+        display: none;
+    }
+
+    #board {
+        grid-template-columns: repeat(4, 1fr);
+        grid-template-rows: 1fr;
+        padding: 16px 32px;
+    }
+
+    /* card stack level 3 */
+    #board :nth-child(1) {
+        order: 3;
+    }
+
+    /* noble stack */
+    #board :nth-child(6) {
+        order: 4;
+    }
+
+    /* card stack level 2 */
+    #board :nth-child(7) {
+        order: 2;
+    }
+
+    .card-deck .level-3:nth-child(1) {
+        transform: rotate(1.65deg);
+    }
+
+    .card-deck .level-3:nth-child(2) {
+        transform: rotate(3.35deg);
+    }
+
+    .card-deck .level-3:nth-child(3) {
+        transform: rotate(5deg);
+    }
+
+    .gems {
+        flex-direction: row;
+        width: 100%;
+        height: 100px;
+        gap: 16px;
+    }
+
+    .gem {
+        width: auto;
+        height: 100%;
+        margin: 0;
+        font-size: 2rem;
+    }
+}
