@@ -4,7 +4,6 @@ document.getElementById("create").addEventListener("click", () => {
     document.getElementById("start").style.display = 'none'; 
     document.getElementById("game").style.display = 'flex';
     playerAmount()
-    setName(4)
 })
 
 let indexValue = 1;
@@ -204,7 +203,7 @@ function nextTurn() {
         console.log("end cpu")
     }
 
-    if (tutPop || (singlePlayer && currentPlayer != 0)) {
+    if (tutPop && !(singlePlayer && currentPlayer != 0)) {
     modal.style.display = "block"
     document.querySelector("#feedback").style.display = "flex"
     document.querySelector("#feedback .modal-text").style.textAlign = "left"
@@ -320,25 +319,6 @@ document.getElementById("start-game").addEventListener("click", () => {
     playerGlow();
 })
 
-// saves username to local storage
-document.getElementById("name").addEventListener("blur", (e) => {
-    window.localStorage.setItem("userName", e.target.value);
-})
-
-// sets name in local storage to game board
-// pAmount: num, the amount of players in a game
-function setName(pAmount) {
-    let name = localStorage.getItem("userName");
-
-    // sets name to player if name blank or no local storage
-    if (name == "" || name == null) {
-        name = "Player";
-    }
-
-    document.getElementsByClassName("player-name")[0].innerText = name;
-    document.getElementsByClassName("player-name")[+pAmount].innerText = name;
-}
-
 // displays how many players are in a game
 // updates on game setting dropdown
 function playerAmount() {
@@ -361,7 +341,7 @@ function playerAmount() {
     let innerPlayers = "";
     for(let i=0; i<playerCount; i++){
         let innerPlayer = `<div class="player player${i}">
-        <h4 class="player-name">Player</h4>
+        <h4 class="player-name">Player ${i+1}</h4>
         <div class="attack"> <img src="/Images/sword.png" alt=""> </div>  
         <div class="player-gems">
           <div class="player-gem red">0</div>
@@ -394,7 +374,6 @@ function playerAmount() {
     } else {
         playerColumn.style.justifyContent = "space-between";
     }
-    setName(playerCount)
     attackIcons = document.querySelectorAll(".attack img");
     for(let i=0; i<attackIcons.length; i++){
         attackIcons[i].addEventListener("click", function(e){
@@ -433,10 +412,8 @@ function setOnline() {
         <div class="noble-balance">Nobles:</div>
         </div>`
     document.getElementById("reserved-cards").innerHTML = innerReserve.repeat(1);
-    setName(1)
 }
 
-document.getElementById("name").value = localStorage.getItem("userName");
 document.getElementById("player-amount").addEventListener("change", playerAmount);
 
 const modal = document.getElementById("modal");
@@ -985,7 +962,7 @@ function checkPrice(obj, type) {
     return true;
 }
 
-function cpuTurn(){
+async function cpuTurn(){
     let player = hands[currentPlayer];
     const attackChance = Math.ceil(Math.random()*10)
     let attackable = [];
@@ -1011,22 +988,25 @@ function cpuTurn(){
         modal.style.display = "block"
         document.querySelector("#feedback").style.display = "flex";
         document.querySelector("#feedback .modal-text").innerHTML = `<h4>CPU ${currentPlayer} Ended Turn</h4><p>CPU ${currentPlayer} attacked a player</p>`;
+        await sleep(5000);
+        modal.style.display = "none"
         nobleAttack(player, attackable[Math.floor(Math.random()*attackable.length)]);
-        return;
     }else if(checkPrice(nobles[0], "cost")){
         console.log("noble1")
         modal.style.display = "block";
         document.querySelector("#feedback").style.display = "flex";
         document.querySelector("#feedback .modal-text").innerHTML = `<h4>CPU ${currentPlayer} Ended Turn</h4><p>CPU ${currentPlayer} attracted a noble</p>`;
+        await sleep(5000);
+        modal.style.display = "none"
         attractNobles(player, nobles[0]);
-        return;
     }else if(checkPrice(nobles[1], "cost")){
         console.log("noble2")
         modal.style.display = "block";
         document.querySelector("#feedback").style.display = "flex";
         document.querySelector("#feedback .modal-text").innerHTML = `<h4>CPU ${currentPlayer} Ended Turn</h4><p>CPU ${currentPlayer} attracted a noble</p>`;
+        await sleep(5000);
+        modal.style.display = "none"
         attractNobles(player, nobles[1]);
-        return;
     }else if(player["reserved"]){
         console.log("has reserved")
         if (checkAfford(player, player["reserved"])) {
@@ -1034,49 +1014,62 @@ function cpuTurn(){
             modal.style.display = "block";
             document.querySelector("#feedback").style.display = "flex";
             document.querySelector("#feedback .modal-text").innerHTML = `<h4>CPU ${currentPlayer} Ended Turn</h4><p>CPU ${currentPlayer} bought their reserve card</p>`;
+            await sleep(5000);
+            modal.style.display = "none"
             buyCard(player, document.getElementsByClassName("empty-card")[currentPlayer], true)
-            return;
         };
     }else if(checkAfford(player, board[3][ranNum])){
         console.log("buy3")
         modal.style.display = "block";
         document.querySelector("#feedback").style.display = "flex";
         document.querySelector("#feedback .modal-text").innerHTML = `<h4>CPU ${currentPlayer} Ended Turn</h4><p>CPU ${currentPlayer} bought a level 3 card</p>`;
+        await sleep(5000);
+        modal.style.display = "none"
         buyCard(player, document.querySelectorAll(".level-3.used")[ranNum], false)
-        return;
     }else if(checkAfford(player, board[2][ranNum])){
         console.log("buy2")
         modal.style.display = "block";
         document.querySelector("#feedback").style.display = "flex";
         document.querySelector("#feedback .modal-text").innerHTML = `<h4>CPU ${currentPlayer} Ended Turn</h4><p>CPU ${currentPlayer} bought a level 2 card</p>`;
+        await sleep(5000);
+        modal.style.display = "none"
         buyCard(player, document.querySelectorAll(".level-2.used")[ranNum], false)
-        return;
     }else if(checkAfford(player, board[1][ranNum])){
         console.log("buy1")
         modal.style.display = "block";
         document.querySelector("#feedback").style.display = "flex";
         document.querySelector("#feedback .modal-text").innerHTML = `<h4>CPU ${currentPlayer} Ended Turn</h4><p>CPU ${currentPlayer} bought a level 1 card</p>`;
+        await sleep(5000);
+        modal.style.display = "none"
         buyCard(player, document.querySelectorAll(".level-1.used")[ranNum], false)
-        return;
     }else if(gemTake == 0 ){
         console.log("gem3")
         modal.style.display = "block";
         document.querySelector("#feedback").style.display = "flex";
         document.querySelector("#feedback .modal-text").innerHTML = `<h4>CPU ${currentPlayer} Ended Turn</h4><p>CPU ${currentPlayer} collected three gems</p>`;
+        await sleep(5000);
+        modal.style.display = "none"
         takeGems(player, [document.querySelector(`.gem.${gemsTaken[0]}`), document.querySelector(`.gem.${gemsTaken[1]}`), document.querySelector(`.gem.${gemsTaken[2]}`)]);
-        return;
     }else if(gemTake == 1){
+        modal.style.display = "none"
         console.log("gem2")
         modal.style.display = "block";
         document.querySelector("#feedback").style.display = "flex";
         document.querySelector("#feedback .modal-text").innerHTML = `<h4>CPU ${currentPlayer} Ended Turn</h4><p>CPU ${currentPlayer} collected two gems</p>`;
+        await sleep(5000);
+        modal.style.display = "none"
         takeGems(player, [document.querySelector(`.gem.${gemsTaken[0]}`), document.querySelector(`.gem.${gemsTaken[0]}`)]);
-        return;
     }else{
         modal.style.display = "block";
         document.querySelector("#feedback").style.display = "flex";
         document.querySelector("#feedback .modal-text").innerHTML = `<h4>CPU ${currentPlayer} Ended Turn</h4><p>CPU ${currentPlayer} reserved a card</p>`;
+        await sleep(5000);
+        modal.style.display = "none"
         reserveCard(player, document.querySelectorAll(`.level-${ranLevel}.used`)[ranNum]);
-        return;
     }
+}
+
+function sleep(ms) {
+    console.log("timeout" + ms)
+    return new Promise((resolve) => setTimeout(resolve, ms));
 }
