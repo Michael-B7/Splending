@@ -676,6 +676,11 @@ input[type="radio"]:checked + label.radio-button {
     border-radius: 0 0 8px 8px;
 }
 
+#back-button {
+    display: none;
+    order: 5;
+}
+
 h4 {
     height: min-content;
 }

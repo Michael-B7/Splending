@@ -11,19 +11,32 @@
 }
 
 @media screen and (max-width: 950px) {
+    .cost {
+        width: 40px;
+        height: 40px;
+    }
+    
+    .reserved-container .card-costs .cost {
+        width: 40px;
+        height: 40px;
+    }
+
     .gamer-zone {
-        width: 100vh; 
+        width: 100%; 
         display: grid;
-        grid-template-rows: min-content min-content 1fr min-content 1fr;
+        grid-template-rows: min-content 1fr min-content 1fr;
         grid-template-columns: 1fr min-content;
         grid-template-areas: 
-        "title settings"
-        "reserved reserved"
+        "reserved settings"
         "board board"
         "gems gems"
         "players players";
         gap: 16px;
-        padding: 0;
+        padding: 16px;
+    }
+
+    .card-content {
+        display: block;
     }
 
     .reserved-container .card-content {
@@ -48,20 +61,22 @@
         margin: 0;
     }
 
-    /* .empty-card {
-        height: 100%;
-    } */
+    .gamer-zone header {
+        display: none;
+    }
 
     #reserved-cards,
     .gems,
     #board,
     #game-settings,
     .player {
-        border-radius: 0;
+        border-radius: 8px;
     }
 
     .ingame-settings {
-        border-radius: 0 0 0 8px;
+        padding: 8px;
+        border-radius: 4px;
+        gap: 8px;
     }
 
     #board .used, .noble {
@@ -69,7 +84,7 @@
     }
 
     #board {
-        grid-template-columns: repeat(4, 1fr);
+        grid-template-columns: 1fr 1fr 1fr 1fr min-content;
         grid-template-rows: 1fr;
         padding: 16px 32px;
     }
@@ -113,5 +128,104 @@
         height: 100%;
         margin: 0;
         font-size: 2rem;
+    }
+
+    #players {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 16px;
+    }
+
+    .player {
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: min-content min-content min-content 1fr;
+        grid-template-areas: 
+        "player attack"
+        "prestige prestige"
+        "noble noble"
+        "gem gem";
+        width: 100%;
+        border-radius: 8px 8px 0 0;
+    }
+
+    #players .player:last-child {
+        border-radius: 0 8px 0 0;
+    }
+
+    #players .player:last-child {
+        border-radius: 8px 0 0 0;
+    }
+
+    .player-gems {
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: repeat(5, 1fr);
+        column-gap: 0;
+    }
+
+    .player-balance {
+        grid-area: prestige;
+        margin: 4px 0;
+    }
+
+    .noble-balance {
+        grid-area: noble;
+        margin: 4px 0;
+    }
+
+    .back-button {
+        display: block;
+        height: 50px;
+        width: 25px;
+        
+    }
+
+    .player-gem.red{
+        order: 1;
+        border-radius: 8px 0 0 0;
+    }
+
+    .player-card.red{
+        order: 2;
+        border-radius: 0 8px 0 0;
+    }
+    
+    .player-gem.green{
+        order: 3;
+        border-radius: 0 0 0 0;
+    }
+
+    .player-card.green{
+        order: 4;
+        border-radius: 0 0 0 0;
+    }
+    
+    .player-gem.blue{
+        order: 5;
+        border-radius: 0 0 0 0;
+    }
+
+    .player-card.blue{
+        order: 6;
+        border-radius: 0 0 0 0;
+    }
+
+    .player-gem.white{
+        order: 7;
+        border-radius: 0 0 0 0;
+    }
+
+    .player-card.white{
+        order: 8;
+        border-radius: 0 0 0 0;
+    }
+
+    .player-gem.black{
+        order: 9;
+        border-radius: 0 0 0 8px;
+    }
+
+    .player-card.black{
+        order: 10;
+        border-radius: 0 0 8px 0;
     }
 }

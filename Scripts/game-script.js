@@ -985,6 +985,73 @@ function checkPrice(obj, type) {
     return true;
 }
 
+// show cards, only works on smaller screens
+let stacks = document.querySelectorAll(".face-down, .noble-stack, .card-deck")
+function clickStack(e) {
+    
+    if (window.outerWidth <= 950) {
+        console.log(e.slice(-1) > 0)
+        for (let i = 0; i < stacks.length; i++) {
+            stacks[i].style.display = "none"
+        }
+        if (e.slice(-1) > 0) {
+            console.log(document.querySelectorAll(`.${e}.used`))
+            for (let i = 0; i < document.querySelectorAll(`.${e}.used`).length; i++) {
+                document.querySelectorAll(`.${e}.used`)[i].style.display = "block"
+            }
+        } else {
+            console.log(document.querySelectorAll(`.${e}`))
+            document.querySelectorAll(`.${e}`)[3].style.display = "block"
+            document.querySelectorAll(`.${e}`)[4].style.display = "block"
+        }
+        document.getElementById("back-button").style.display = "block"
+    } 
+}
+
+document.getElementById("back-button").addEventListener("click", function() {
+    document.getElementById("back-button").style.display = "none"
+    if (document.querySelectorAll(`.noble`)[3].style.display == "block") {
+        document.querySelectorAll(`.noble`)[3].style.display = "none"
+        document.querySelectorAll(`.noble`)[4].style.display = "none"
+    } else if(document.querySelectorAll(".level-3.used")[0].style.display == "block") {
+        for (let i = 0; i < document.querySelectorAll(`.level-3.used`).length; i++) {
+            document.querySelectorAll(`.level-3.used`)[i].style.display = "none"
+        }
+    } else if(document.querySelectorAll(".level-2.used")[0].style.display == "block") {
+        for (let i = 0; i < document.querySelectorAll(`.level-2.used`).length; i++) {
+            document.querySelectorAll(`.level-2.used`)[i].style.display = "none"
+        }
+    } else {
+        for (let i = 0; i < document.querySelectorAll(`.level-1.used`).length; i++) {
+            document.querySelectorAll(`.level-1.used`)[i].style.display = "none"
+        }
+    }
+    for (let i = 0; i < stacks.length; i++) {
+        stacks[i].style.display = "flex"
+    }
+})
+
+for (let i = 0; i < stacks.length; i++) {
+    stacks[i].addEventListener("click", function(e){
+        let stack = e.target.classList[1]
+        clickStack(stack)
+    });
+}
+
+// window.addEventListener("resize", function() {
+//     console.log(window.outerWidth)
+//     if (window.outerWidth > 950) {
+//         for (let i = 0; i < stacks.length; i++) {
+//             stacks[i].style.display = "flex"
+//         }
+//         for (let j = 0; j < 3; j++) {
+//             for (let i = 0; i < document.querySelectorAll(`.level${j}.used, .noble`); i++) {
+//                 document.querySelectorAll(`level${j}`).style.display = "block"
+//             }
+//         }
+//     } 
+// })
+
 function cpuTurn(){
     let player = hands[currentPlayer];
     const attackChance = Math.ceil(Math.random()*10)
