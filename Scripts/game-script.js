@@ -439,7 +439,7 @@ window.onclick = function(e) {
         }
     }
     
-    if (e.target == modal) {
+    if (e.target == modal && (singlePlayer && currentPlayer == 0)) {
         if(document.querySelector(".win").style.display == "flex"){
             location.reload()
         }
@@ -971,10 +971,25 @@ async function cpuTurn(){
             attackable.push(hand)
         }
     }
+
+    let total = 0
+
+    for (let i = 0; i < Object.keys(player["gems"]).length; i++) {
+        total += Object.values(player["gems"])[i]
+    }
+
     let ranNum = Math.floor(Math.random()*4);
     let ranLevel = Math.floor(Math.random()*3)
     let gemTake = Math.floor(Math.random()*2);
     let gemsTaken;
+
+    if(total == 90){
+        gemTake == 2
+    }else if(total == 80){
+        gemTake == 1
+    }else if(total == 100){
+        gemTake = false
+    }
 
     if(gemTake == 0){
         gemsTaken = selectColors(3)
@@ -988,7 +1003,7 @@ async function cpuTurn(){
         modal.style.display = "block"
         document.querySelector("#feedback").style.display = "flex";
         document.querySelector("#feedback .modal-text").innerHTML = `<h4>CPU ${currentPlayer} Ended Turn</h4><p>CPU ${currentPlayer} attacked a player</p>`;
-        await sleep(5000);
+        await sleep(2500);
         modal.style.display = "none"
         nobleAttack(player, attackable[Math.floor(Math.random()*attackable.length)]);
     }else if(checkPrice(nobles[0], "cost")){
@@ -996,7 +1011,7 @@ async function cpuTurn(){
         modal.style.display = "block";
         document.querySelector("#feedback").style.display = "flex";
         document.querySelector("#feedback .modal-text").innerHTML = `<h4>CPU ${currentPlayer} Ended Turn</h4><p>CPU ${currentPlayer} attracted a noble</p>`;
-        await sleep(5000);
+        await sleep(2500);
         modal.style.display = "none"
         attractNobles(player, nobles[0]);
     }else if(checkPrice(nobles[1], "cost")){
@@ -1004,7 +1019,7 @@ async function cpuTurn(){
         modal.style.display = "block";
         document.querySelector("#feedback").style.display = "flex";
         document.querySelector("#feedback .modal-text").innerHTML = `<h4>CPU ${currentPlayer} Ended Turn</h4><p>CPU ${currentPlayer} attracted a noble</p>`;
-        await sleep(5000);
+        await sleep(2500);
         modal.style.display = "none"
         attractNobles(player, nobles[1]);
     }else if(player["reserved"]){
@@ -1014,56 +1029,63 @@ async function cpuTurn(){
             modal.style.display = "block";
             document.querySelector("#feedback").style.display = "flex";
             document.querySelector("#feedback .modal-text").innerHTML = `<h4>CPU ${currentPlayer} Ended Turn</h4><p>CPU ${currentPlayer} bought their reserve card</p>`;
-            await sleep(5000);
+            await sleep(2500);
             modal.style.display = "none"
             buyCard(player, document.getElementsByClassName("empty-card")[currentPlayer], true)
         };
     }else if(checkAfford(player, board[3][ranNum])){
-        console.log("buy3")
+        console.log(board[3][ranNum], player)
         modal.style.display = "block";
         document.querySelector("#feedback").style.display = "flex";
         document.querySelector("#feedback .modal-text").innerHTML = `<h4>CPU ${currentPlayer} Ended Turn</h4><p>CPU ${currentPlayer} bought a level 3 card</p>`;
-        await sleep(5000);
+        await sleep(2500);
         modal.style.display = "none"
         buyCard(player, document.querySelectorAll(".level-3.used")[ranNum], false)
     }else if(checkAfford(player, board[2][ranNum])){
-        console.log("buy2")
+        console.log(board[2][ranNum], player)
         modal.style.display = "block";
         document.querySelector("#feedback").style.display = "flex";
         document.querySelector("#feedback .modal-text").innerHTML = `<h4>CPU ${currentPlayer} Ended Turn</h4><p>CPU ${currentPlayer} bought a level 2 card</p>`;
-        await sleep(5000);
+        await sleep(2500);
         modal.style.display = "none"
         buyCard(player, document.querySelectorAll(".level-2.used")[ranNum], false)
     }else if(checkAfford(player, board[1][ranNum])){
-        console.log("buy1")
+        console.log(player["gems"], board[1][ranNum])
         modal.style.display = "block";
         document.querySelector("#feedback").style.display = "flex";
         document.querySelector("#feedback .modal-text").innerHTML = `<h4>CPU ${currentPlayer} Ended Turn</h4><p>CPU ${currentPlayer} bought a level 1 card</p>`;
-        await sleep(5000);
+        await sleep(2500);
         modal.style.display = "none"
         buyCard(player, document.querySelectorAll(".level-1.used")[ranNum], false)
-    }else if(gemTake == 0 ){
+    }else if(gemTake == 0){
         console.log("gem3")
         modal.style.display = "block";
         document.querySelector("#feedback").style.display = "flex";
         document.querySelector("#feedback .modal-text").innerHTML = `<h4>CPU ${currentPlayer} Ended Turn</h4><p>CPU ${currentPlayer} collected three gems</p>`;
-        await sleep(5000);
+        await sleep(2500);
         modal.style.display = "none"
         takeGems(player, [document.querySelector(`.gem.${gemsTaken[0]}`), document.querySelector(`.gem.${gemsTaken[1]}`), document.querySelector(`.gem.${gemsTaken[2]}`)]);
     }else if(gemTake == 1){
-        modal.style.display = "none"
         console.log("gem2")
         modal.style.display = "block";
         document.querySelector("#feedback").style.display = "flex";
         document.querySelector("#feedback .modal-text").innerHTML = `<h4>CPU ${currentPlayer} Ended Turn</h4><p>CPU ${currentPlayer} collected two gems</p>`;
-        await sleep(5000);
+        await sleep(2500);
         modal.style.display = "none"
         takeGems(player, [document.querySelector(`.gem.${gemsTaken[0]}`), document.querySelector(`.gem.${gemsTaken[0]}`)]);
+    }else if(gemTake == 2){
+        console.log("gem1")
+        modal.style.display = "block";
+        document.querySelector("#feedback").style.display = "flex";
+        document.querySelector("#feedback .modal-text").innerHTML = `<h4>CPU ${currentPlayer} Ended Turn</h4><p>CPU ${currentPlayer} collected one gem</p>`;
+        await sleep(2500);
+        modal.style.display = "none"
+        takeGems(player, [document.querySelector(`.gem.${gemsTaken[0]}`)]);
     }else{
         modal.style.display = "block";
         document.querySelector("#feedback").style.display = "flex";
         document.querySelector("#feedback .modal-text").innerHTML = `<h4>CPU ${currentPlayer} Ended Turn</h4><p>CPU ${currentPlayer} reserved a card</p>`;
-        await sleep(5000);
+        await sleep(2500);
         modal.style.display = "none"
         reserveCard(player, document.querySelectorAll(`.level-${ranLevel}.used`)[ranNum]);
     }
