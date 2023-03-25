@@ -439,13 +439,18 @@ window.onclick = function(e) {
         }
     }
     
-    if (e.target == modal && (singlePlayer && currentPlayer == 0)) {
+    if (e.target == modal && !(singlePlayer && currentPlayer != 0)) {
         if(document.querySelector(".win").style.display == "flex"){
             location.reload()
         }
         modal.style.display = "none";
         modalHeader.innerText = "";
-        document.querySelectorAll(".modal-content")[0].style.width = "500px";
+        
+        if (window.outerWidth <= 950) {
+            document.querySelectorAll(".modal-content")[0].style.width = "350px";
+        } else {
+            document.querySelectorAll(".modal-content")[0].style.width = "500px";
+        }
         for (let i = 0; i < modalSections.length; i++) {
             modalSections[i].style.display = "none";
         }
@@ -459,7 +464,11 @@ for (let i = 0; i < modalIcons.length; i++) {
         if (e.target.classList.contains("fa-circle-question")) {
             document.getElementById("modal-header").innerText = "How to play";
             document.getElementById("how-play").style.display = "flex";
-            document.querySelectorAll(".modal-content")[0].style.width = "1000px";
+            if (window.outerWidth <= 950) {
+                document.querySelectorAll(".modal-content")[0].style.width = "400px";
+            } else {
+                document.querySelectorAll(".modal-content")[0].style.width = "1000px";
+            }
         } else {
             document.getElementById("modal-header").innerText = "Settings";
             document.getElementById("settings").style.display = "flex";
