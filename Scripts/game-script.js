@@ -4,7 +4,6 @@ document.getElementById("create").addEventListener("click", () => {
     document.getElementById("start").style.display = 'none'; 
     document.getElementById("game").style.display = 'flex';
     playerAmount()
-    setName(4)
 })
 
 let indexValue = 1;
@@ -204,7 +203,7 @@ function nextTurn() {
         console.log("end cpu")
     }
 
-    if (tutPop || (singlePlayer && currentPlayer != 0)) {
+    if (tutPop && !(singlePlayer && currentPlayer != 0)) {
     modal.style.display = "block"
     document.querySelector("#feedback").style.display = "flex"
     document.querySelector("#feedback .modal-text").style.textAlign = "left"
@@ -320,25 +319,6 @@ document.getElementById("start-game").addEventListener("click", () => {
     playerGlow();
 })
 
-// saves username to local storage
-document.getElementById("name").addEventListener("blur", (e) => {
-    window.localStorage.setItem("userName", e.target.value);
-})
-
-// sets name in local storage to game board
-// pAmount: num, the amount of players in a game
-function setName(pAmount) {
-    let name = localStorage.getItem("userName");
-
-    // sets name to player if name blank or no local storage
-    if (name == "" || name == null) {
-        name = "Player";
-    }
-
-    document.getElementsByClassName("player-name")[0].innerText = name;
-    document.getElementsByClassName("player-name")[+pAmount].innerText = name;
-}
-
 // displays how many players are in a game
 // updates on game setting dropdown
 function playerAmount() {
@@ -361,7 +341,7 @@ function playerAmount() {
     let innerPlayers = "";
     for(let i=0; i<playerCount; i++){
         let innerPlayer = `<div class="player player${i}">
-        <h4 class="player-name">Player</h4>
+        <h4 class="player-name">Player ${i+1}</h4>
         <div class="attack"> <img src="/Images/sword.png" alt=""> </div>  
         <div class="player-gems">
           <div class="player-gem red">0</div>
@@ -394,7 +374,6 @@ function playerAmount() {
     } else {
         playerColumn.style.justifyContent = "space-between";
     }
-    setName(playerCount)
     attackIcons = document.querySelectorAll(".attack img");
     for(let i=0; i<attackIcons.length; i++){
         attackIcons[i].addEventListener("click", function(e){
@@ -433,10 +412,8 @@ function setOnline() {
         <div class="noble-balance">Nobles:</div>
         </div>`
     document.getElementById("reserved-cards").innerHTML = innerReserve.repeat(1);
-    setName(1)
 }
 
-document.getElementById("name").value = localStorage.getItem("userName");
 document.getElementById("player-amount").addEventListener("change", playerAmount);
 
 const modal = document.getElementById("modal");
@@ -462,7 +439,7 @@ window.onclick = function(e) {
         }
     }
     
-    if (e.target == modal) {
+    if (e.target == modal && (singlePlayer && currentPlayer == 0)) {
         if(document.querySelector(".win").style.display == "flex"){
             location.reload()
         }
@@ -1061,10 +1038,25 @@ function cpuTurn(){
             attackable.push(hand)
         }
     }
+
+    let total = 0
+
+    for (let i = 0; i < Object.keys(player["gems"]).length; i++) {
+        total += Object.values(player["gems"])[i]
+    }
+
     let ranNum = Math.floor(Math.random()*4);
     let ranLevel = Math.floor(Math.random()*3)
     let gemTake = Math.floor(Math.random()*2);
     let gemsTaken;
+
+    if(total == 90){
+        gemTake == 2
+    }else if(total == 80){
+        gemTake == 1
+    }else if(total == 100){
+        gemTake = false
+    }
 
     if(gemTake == 0){
         gemsTaken = selectColors(3)
@@ -1146,4 +1138,9 @@ function cpuTurn(){
         reserveCard(player, document.querySelectorAll(`.level-${ranLevel}.used`)[ranNum]);
         return;
     }
+}
+
+function sleep(ms) {
+    console.log("timeout" + ms)
+    return new Promise((resolve) => setTimeout(resolve, ms));
 }
