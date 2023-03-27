@@ -421,7 +421,12 @@ const modalIcons = document.querySelectorAll(".open-modal");
 const modalSections = document.querySelectorAll(".modal-section");
 const modalHeader = document.getElementById("modal-header");
 // removes modal from display when modal content is not clicked
-window.onclick = function(e) {
+let clickType = "onclick";
+if (window.outerWidth <= 950) {
+    clickType = "ontouchstart";
+}
+
+window[clickType] = function(e) {
     let gemClick = true
     for(let i=0; i<document.querySelectorAll(".gems .gem").length-1; i++){
         if(e.target != document.querySelectorAll(".gems .gem")[i]){
