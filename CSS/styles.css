@@ -542,10 +542,6 @@ input[type="radio"]:checked + label.radio-button {
 
 .card-costs {
     display: flex;
-    /* grid-template-columns: repeat(auto-fill, minmax(45px, 1fr)); */
-    /* grid-template-columns: min-content min-content;
-    grid-template-rows: repeat(3, 1fr); */
-    /* align-content: end; */
     flex-direction: column;
     flex-wrap: wrap;
 

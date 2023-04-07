@@ -615,7 +615,6 @@ function reserveCard(player, eventCard) {
 
 // take gems
 function takeGems(player, gems){
-    var take = false
     let gemColors = []
     for(let i=0; i<gems.length; i++){
         gemColors.push(window.getComputedStyle(gems[i]).backgroundColor);
@@ -632,7 +631,6 @@ function takeGems(player, gems){
             gems[0].style.boxShadow = "2px 2px 4px rgba(255, 255, 255, 0.25)"
             updatePlayers();
             nextTurn();
-            take = true
         } 
     }
     if (total == 80 && gems.length == 2) {
@@ -643,7 +641,6 @@ function takeGems(player, gems){
                 gems[i].innerHTML = gemAmounts[reverseColorList[gemColors[i]]];
                 updatePlayers();
                 nextTurn();
-                take = true;
             } 
         }
         for(let i=0; i<gems.length; i++){
@@ -673,7 +670,6 @@ function takeGems(player, gems){
             }else{
                 updatePlayers();
                 nextTurn();
-                take = true;
             }
         }else{
             modal.style.display = "block"
@@ -712,7 +708,6 @@ function takeGems(player, gems){
             }else{
                 updatePlayers();
                 nextTurn();
-                take = true;
             }
         }else{
             modal.style.display = "block"
@@ -740,7 +735,6 @@ function takeGems(player, gems){
             gems[i].innerHTML = gemAmounts[reverseColorList[gemColors[i]]];
         }
     }
-    return take;
 }
 
 for(let i=0; i<Object.keys(colorList).length; i++){
@@ -878,7 +872,6 @@ function reserveSize() {
         }
     }
 }
-// reserveSize()
 
 function attractNobles(player, noble){
     let noblesHTML = document.querySelectorAll(".noble:not(.noble-stack)");
@@ -1028,20 +1021,6 @@ for (let i = 0; i < stacks.length; i++) {
         clickStack(stack)
     });
 }
-
-// window.addEventListener("resize", function() {
-//     console.log(window.outerWidth)
-//     if (window.outerWidth > 950) {
-//         for (let i = 0; i < stacks.length; i++) {
-//             stacks[i].style.display = "flex"
-//         }
-//         for (let j = 0; j < 3; j++) {
-//             for (let i = 0; i < document.querySelectorAll(`.level${j}.used, .noble`); i++) {
-//                 document.querySelectorAll(`level${j}`).style.display = "block"
-//             }
-//         }
-//     } 
-// })
 
 async function cpuTurn(){
     let player = hands[currentPlayer];
