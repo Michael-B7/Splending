@@ -83,6 +83,34 @@ class Player {
         this.name = name;
         this.attackable = false;
     }
+}
+
+// card class
+class Card {
+    // color: string of the gem provided by card
+    // image: string of url of background image of card
+    // points: num of point value of card
+    // cost: object of how many gems and color of gems card costs
+    // level: num of difficulty to acquire
+    constructor(image, level){
+        this.image = image;
+        this.color = ranColor(colorList);
+        this.level = level;
+        this.calcPoints = function(level){
+            const possPoints = {1:[0,0,0,0,0,0,0,1], 2:[1,1,2,2,2,3], 3:[3,4,4,5]};
+            let points;
+            if(level == 1){
+                points = possPoints[1][Math.floor(Math.random() * possPoints[1].length)];
+            }else if(level == 2){
+                points = possPoints[2][Math.floor(Math.random() * possPoints[2].length)];
+            }else if(level == 3){
+                points = possPoints[3][Math.floor(Math.random() * possPoints[3].length)];
+            }
+            return points;
+        }
+        this.points = this.calcPoints(level);
+        this.calcCost = function(level, points){
+            let possCosts = {
                 1:[[10,10,10,10,0], [10,10,10,20,0], [10,20,20,0,0], [10,10,30,0,0], [10,20,0,0,0], [20,20,0,0,0], [30,0,0,0,0]],
                 2:{1:[[20,20,30,0,0], [20,30,30,0,0]], 2:[[10,20,40,0,0], [30,50,0,0,0], [50,0,0,0,0]]},
                 3:{3:[[30,30,30,50,0]], 4:[[70,0,0,0,0], [30,30,60,0,0]]}
@@ -97,9 +125,9 @@ class Player {
                 costNums = [30,70]
             }else if(level == 1){
                 costNums = possCosts[1][Math.floor(Math.random() * possCosts[1].length)]
-            }else if(levb == 2){
+            }else if(level == 2){
                 costNums = possCosts[2][points][Math.floor(Math.random() * possCosts[2][points].length)]
-            }else if(level != 3){
+            }else if(level == 3){
                 costNums = possCosts[3][points][Math.floor(Math.random() * possCosts[3][points].length)]
             }
 
@@ -178,7 +206,18 @@ function nextTurn() {
     if (tutPop && !(singlePlayer && currentPlayer != 0)) {
     modal.style.display = "block"
     document.querySelector("#feedback").style.display = "flex"
-    document.querySelector("#feedback .modal-text").style.textAlign = "left"ms]]
+    document.querySelector("#feedback .modal-text").style.textAlign = "left"
+    document.querySelector("#feedback .modal-text").innerHTML = `<h4>It is Player ${currentPlayer+1}'s Turn</h4><p>You Can:<br>1. Take Two of One Color Gem<br>2. Take One of Three Different Color Gems<br>3. Buy a Development Card<br>4. Reserve a Development Card<br>5. Attract a Noble<br>6. Attack Another Player's Noble</p>`
+    }
+
+    playerGlow()
+    chosenGems = [];
+}
+
+function updatePlayers(){
+    for(let i=0; i<hands.length; i++){
+        for(let iGems=0; iGems<Object.keys(hands[i]["gems"]).length; iGems++){
+            players[i].children[2].children[iGems].innerHTML = hands[i]["gems"][colors[iGems]]
         }
         for(let iCards=5; iCards<Object.keys(hands[i]["cards"]).length+5; iCards++){
             players[i].children[2].children[iCards].innerHTML = hands[i]["cards"][colors[iCards-5]]
@@ -370,103 +409,26 @@ function setOnline() {
           <div class="player-card black">0</div>
         </div>
         <div class="player-balance">Prestige Points:</div>
-        <div class="noble-balance">Nobles:</div><L></L>
+        <div class="noble-balance">Nobles:</div>
         </div>`
     document.getElementById("reserved-cards").innerHTML = innerReserve.repeat(1);
 }
-blue">0</div>
-          <div class="player-gem white">0</div>
-          <div class="player-gem black">0</div>
-          <div class="player-card red">0</div>
-          <div class="player-card green">0</div>
-          <div class="player-card blue">0</div>
-          <div class="player-card white">0</div>
-          <div class="player-card black">0</div>blue">0</div>
-          <div class="player-gem white">0</div>
-          <div class="player-gem black">0</div>
-          <div class="player-card red">0</div>
-          <div class="player-card green">0</div>
-          <div class="player-card blue">0</div>
-          <div class="player-card white">0</div>
-          <div class="player-card black">0</div>blue">0</div>
-          <div class="player-gem white">0</div>
-          <div class="player-gem black">0</div>
-          <div class="player-card red">0</div>
-          <div class="player-card green">0</div>
-          <div class="player-card blue">0</div>
-          <div class="player-card white">0</div>
-          <div class="player-card black">0</div>blue">0</div>
-          <div class="player-gem white">0</div>
-          <div class="player-gem black">0</div>
-          <div class="player-card red">0</div>
-          <div class="player-card green">0</div>
-          <div class="player-card blue">0</div>
-          <div class="player-card white">0</div>
-          <div class="player-card black">0</div>blue">0</div>
-          <div class="player-gem white">0</div>
-          <div class="player-gem black">0</div>
-          <div class="player-card red">0</div>
-          <div class="player-card green">0</div>
-          <div class="player-card blue">0</div>
-          <div class="player-card white">0</div>
-          <div class="player-card black">0</div>blue">0</div>
-          <div class="player-gem white">0</div>
-          <div class="player-gem black">0</div>
-          <div class="player-card red">0</div>
-          <div class="player-card green">0</div>
-          <div class="player-card blue">0</div>
-          <div class="player-card white">0</div>
-          <div class="player-card black">0</div>
-          blue">0</div>
-          <div class="player-gem white">0</div>
-          <div class="player-gem black">0</div>
-          <div class="player-card red">0</div>
-          <div class="player-card green">0</div>
-          <div class="player-card blue">0</div>
-          <div class="player-card white">0</div>
-          <div class="player-card black">0</div>blue">0</div>
-          <div class="player-gem white">0</div>
-          <div class="player-gem black">0</div>
-          <div class="player-card red">0</div>
-          <div class="player-card green">0</div>
-          <div class="player-card blue">0</div>
-          <div class="player-card white">0</div>
-          <div class="player-card black">0</div>blue">0</div>
-          <div class="player-gem white">0</div>
-          <div class="player-gem black">0</div>
-          <div class="player-card red">0</div>
-          <div class="player-card green">0</div>
-          <div class="player-card blue">0</div>
-          <div class="player-card white">0</div>
-          <div class="player-card black">0</div>blue">0</div>
-          <div class="player-gem white">0</div>
-          <div class="player-gem black">0</div>
-          <div class="player-card red">0</div>
-          <div class="player-card green">0</div>
-          <div class="player-card blue">0</div>
-          <div class="player-card white">0</div>
-          <div class="player-card black">0</div>blue">0</div>
-          <div class="player-gem white">0</div>
-          <div class="player-gem black">0</div>
-          <div class="player-card red">0</div>
-          <div class="player-card green">0</div>
-          <div class="player-card blue">0</div>
-          <div class="player-card white">0</div>
-          <div class="player-card black">0</div>blue">0</div>
-          <div class="player-gem white">0</div>
-          <div class="player-gem black">0</div>
-          <div class="player-card red">0</div>
-          <div class="player-card green">0</div>
-          <div class="player-card blue">0</div>
-          <div class="player-card white">0</div>
-          <div class="player-card black">0</div>blue">0</div>
-          <div class="player-gem white">0</div>
-          <div class="player-gem black">0</div>
-          <div class="player-card red">0</div>
-          <div class="player-card green">0</div>
-          <div class="player-card blue">0</div>
-          <div class="player-card white">0</div>
-          <div class="player-card black">0</div>
+
+document.getElementById("player-amount").addEventListener("change", playerAmount);
+
+const modal = document.getElementById("modal");
+const modalIcons = document.querySelectorAll(".open-modal");
+const modalSections = document.querySelectorAll(".modal-section");
+const modalHeader = document.getElementById("modal-header");
+// removes modal from display when modal content is not clicked
+window.onclick = function(e) {
+    let gemClick = true
+    for(let i=0; i<document.querySelectorAll(".gems .gem").length-1; i++){
+        if(e.target != document.querySelectorAll(".gems .gem")[i]){
+            gemClick = false
+        }else{
+            gemClick = true
+            break
         }
     }
 
@@ -654,6 +616,24 @@ function takeGems(player, gems){
             gemAmounts[reverseColorList[gemColors[0]]] -= 10;
             gems[0].innerHTML = gemAmounts[reverseColorList[gemColors[0]]];
             gems[0].style.boxShadow = "2px 2px 4px rgba(255, 255, 255, 0.25)"
+            updatePlayers();
+            nextTurn();
+            take = true
+        } 
+    }
+    if (total == 80 && gems.length == 2) {
+        for(let i=0; i<gems.length; i++){
+            if (gemAmounts[reverseColorList[gemColors[i]]] > 0) {
+                player.gems[Object.keys(colorList).find(key => colorList[key] == gemColors[i])] += 10;
+                gemAmounts[reverseColorList[gemColors[i]]] -= 10;
+                gems[i].innerHTML = gemAmounts[reverseColorList[gemColors[i]]];
+                updatePlayers();
+                nextTurn();
+                take = true;
+            } 
+        }
+        for(let i=0; i<gems.length; i++){
+            gems[i].style.boxShadow = "2px 2px 4px rgba(255, 255, 255, 0.25)";
         }
     }
     if(gems.length == 2 && gemColors[0] == gemColors[1]){
@@ -729,6 +709,19 @@ function takeGems(player, gems){
             for(let i=0; i<gems.length; i++){
                 gems[i].style.boxShadow = "2px 2px 4px rgba(255, 255, 255, 0.25)"
             }
+        }
+    }else if(gems.length > 2 ){
+        modal.style.display = "block"
+        document.querySelector("#feedback").style.display = "flex"
+        document.querySelector("#feedback .modal-text").innerHTML = "<h4>Cannot Take These Gems</h4><p>You can take either one of three different colors of gems or two of the same color of gem</p>"
+        chosenGems = []
+        for(let i=0; i<gems.length; i++){
+            gems[i].style.boxShadow = "2px 2px 4px rgba(255, 255, 255, 0.25)"
+        }
+    }
+    
+    for (let i = 0; i < gemDisplays.length; i++) {
+        if (gemDisplays[i].innerHTML != gemAmounts[Object.keys(gemAmounts)[i]]) {
             console.log("nonono")
             gems[i].innerHTML = gemAmounts[reverseColorList[gemColors[i]]];
         }
@@ -784,7 +777,28 @@ function buyCard(player, card, reserved){
             returnGems(player, player["reserved"])
             player["cards"][player["reserved"]["color"]] ++;
             let curPlaySpace = reserveSpace[currentPlayer]
-            curPlaySpace.style.backgroundColor = "rgba(0, 0, 0, 0
+            curPlaySpace.style.backgroundColor = "rgba(0, 0, 0, 0)";
+            curPlaySpace.style.border = "4px dashed white"
+            curPlaySpace.innerHTML = ""
+            player["reserved"] = false;
+            updatePlayers();
+            nextTurn();
+        } else if(!player["gold"]){
+            modal.style.display = "block";
+            modalHeader.innerText = "Use Gold Before Purchasing"
+            document.getElementById("select-gold").style.display = "flex";
+        } else {
+            modal.style.display = "block";
+            document.querySelector("#feedback").style.display = "flex";
+            document.querySelector("#feedback .modal-text").innerHTML = "<h4>Cannot Buy Card</h4><p>You do not have the wealth required to buy this development card.</p>";
+        }
+    }
+    
+}
+
+function checkAfford(player, card) {
+    let afford = false
+    for(let j=0; j<Object.keys(card["cost"]).length; j++){
         let currColor = Object.keys(card["cost"])[j];
         if(player["gems"][currColor] >= (card["cost"][currColor] - player["cards"][currColor]*10) ){
             afford = true;
@@ -855,6 +869,14 @@ function reserveSize() {
 function attractNobles(player, noble){
     let noblesHTML = document.querySelectorAll(".noble:not(.noble-stack)");
     if(player["np"] > 0){
+        modal.style.display = "block"
+        document.querySelector("#feedback").style.display = "flex"
+        document.querySelector("#feedback .modal-text").innerHTML = "<h4>Cannot Attract Noble</h4><p>You may only have one noble at a time.</p>"
+    }else{
+        for(let i=0; i<noblesHTML.length; i++){
+            if(noblesHTML[i] == noble){
+                let afford = false;
+                for(let j=0; j<Object.keys(nobles[i]["cost"]).length; j++){
                     let currColor = Object.keys(nobles[i]["cost"])[j]
                     if(player["cards"][currColor] >= nobles[i]["cost"][currColor]){
                         afford = true
@@ -1018,6 +1040,11 @@ async function cpuTurn(){
         document.querySelector("#feedback .modal-text").innerHTML = `<h4>CPU ${currentPlayer} Ended Turn</h4><p>CPU ${currentPlayer} bought a level 3 card</p>`;
         await sleep(2500);
         modal.style.display = "none"
+        buyCard(player, document.querySelectorAll(".level-3.used")[ranNum], false)
+    }else if(checkAfford(player, board[2][ranNum])){
+        console.log(board[2][ranNum], player)
+        modal.style.display = "block";
+        document.querySelector("#feedback").style.display = "flex";
         document.querySelector("#feedback .modal-text").innerHTML = `<h4>CPU ${currentPlayer} Ended Turn</h4><p>CPU ${currentPlayer} bought a level 2 card</p>`;
         await sleep(2500);
         modal.style.display = "none"
