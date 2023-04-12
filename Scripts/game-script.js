@@ -997,6 +997,7 @@ async function cpuTurn(){
         gemsTaken = selectColors(1)
     }
 
+    console.log("Tyler Fursman is very cool and aweseome!")
     if(attackChance == 10 && (player["np"] > 0)){
         console.log("attack")
 
