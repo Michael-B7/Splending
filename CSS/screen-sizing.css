@@ -4,26 +4,79 @@
         height: 30px;
     }
     
+    .reserved-container {
+        margin: 0 8px;
+    }
+
     .reserved-container .card-costs .cost {
         width: 30px;
         height: 30px;
     }
+
+    .empty-card .card-costs{
+        display: grid;
+        grid-template-columns: min-content min-content;
+        grid-template-rows: min-content min-content;
+    }
 }
 
-@media screen and (max-width: 950px) {
-    .gamer-zone {
-        width: 100vh; 
+@media screen and (max-width: 1150px) {
+    .player {
+        font-size: 1rem;
+    }
+
+    .reserved-container {
+        margin: 0 4px;
+    }
+}
+
+@media screen and (max-width: 1050px) {
+    .empty-card .card-costs{
         display: grid;
-        grid-template-rows: min-content min-content 1fr min-content 1fr;
+        grid-template-columns: min-content min-content;
+        grid-template-rows: min-content min-content;
+    }
+
+    .gamer-zone {
+        padding: 16px;
+        gap: 16px;
+    }
+}
+
+@media screen and (max-width: 975px) {
+    .player {
+        padding: 8px;
+    }
+
+}
+
+@media screen and (max-width: 800px) {
+    .cost {
+        width: 40px;
+        height: 40px;
+    }
+    
+    .reserved-container .card-costs .cost {
+        width: 40px;
+        height: 40px;
+    }
+
+    .gamer-zone {
+        width: 100%; 
+        display: grid;
+        grid-template-rows: min-content 1fr min-content 1fr;
         grid-template-columns: 1fr min-content;
         grid-template-areas: 
-        "title settings"
-        "reserved reserved"
+        "gems settings"
         "board board"
-        "gems gems"
+        "reserved reserved"
         "players players";
         gap: 16px;
-        padding: 0;
+        padding: 8px;
+    }
+
+    .card-content {
+        display: block;
     }
 
     .reserved-container .card-content {
@@ -48,20 +101,22 @@
         margin: 0;
     }
 
-    /* .empty-card {
-        height: 100%;
-    } */
+    .gamer-zone header {
+        display: none;
+    }
 
     #reserved-cards,
     .gems,
     #board,
     #game-settings,
     .player {
-        border-radius: 0;
+        border-radius: 8px;
     }
 
     .ingame-settings {
-        border-radius: 0 0 0 8px;
+        padding: 8px;
+        border-radius: 4px;
+        gap: 8px;
     }
 
     #board .used, .noble {
@@ -69,9 +124,172 @@
     }
 
     #board {
-        grid-template-columns: repeat(4, 1fr);
+        grid-template-columns: 1fr 1fr 1fr 1fr min-content;
         grid-template-rows: 1fr;
         padding: 16px 32px;
+    }
+
+    .setting-wrapper {
+        row-gap: 8px;
+    }
+
+    #start-game {
+        margin-top: 8px;
+    }
+
+    #multiplayer .button, #single-player .button {
+        font-size: 1rem;
+    }
+
+    .gems {
+        flex-direction: row;
+        width: 100%;
+        /* height: 75px; */
+        gap: 8px;
+        padding: 8px;
+    }
+
+    .gem {
+        /* width: auto;
+        height: 100%; */
+        margin: 0;
+        font-size: 1rem;
+    }
+
+    .modal-content {
+        width: 350px;
+        overflow-y: auto;
+        max-height: 500px;
+    }
+
+    #players {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 16px;
+    }
+
+    .player {
+        grid-template-columns: 1fr;
+        grid-template-rows: min-content min-content min-content min-content 1fr;
+        grid-template-areas: 
+        "player"
+        "attack"
+        "prestige"
+        "noble"
+        "gem";
+        width: 100%;
+        padding: 4px;
+    }
+
+    .player-gems {
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: repeat(5, 1fr);
+        column-gap: 0;
+    }
+
+    .player-balance {
+        grid-area: prestige;
+        margin: 4px 0;
+    }
+
+    .noble-balance {
+        grid-area: noble;
+        margin: 4px 0;
+    }
+
+    .back-button {
+        display: block;
+        height: 50px;
+        width: 25px;
+    }
+
+    .step-rule .tut-card, .step-rule .tut-noble {
+        height: 80px;
+        width: 60px;
+    }
+
+
+    h3 {
+        font-size: 1rem;
+    }
+
+    .button-box {
+        width: auto;
+    }
+
+    .footer-item {
+        height: 50%;
+    }
+
+    .footer-item:not(:nth-child(2)) {
+        width: 50%;
+        border: 2px solid #242830;
+    }
+
+    .footer-item:nth-child(2) {
+        width: 100%;
+        order: -1;
+        border-right: 2px solid #242830;
+        border-left: 2px solid #242830;
+    }
+
+    footer {
+        flex-wrap: wrap;
+        height: 40vh;
+    }
+
+    .step a {
+        padding: 8px;
+    }
+
+    .player-gem.red{
+        order: 1;
+        border-radius: 8px 0 0 0;
+    }
+
+    .player-card.red{
+        order: 2;
+        border-radius: 0 8px 0 0;
+    }
+    
+    .player-gem.green{
+        order: 3;
+        border-radius: 0 0 0 0;
+    }
+
+    .player-card.green{
+        order: 4;
+        border-radius: 0 0 0 0;
+    }
+    
+    .player-gem.blue{
+        order: 5;
+        border-radius: 0 0 0 0;
+    }
+
+    .player-card.blue{
+        order: 6;
+        border-radius: 0 0 0 0;
+    }
+
+    .player-gem.white{
+        order: 7;
+        border-radius: 0 0 0 0;
+    }
+
+    .player-card.white{
+        order: 8;
+        border-radius: 0 0 0 0;
+    }
+
+    .player-gem.black{
+        order: 9;
+        border-radius: 0 0 0 8px;
+    }
+
+    .player-card.black{
+        order: 10;
+        border-radius: 0 0 8px 0;
     }
 
     /* card stack level 3 */
@@ -99,19 +317,5 @@
 
     .card-deck .level-3:nth-child(3) {
         transform: rotate(5deg);
-    }
-
-    .gems {
-        flex-direction: row;
-        width: 100%;
-        height: 100px;
-        gap: 16px;
-    }
-
-    .gem {
-        width: auto;
-        height: 100%;
-        margin: 0;
-        font-size: 2rem;
     }
 }

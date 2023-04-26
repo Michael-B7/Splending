@@ -421,7 +421,12 @@ const modalIcons = document.querySelectorAll(".open-modal");
 const modalSections = document.querySelectorAll(".modal-section");
 const modalHeader = document.getElementById("modal-header");
 // removes modal from display when modal content is not clicked
-window.onclick = function(e) {
+let clickType = "onclick";
+if (window.outerWidth <= 950) {
+    clickType = "ontouchstart";
+}
+
+window[clickType] = function(e) {
     let gemClick = true
     for(let i=0; i<document.querySelectorAll(".gems .gem").length-1; i++){
         if(e.target != document.querySelectorAll(".gems .gem")[i]){
@@ -439,13 +444,18 @@ window.onclick = function(e) {
         }
     }
     
-    if (e.target == modal && (singlePlayer && currentPlayer == 0)) {
+    if (e.target == modal && !(singlePlayer && currentPlayer != 0)) {
         if(document.querySelector(".win").style.display == "flex"){
             location.reload()
         }
         modal.style.display = "none";
         modalHeader.innerText = "";
-        document.querySelectorAll(".modal-content")[0].style.width = "500px";
+        
+        if (window.outerWidth <= 950) {
+            document.querySelectorAll(".modal-content")[0].style.width = "350px";
+        } else {
+            document.querySelectorAll(".modal-content")[0].style.width = "500px";
+        }
         for (let i = 0; i < modalSections.length; i++) {
             modalSections[i].style.display = "none";
         }
@@ -459,7 +469,11 @@ for (let i = 0; i < modalIcons.length; i++) {
         if (e.target.classList.contains("fa-circle-question")) {
             document.getElementById("modal-header").innerText = "How to play";
             document.getElementById("how-play").style.display = "flex";
-            document.querySelectorAll(".modal-content")[0].style.width = "1000px";
+            if (window.outerWidth <= 950) {
+                document.querySelectorAll(".modal-content")[0].style.width = "400px";
+            } else {
+                document.querySelectorAll(".modal-content")[0].style.width = "1000px";
+            }
         } else {
             document.getElementById("modal-header").innerText = "Settings";
             document.getElementById("settings").style.display = "flex";
@@ -601,7 +615,7 @@ function reserveCard(player, eventCard) {
 
 // take gems
 function takeGems(player, gems){
-    let take = false
+    var take = false
     let gemColors = []
     for(let i=0; i<gems.length; i++){
         gemColors.push(window.getComputedStyle(gems[i]).backgroundColor);
@@ -904,19 +918,22 @@ function attractNobles(player, noble){
 const modalGems = document.getElementsByClassName("select-gem");
 for (let i = 0; i < modalGems.length; i++) {
     modalGems[i].addEventListener("click", (e) => {
-        let selectedColor = e.target.classList[1];
-        hands[currentPlayer]["gems"][selectedColor] += 10;
-        hands[currentPlayer]["gold"] = selectedColor;
-        gemAmounts["gold"]++;
-        document.querySelector(`.gem.gold`).innerHTML = gemAmounts["gold"];
-        updatePlayers();
-
-        modalHeader.innerText = "";
-        modal.style.display = "none";
-        for (let i = 0; i < modalSections.length; i++) {
-            modalSections[i].style.display = "none";
-        }
+        useGold(hands[currentPlayer], e.target.classList[1])
+        
     })
+}
+function useGold(player, color) {
+    player["gems"][color] += 10;
+    player["gold"] = color;
+    gemAmounts["gold"]++;
+    document.querySelector(`.gem.gold`).innerHTML = gemAmounts["gold"];
+    updatePlayers();
+
+    modalHeader.innerText = "";
+    modal.style.display = "none";
+    for (let i = 0; i < modalSections.length; i++) {
+        modalSections[i].style.display = "none";
+    }
 }
 
 function nobleAttack(attacker, defender){
@@ -962,6 +979,70 @@ function checkPrice(obj, type) {
     return true;
 }
 
+// show cards, only works on smaller screens
+let stacks = document.querySelectorAll(".face-down, .noble-stack, .card-deck")
+function clickStack(e) {
+    
+    if (window.outerWidth <= 950) {
+        for (let i = 0; i < stacks.length; i++) {
+            stacks[i].style.display = "none"
+        }
+        if (e.slice(-1) > 0) {
+            for (let i = 0; i < document.querySelectorAll(`.${e}.used`).length; i++) {
+                document.querySelectorAll(`.${e}.used`)[i].style.display = "block"
+            }
+        } else {
+            document.querySelectorAll(`.${e}`)[3].style.display = "block"
+            document.querySelectorAll(`.${e}`)[4].style.display = "block"
+        }
+        document.getElementById("back-button").style.display = "block"
+    } 
+}
+
+document.getElementById("back-button").addEventListener("click", function() {
+    document.getElementById("back-button").style.display = "none"
+    if (document.querySelectorAll(`.noble`)[3].style.display == "block") {
+        document.querySelectorAll(`.noble`)[3].style.display = "none"
+        document.querySelectorAll(`.noble`)[4].style.display = "none"
+    } else if(document.querySelectorAll(".level-3.used")[0].style.display == "block") {
+        for (let i = 0; i < document.querySelectorAll(`.level-3.used`).length; i++) {
+            document.querySelectorAll(`.level-3.used`)[i].style.display = "none"
+        }
+    } else if(document.querySelectorAll(".level-2.used")[0].style.display == "block") {
+        for (let i = 0; i < document.querySelectorAll(`.level-2.used`).length; i++) {
+            document.querySelectorAll(`.level-2.used`)[i].style.display = "none"
+        }
+    } else {
+        for (let i = 0; i < document.querySelectorAll(`.level-1.used`).length; i++) {
+            document.querySelectorAll(`.level-1.used`)[i].style.display = "none"
+        }
+    }
+    for (let i = 0; i < stacks.length; i++) {
+        stacks[i].style.display = "flex"
+    }
+})
+
+for (let i = 0; i < stacks.length; i++) {
+    stacks[i].addEventListener("click", function(e){
+        let stack = e.target.classList[1]
+        clickStack(stack)
+    });
+}
+
+// window.addEventListener("resize", function() {
+//     console.log(window.outerWidth)
+//     if (window.outerWidth > 950) {
+//         for (let i = 0; i < stacks.length; i++) {
+//             stacks[i].style.display = "flex"
+//         }
+//         for (let j = 0; j < 3; j++) {
+//             for (let i = 0; i < document.querySelectorAll(`.level${j}.used, .noble`); i++) {
+//                 document.querySelectorAll(`level${j}`).style.display = "block"
+//             }
+//         }
+//     } 
+// })
+
 async function cpuTurn(){
     let player = hands[currentPlayer];
     const attackChance = Math.ceil(Math.random()*10)
@@ -979,22 +1060,39 @@ async function cpuTurn(){
     }
 
     let ranNum = Math.floor(Math.random()*4);
-    let ranLevel = Math.floor(Math.random()*3)
-    let gemTake = Math.floor(Math.random()*2);
+    let ranLevel = Math.ceil(Math.random()*3)
+    let gemTake = Math.ceil(Math.random()*2+1);
     let gemsTaken;
 
     if(total == 90){
-        gemTake == 2
+        gemTake = 1
+        selectColors(1)
     }else if(total == 80){
-        gemTake == 1
+        gemTake = 2
     }else if(total == 100){
         gemTake = false
     }
 
-    if(gemTake == 0){
+
+    if(gemTake === 3){
         gemsTaken = selectColors(3)
     }else {
         gemsTaken = selectColors(1)
+    } 
+
+    for (let i = 0; i < gemsTaken.length; i++) {
+        if (gemAmounts[gemsTaken[i]] == 0) {
+            gemTake = false;
+        }
+    }
+
+    let reservedCard = false;
+    if (player["reserved"]) {
+        reservedCard = checkAfford(player, player["reserved"])
+    }
+    if (player["gold"]) {
+        console.log("use gold")
+        useGold(player, gemsTaken[0]);
     }
 
     console.log("Tyler Fursman is very cool and aweseome!")
@@ -1004,6 +1102,7 @@ async function cpuTurn(){
         modal.style.display = "block"
         document.querySelector("#feedback").style.display = "flex";
         document.querySelector("#feedback .modal-text").innerHTML = `<h4>CPU ${currentPlayer} Ended Turn</h4><p>CPU ${currentPlayer} attacked a player</p>`;
+
         await sleep(2500);
         modal.style.display = "none"
         nobleAttack(player, attackable[Math.floor(Math.random()*attackable.length)]);
@@ -1012,6 +1111,7 @@ async function cpuTurn(){
         modal.style.display = "block";
         document.querySelector("#feedback").style.display = "flex";
         document.querySelector("#feedback .modal-text").innerHTML = `<h4>CPU ${currentPlayer} Ended Turn</h4><p>CPU ${currentPlayer} attracted a noble</p>`;
+
         await sleep(2500);
         modal.style.display = "none"
         attractNobles(player, nobles[0]);
@@ -1020,75 +1120,125 @@ async function cpuTurn(){
         modal.style.display = "block";
         document.querySelector("#feedback").style.display = "flex";
         document.querySelector("#feedback .modal-text").innerHTML = `<h4>CPU ${currentPlayer} Ended Turn</h4><p>CPU ${currentPlayer} attracted a noble</p>`;
+
         await sleep(2500);
         modal.style.display = "none"
         attractNobles(player, nobles[1]);
-    }else if(player["reserved"]){
-        console.log("has reserved")
-        if (checkAfford(player, player["reserved"])) {
-            console.log("buy reserve")
-            modal.style.display = "block";
-            document.querySelector("#feedback").style.display = "flex";
-            document.querySelector("#feedback .modal-text").innerHTML = `<h4>CPU ${currentPlayer} Ended Turn</h4><p>CPU ${currentPlayer} bought their reserve card</p>`;
-            await sleep(2500);
-            modal.style.display = "none"
-            buyCard(player, document.getElementsByClassName("empty-card")[currentPlayer], true)
-        };
+    }else if(player["reserved"] && reservedCard){
+        console.log("buy reserve")
+        modal.style.display = "block";
+        document.querySelector("#feedback").style.display = "flex";
+        document.querySelector("#feedback .modal-text").innerHTML = `<h4>CPU ${currentPlayer} Ended Turn</h4><p>CPU ${currentPlayer} bought their reserve card</p>`;
+
+        await sleep(2500);
+        modal.style.display = "none";
+        buyCard(player, document.getElementsByClassName("empty-card")[currentPlayer], true);
     }else if(checkAfford(player, board[3][ranNum])){
-        console.log(board[3][ranNum], player)
+        console.log("buy3")
         modal.style.display = "block";
         document.querySelector("#feedback").style.display = "flex";
         document.querySelector("#feedback .modal-text").innerHTML = `<h4>CPU ${currentPlayer} Ended Turn</h4><p>CPU ${currentPlayer} bought a level 3 card</p>`;
+
         await sleep(2500);
         modal.style.display = "none"
         buyCard(player, document.querySelectorAll(".level-3.used")[ranNum], false)
     }else if(checkAfford(player, board[2][ranNum])){
-        console.log(board[2][ranNum], player)
+        console.log("buy2")
         modal.style.display = "block";
         document.querySelector("#feedback").style.display = "flex";
         document.querySelector("#feedback .modal-text").innerHTML = `<h4>CPU ${currentPlayer} Ended Turn</h4><p>CPU ${currentPlayer} bought a level 2 card</p>`;
+
         await sleep(2500);
         modal.style.display = "none"
         buyCard(player, document.querySelectorAll(".level-2.used")[ranNum], false)
     }else if(checkAfford(player, board[1][ranNum])){
-        console.log(player["gems"], board[1][ranNum])
+        console.log("buy1")
         modal.style.display = "block";
         document.querySelector("#feedback").style.display = "flex";
         document.querySelector("#feedback .modal-text").innerHTML = `<h4>CPU ${currentPlayer} Ended Turn</h4><p>CPU ${currentPlayer} bought a level 1 card</p>`;
+
         await sleep(2500);
         modal.style.display = "none"
         buyCard(player, document.querySelectorAll(".level-1.used")[ranNum], false)
-    }else if(gemTake == 0){
+    }else if(gemTake == 3 ){
         console.log("gem3")
         modal.style.display = "block";
         document.querySelector("#feedback").style.display = "flex";
         document.querySelector("#feedback .modal-text").innerHTML = `<h4>CPU ${currentPlayer} Ended Turn</h4><p>CPU ${currentPlayer} collected three gems</p>`;
+
         await sleep(2500);
         modal.style.display = "none"
+        console.log(`going to take ${gemsTaken}`)
         takeGems(player, [document.querySelector(`.gem.${gemsTaken[0]}`), document.querySelector(`.gem.${gemsTaken[1]}`), document.querySelector(`.gem.${gemsTaken[2]}`)]);
-    }else if(gemTake == 1){
+    }else if(gemTake == 2 && gemAmounts[gemsTaken[0]] > 30){
         console.log("gem2")
+
         modal.style.display = "block";
         document.querySelector("#feedback").style.display = "flex";
         document.querySelector("#feedback .modal-text").innerHTML = `<h4>CPU ${currentPlayer} Ended Turn</h4><p>CPU ${currentPlayer} collected two gems</p>`;
+
         await sleep(2500);
         modal.style.display = "none"
+        console.log(`going to take ${gemsTaken}`)
         takeGems(player, [document.querySelector(`.gem.${gemsTaken[0]}`), document.querySelector(`.gem.${gemsTaken[0]}`)]);
-    }else if(gemTake == 2){
+    }else if(gemTake == 1) {
         console.log("gem1")
         modal.style.display = "block";
         document.querySelector("#feedback").style.display = "flex";
         document.querySelector("#feedback .modal-text").innerHTML = `<h4>CPU ${currentPlayer} Ended Turn</h4><p>CPU ${currentPlayer} collected one gem</p>`;
+        
         await sleep(2500);
         modal.style.display = "none"
+        console.log(`going to take ${gemsTaken}`)
         takeGems(player, [document.querySelector(`.gem.${gemsTaken[0]}`)]);
-    }else{
+    }else if(checkAfford(player, board[1][0])){
+        console.log("final check, buy(0)")
+        modal.style.display = "block";
+        document.querySelector("#feedback").style.display = "flex";
+        document.querySelector("#feedback .modal-text").innerHTML = `<h4>CPU ${currentPlayer} Ended Turn</h4><p>CPU ${currentPlayer} bought a level 1 card</p>`;
+
+        await sleep(2500);
+        modal.style.display = "none"
+        buyCard(player, document.querySelectorAll(".level-1.used")[0], false)
+    }else if(checkAfford(player, board[1][1])) {
+        console.log("final check, buy(1)")
+        modal.style.display = "block";
+        document.querySelector("#feedback").style.display = "flex";
+        document.querySelector("#feedback .modal-text").innerHTML = `<h4>CPU ${currentPlayer} Ended Turn</h4><p>CPU ${currentPlayer} bought a level 1 card</p>`;
+
+        await sleep(2500);
+        modal.style.display = "none"
+        buyCard(player, document.querySelectorAll(".level-1.used")[1], false)
+    }else if(checkAfford(player, board[1][2])) {
+        console.log("final check, buy(2)")
+        modal.style.display = "block";
+        document.querySelector("#feedback").style.display = "flex";
+        document.querySelector("#feedback .modal-text").innerHTML = `<h4>CPU ${currentPlayer} Ended Turn</h4><p>CPU ${currentPlayer} bought a level 1 card</p>`;
+
+        await sleep(2500);
+        modal.style.display = "none"
+        buyCard(player, document.querySelectorAll(".level-1.used")[2], false)
+    }else if(checkAfford(player, board[1][3])) {
+        console.log("final check, buy(3)")
+        modal.style.display = "block";
+        document.querySelector("#feedback").style.display = "flex";
+        document.querySelector("#feedback .modal-text").innerHTML = `<h4>CPU ${currentPlayer} Ended Turn</h4><p>CPU ${currentPlayer} bought a level 1 card</p>`;
+
+        await sleep(2500);
+        modal.style.display = "none"
+        buyCard(player, document.querySelectorAll(".level-1.used")[3], false)
+    }else if(!player["reserved"]) {
+        console.log("reserve")
         modal.style.display = "block";
         document.querySelector("#feedback").style.display = "flex";
         document.querySelector("#feedback .modal-text").innerHTML = `<h4>CPU ${currentPlayer} Ended Turn</h4><p>CPU ${currentPlayer} reserved a card</p>`;
+
         await sleep(2500);
         modal.style.display = "none"
         reserveCard(player, document.querySelectorAll(`.level-${ranLevel}.used`)[ranNum]);
+    }else {
+        console.log("cpu stuck")
+        nextTurn();
     }
 }
 
