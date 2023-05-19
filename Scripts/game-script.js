@@ -1124,15 +1124,15 @@ async function cpuTurn(){
         await sleep(2500);
         modal.style.display = "none"
         attractNobles(player, nobles[1]);
-    }else if(player["reserved"] && reservedCard){
-        console.log("buy reserve")
-        modal.style.display = "block";
-        document.querySelector("#feedback").style.display = "flex";
-        document.querySelector("#feedback .modal-text").innerHTML = `<h4>CPU ${currentPlayer} Ended Turn</h4><p>CPU ${currentPlayer} bought their reserve card</p>`;
+    // }else if(player["reserved"] && reservedCard){
+    //     console.log("buy reserve")
+    //     modal.style.display = "block";
+    //     document.querySelector("#feedback").style.display = "flex";
+    //     document.querySelector("#feedback .modal-text").innerHTML = `<h4>CPU ${currentPlayer} Ended Turn</h4><p>CPU ${currentPlayer} bought their reserve card</p>`;
 
-        await sleep(2500);
-        modal.style.display = "none";
-        buyCard(player, document.getElementsByClassName("empty-card")[currentPlayer], true);
+    //     await sleep(2500);
+    //     modal.style.display = "none";
+    //     buyCard(player, document.getElementsByClassName("empty-card")[currentPlayer], true);
     }else if(checkAfford(player, board[3][ranNum])){
         console.log("buy3")
         modal.style.display = "block";
